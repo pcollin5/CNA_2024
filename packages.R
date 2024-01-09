@@ -167,6 +167,9 @@ tract_map_function <- function(outline, data, fill, label){
 }
 
 
+location_factors_for_graph <- c("United States", "Tennessee", "Carter County", "Greene County", "Hancock County", "Hawkins County", "Johnson County", "Sullivan County", "Unicoi County", "Washington County")
+
+county_location_factors_for_graph <- c("Carter County", "Greene County", "Hancock County", "Hawkins County", "Johnson County", "Sullivan County", "Unicoi County", "Washington County")
 
 ztcas = c(37445, 37463, 37565, 37569, 37587, 37600, 37601, 37602, 37604, 37605, 37608, 37609,
           37610, 37611, 37614, 37615, 37616, 37617, 37618, 37620, 37621, 37640, 37641, 37642, 37643, 37644, 37645, 37647, 37650, 37653, 37656, 37657, 37658, 37659,

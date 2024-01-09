@@ -947,6 +947,309 @@ Full_dp_2021
 
 dp_2021
 
+#### school districts ####
+
+# 2022
+
+tn_school_districts_DP02_22 <- get_acs(geography = "school district (unified)", state = "TN", table = "DP02", year = 2022, geometry = TRUE)
+
+tn_school_districts_DP03_22 <- get_acs(geography = "school district (unified)", state = "TN", table = "DP03", year = 2022, geometry = TRUE)
+
+tn_school_districts_DP04_22 <- get_acs(geography = "school district (unified)", state = "TN", table = "DP04", year = 2022, geometry = TRUE)
+
+tn_school_districts_DP05_22 <- get_acs(geography = "school district (unified)", state = "TN", table = "DP05", year = 2022, geometry = TRUE)
+
+tn_school_districts_2022 <- rbind(tn_school_districts_DP02_22, tn_school_districts_DP03_22, tn_school_districts_DP04_22, tn_school_districts_DP05_22)
+
+joined_tn_school_districts_2022 <- inner_join(tn_school_districts_2022, dp_table_variables_22, by = "variable")
+
+
+# 2021
+
+tn_school_districts_DP02_21 <- get_acs(geography = "school district (unified)", state = "TN", table = "DP02", year = 2021, geometry = TRUE)
+
+tn_school_districts_DP03_21 <- get_acs(geography = "school district (unified)", state = "TN", table = "DP03", year = 2021, geometry = TRUE)
+
+tn_school_districts_DP04_21 <- get_acs(geography = "school district (unified)", state = "TN", table = "DP04", year = 2021, geometry = TRUE)
+
+tn_school_districts_DP05_21 <- get_acs(geography = "school district (unified)", state = "TN", table = "DP05", year = 2021, geometry = TRUE)
+
+tn_school_districts_2021 <- rbind(tn_school_districts_DP02_21, tn_school_districts_DP03_21, tn_school_districts_DP04_21, tn_school_districts_DP05_21)
+
+joined_tn_school_districts_2021 <- inner_join(tn_school_districts_2021, dp_table_variables_21, by = "variable")
+
+#### extracting school districts #####
+
+#### DATA PROFILES #####
+
+View(tn_school_districts_2022)
+
+tn_school_districts_2021
+
+
+#### 2022 ####
+
+#### using for school districts in each county ####
+
+# carter
+# Carter County Schools
+carter_county_schools_22 <- tn_school_districts_2022 %>%
+  filter(str_detect(NAME, "Carter County"))
+
+# Elizabethon City Schools
+elizabethton_schools_22 <- tn_school_districts_2022 %>%
+  filter(str_detect(NAME, "Elizabethton"))
+
+
+# greene
+# greeneville city schools
+
+greeneville_city_schools_22 <- tn_school_districts_2022 %>%
+  filter(str_detect(NAME, "Greeneville City"))
+
+greeneville_city_schools_22
+
+# greene county schools
+greene_county_schools_22 <- tn_school_districts_2022 %>%
+  filter(str_detect(NAME, "Greene County"))
+
+greene_county_schools_22
+
+# hancock
+# hancock county schools
+hancock_county_schools_22 <- tn_school_districts_2022 %>%
+  filter(str_detect(NAME, "Hancock"))
+
+hancock_temp_22 <- hancock_county_schools_22 %>%
+  mutate(County = "Hancock")
+
+# hawkins
+# hawkins county school
+hawkins_county_schools_22 <- tn_school_districts_2022 %>%
+  filter(str_detect(NAME, "Hawkins"))
+
+hawkins_temp_22 <- hawkins_county_schools_22 %>%
+  mutate(County = "Hawkins")
+
+# johnson 
+# johnson county school
+johnson_county_schools_22 <- tn_school_districts_2022 %>%
+  filter(str_detect(NAME, "Johnson County"))
+
+johnson_temp_22 <- johnson_county_schools_22 %>%
+  mutate(County = "Johnson")
+
+# sullivan
+# kingsport city school
+kpt_city_schools_22 <- tn_school_districts_2022 %>%
+  filter(str_detect(NAME, "Kingsport"))
+
+kpt_temp_22 <- kpt_city_schools_22 %>%
+  mutate(County = "Sullivan")
+
+# bristol city school
+
+bristol_schools_22 <- tn_school_districts_2022 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+bristol_temp_22 <- bristol_schools_22 %>%
+  mutate(County = "Sullivan")
+
+# Sullivan County
+
+sullivan_schools_22 <- tn_school_districts_2022 %>%
+  filter(str_detect(NAME, "Sullivan"))
+
+sc_temp_22 <- sullivan_schools_22 %>%
+  mutate(County = "Sullivan")
+
+# unicoi
+# unicoi County Schools
+
+unicoi_schools_22 <- tn_school_districts_2022 %>%
+  filter(str_detect(NAME, "Unicoi"))
+
+unicoi_temp_22 <- unicoi_schools_22 %>%
+  mutate(County = "Unicoi")
+
+# washington 
+# johnson city schools
+jc_schools_22 <- tn_school_districts_2022 %>%
+  filter(str_detect(NAME, "Johnson City"))
+
+jc_temp_22 <- jc_schools_22 %>%
+  mutate(County = "Washington")
+
+# washington county schools
+
+washington_county_schools_22 <- tn_school_districts_2022 %>%
+  filter(str_detect(NAME, "Washington County"))
+
+washington_county_schools_22
+
+washington_county_temp_22 <- washington_county_schools_22 %>%
+  mutate(County = "Washington")
+
+uethda_schools_2022 <- rbind(carter_county_schools_22, elizabethton_schools_22, greeneville_city_schools_22, greene_county_schools_22,
+                             hancock_county_schools_22, hawkins_county_schools_22, johnson_county_schools_22, kpt_city_schools_22,
+                             bristol_schools_22, sullivan_schools_22, unicoi_schools_22, jc_schools_22, washington_county_schools_22)
+
+#### 2021 ####
+
+#### using for school districts in each county ####
+
+# carter
+# Carter County Schools
+carter_county_schools_21 <- tn_school_districts_2021 %>%
+  filter(str_detect(NAME, "Carter County"))
+
+# Elizabethon City Schools
+elizabethton_schools_21 <- tn_school_districts_2021 %>%
+  filter(str_detect(NAME, "Elizabethton"))
+
+
+# greene
+# greeneville city schools
+
+greeneville_city_schools_21 <- tn_school_districts_2021 %>%
+  filter(str_detect(NAME, "Greeneville City"))
+
+greeneville_city_schools_21
+
+# greene county schools
+greene_county_schools_21 <- tn_school_districts_2021 %>%
+  filter(str_detect(NAME, "Greene County"))
+
+greene_county_schools_21
+
+# hancock
+# hancock county schools
+hancock_county_schools_21 <- tn_school_districts_2021 %>%
+  filter(str_detect(NAME, "Hancock"))
+
+hancock_temp_21 <- hancock_county_schools_21 %>%
+  mutate(County = "Hancock")
+
+# hawkins
+# hawkins county school
+hawkins_county_schools_21 <- tn_school_districts_2021 %>%
+  filter(str_detect(NAME, "Hawkins"))
+
+hawkins_temp_21 <- hawkins_county_schools_21 %>%
+  mutate(County = "Hawkins")
+
+# johnson 
+# johnson county school
+johnson_county_schools_21 <- tn_school_districts_2021 %>%
+  filter(str_detect(NAME, "Johnson County"))
+
+johnson_temp_21 <- johnson_county_schools_21 %>%
+  mutate(County = "Johnson")
+
+# sullivan
+# kingsport city school
+kpt_city_schools_21 <- tn_school_districts_2021 %>%
+  filter(str_detect(NAME, "Kingsport"))
+
+kpt_temp_21 <- kpt_city_schools_21 %>%
+  mutate(County = "Sullivan")
+
+# bristol city school
+
+bristol_schools_21 <- tn_school_districts_2021 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+bristol_temp_21 <- bristol_schools_21 %>%
+  mutate(County = "Sullivan")
+
+# Sullivan County
+
+sullivan_schools_21 <- tn_school_districts_2021 %>%
+  filter(str_detect(NAME, "Sullivan"))
+
+sc_temp_21 <- sullivan_schools_21 %>%
+  mutate(County = "Sullivan")
+
+# unicoi
+# unicoi County Schools
+
+unicoi_schools_21 <- tn_school_districts_2021 %>%
+  filter(str_detect(NAME, "Unicoi"))
+
+unicoi_temp_21 <- unicoi_schools_21 %>%
+  mutate(County = "Unicoi")
+
+# washington 
+# johnson city schools
+jc_schools_21 <- tn_school_districts_2021 %>%
+  filter(str_detect(NAME, "Johnson City"))
+
+jc_temp_21 <- jc_schools_21 %>%
+  mutate(County = "Washington")
+
+# washington county schools
+
+washington_county_schools_21 <- tn_school_districts_2021 %>%
+  filter(str_detect(NAME, "Washington County"))
+
+washington_county_schools_21
+
+washington_county_temp_21 <- washington_county_schools_21 %>%
+  mutate(County = "Washington")
+
+uethda_schools_2021 <- rbind(carter_county_schools_21, elizabethton_schools_21, greeneville_city_schools_21, greene_county_schools_21,
+                             hancock_county_schools_21, hawkins_county_schools_21, johnson_county_schools_21, kpt_city_schools_21,
+                             bristol_schools_21, sullivan_schools_21, unicoi_schools_21, jc_schools_21, washington_county_schools_21)
+
+
+#### S1301 FERTILITY #####
+
+carter_county_fertility <- school_fertility %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_fertility <- school_fertility %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_fertility <- school_fertility %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_school_fertility <- school_fertility %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_school_fertility <- school_fertility %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_school_fertility <- school_fertility %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_school_fertility <- school_fertility %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_fertility <- school_fertility %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_fertility <- school_fertility %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_school_fertility <- school_fertility %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_school_fertility <- school_fertility %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_school_fertility <- school_fertility %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_school_fertility <- school_fertility %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_fertility <- rbind(carter_county_fertility, elizabethton_fertility, greene_city_fertility, greene_school_fertility,hancock_school_fertility,hawkins_school_fertility, 
+                                  johnson_school_fertility, kpt_city_fertility, bristol_city_fertility, sullivan_school_fertility,unicoi_school_fertility, jc_school_fertility, 
+                                  wash_co_school_fertility)
+
+
+
+
 ##### supplemental tables #### 
 
 #####S1301 - FERTILITY #####
@@ -966,15 +1269,21 @@ vars_named_to_pull <- c("Total Women 15-50", "Total Women 15-50 Non-Hispanic Whi
 # 2022
 subject_table_variables_2022 <- load_variables(2022, "acs5/subject", cache = TRUE)
 
+subject_table_variables_22 <- load_variables(2022, "acs5/subject", cache = TRUE)
+
 new_names_22 <- c("variable", "label", "concept")
 
 names(subject_table_variables_2022) <- new_names_22
 
-View(subject_table_variables_2022)
+names(subject_table_variables_22) <- new_names_22
 
-subject_table_variables_2016 <- load_variables(2016, "acs5/subject", cache = TRUE)
+subject_table_variables_2021 <- load_variables(2021, "acs5/subject", cache = TRUE)
 
-names(subject_table_variables_2016) <- new_names_22
+names(subject_table_variables_2021) <- new_names_22
+
+subject_table_variables_21 <- load_variables(2021, "acs5/subject", cache = TRUE)
+
+names(subject_table_variables_21) <- new_names_22
 
 # school districts
 tn_school_districts_fertility_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1301", year = 2022, geometry = TRUE)
@@ -2139,3 +2448,2401 @@ uethda_schools_fertility <- rbind(carter_county_fertility, elizabethton_fertilit
                                   johnson_school_fertility, kpt_city_fertility, bristol_city_fertility, sullivan_school_fertility,unicoi_school_fertility, jc_school_fertility, 
                                   wash_co_school_fertility)
 uethda_schools_fertility
+
+#### S1701 individual_poverty IN PAST 12 MONTHS ####
+# 2022
+
+# school districts
+tn_school_districts_individual_poverty_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1701", year = 2022, geometry = TRUE)
+
+# carter 
+
+Carter_tract_individual_poverty_2022 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S1701", year = 2022, geometry = TRUE)
+
+Carter_county_individual_poverty_2022 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S1701", year = 2022, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_individual_poverty_2022 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S1701", year = 2022, geometry = TRUE)
+
+Greene_county_individual_poverty_2022 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S1701", year = 2022, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_individual_poverty_2022 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S1701", year = 2022, geometry = TRUE)
+
+Hancock_county_individual_poverty_2022 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S1701", year = 2022, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_individual_poverty_2022 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S1701", year = 2022, geometry = TRUE)
+
+Hawkins_county_individual_poverty_2022 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S1701", year = 2022, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_individual_poverty_2022 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S1701", year = 2022, geometry = TRUE)
+
+Johnson_county_individual_poverty_2022 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S1701", year = 2022, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_individual_poverty_2022 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S1701", year = 2022, geometry = TRUE)
+
+Sullivan_county_individual_poverty_2022 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S1701", year = 2022, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_individual_poverty_2022 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S1701", year = 2022, geometry = TRUE)
+
+Unicoi_county_individual_poverty_2022 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S1701", year = 2022, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_individual_poverty_2022 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S1701", year = 2022, geometry = TRUE)
+
+Washington_county_individual_poverty_2022 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1701", year = 2022, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_individual_poverty_2022 <- rbind(Carter_county_individual_poverty_2022, Greene_county_individual_poverty_2022, Hancock_county_individual_poverty_2022, Hawkins_county_individual_poverty_2022, Johnson_county_individual_poverty_2022,
+                                               Sullivan_county_individual_poverty_2022, Unicoi_county_individual_poverty_2022, Washington_county_individual_poverty_2022)
+
+uethda_tract_individual_poverty_2022 <- rbind(Carter_tract_individual_poverty_2022, Greene_tract_individual_poverty_2022, Hancock_tract_individual_poverty_2022, Hawkins_tract_individual_poverty_2022,
+                                              Johnson_tract_individual_poverty_2022, Sullivan_tract_individual_poverty_2022, Unicoi_tract_individual_poverty_2022, Washington_tract_individual_poverty_2022)
+
+#join the names 
+
+named_uethda_county_individual_poverty_2022 <- inner_join(uethda_county_individual_poverty_2022, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_individual_poverty_2022 <- inner_join(uethda_tract_individual_poverty_2022,subject_table_variables_22, by = "variable")
+
+named_uethda_school_individual_poverty_2022 <- inner_join(tn_school_districts_individual_poverty_2022, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_individual_poverty_2022 <- named_uethda_county_individual_poverty_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_individual_poverty_2022 <- named_uethda_tract_individual_poverty_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_individual_poverty_2022 <- named_uethda_school_individual_poverty_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_individual_poverty_2022 <- cleaned_uethda_school_individual_poverty_2022 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_individual_poverty_2022 <- cleaned_uethda_school_individual_poverty_2022 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_individual_poverty_2022 <- cleaned_uethda_school_individual_poverty_2022 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_individual_poverty_2022 <- cleaned_uethda_school_individual_poverty_2022 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_individual_poverty_2022 <- cleaned_uethda_school_individual_poverty_2022 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_individual_poverty_2022 <- cleaned_uethda_school_individual_poverty_2022 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_individual_poverty_2022 <- cleaned_uethda_school_individual_poverty_2022 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_individual_poverty_2022 <- cleaned_uethda_school_individual_poverty_2022 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_individual_poverty_2022 <- cleaned_uethda_school_individual_poverty_2022 %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_cleaned_uethda_school_individual_poverty_2022 <- cleaned_uethda_school_individual_poverty_2022 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_individual_poverty_2022 <- cleaned_uethda_school_individual_poverty_2022 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_individual_poverty_2022 <- cleaned_uethda_school_individual_poverty_2022 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_individual_poverty_2022 <- cleaned_uethda_school_individual_poverty_2022 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_individual_poverty_2022 <- rbind(carter_county_individual_poverty_2022, elizabethton_individual_poverty_2022, greene_city_individual_poverty_2022, greene_cleaned_uethda_school_individual_poverty_2022,hancock_cleaned_uethda_school_individual_poverty_2022,hawkins_cleaned_uethda_school_individual_poverty_2022, 
+                                                johnson_cleaned_uethda_school_individual_poverty_2022, kpt_city_individual_poverty_2022, bristol_city_individual_poverty_2022, sullivan_cleaned_uethda_school_individual_poverty_2022,unicoi_cleaned_uethda_school_individual_poverty_2022, jc_cleaned_uethda_school_individual_poverty_2022, 
+                                                wash_co_cleaned_uethda_school_individual_poverty_2022)
+
+uethda_schools_individual_poverty_2022
+
+#S1702 - poverty status families 
+#### S1702 family_poverty IN PAST 12 MONTHS ####
+# 2022
+
+# school districts
+tn_school_districts_family_poverty_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1702", year = 2022, geometry = TRUE)
+
+# carter 
+
+Carter_tract_family_poverty_2022 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S1702", year = 2022, geometry = TRUE)
+
+Carter_county_family_poverty_2022 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S1702", year = 2022, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_family_poverty_2022 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S1702", year = 2022, geometry = TRUE)
+
+Greene_county_family_poverty_2022 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S1702", year = 2022, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_family_poverty_2022 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S1702", year = 2022, geometry = TRUE)
+
+Hancock_county_family_poverty_2022 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S1702", year = 2022, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_family_poverty_2022 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S1702", year = 2022, geometry = TRUE)
+
+Hawkins_county_family_poverty_2022 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S1702", year = 2022, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_family_poverty_2022 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S1702", year = 2022, geometry = TRUE)
+
+Johnson_county_family_poverty_2022 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S1702", year = 2022, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_family_poverty_2022 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S1702", year = 2022, geometry = TRUE)
+
+Sullivan_county_family_poverty_2022 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S1702", year = 2022, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_family_poverty_2022 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S1702", year = 2022, geometry = TRUE)
+
+Unicoi_county_family_poverty_2022 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S1702", year = 2022, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_family_poverty_2022 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S1702", year = 2022, geometry = TRUE)
+
+Washington_county_family_poverty_2022 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1702", year = 2022, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_family_poverty_2022 <- rbind(Carter_county_family_poverty_2022, Greene_county_family_poverty_2022, Hancock_county_family_poverty_2022, Hawkins_county_family_poverty_2022, Johnson_county_family_poverty_2022,
+                                           Sullivan_county_family_poverty_2022, Unicoi_county_family_poverty_2022, Washington_county_family_poverty_2022)
+
+uethda_tract_family_poverty_2022 <- rbind(Carter_tract_family_poverty_2022, Greene_tract_family_poverty_2022, Hancock_tract_family_poverty_2022, Hawkins_tract_family_poverty_2022,
+                                          Johnson_tract_family_poverty_2022, Sullivan_tract_family_poverty_2022, Unicoi_tract_family_poverty_2022, Washington_tract_family_poverty_2022)
+
+#join the names 
+
+named_uethda_county_family_poverty_2022 <- inner_join(uethda_county_family_poverty_2022, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_family_poverty_2022 <- inner_join(uethda_tract_family_poverty_2022,subject_table_variables_22, by = "variable")
+
+named_uethda_school_family_poverty_2022 <- inner_join(tn_school_districts_family_poverty_2022, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_family_poverty_2022 <- named_uethda_county_family_poverty_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_family_poverty_2022 <- named_uethda_tract_family_poverty_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_family_poverty_2022 <- named_uethda_school_family_poverty_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_family_poverty_2022 <- cleaned_uethda_school_family_poverty_2022 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_family_poverty_2022 <- cleaned_uethda_school_family_poverty_2022 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_family_poverty_2022 <- cleaned_uethda_school_family_poverty_2022 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_family_poverty_2022 <- cleaned_uethda_school_family_poverty_2022 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_family_poverty_2022 <- cleaned_uethda_school_family_poverty_2022 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_family_poverty_2022 <- cleaned_uethda_school_family_poverty_2022 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_family_poverty_2022 <- cleaned_uethda_school_family_poverty_2022 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_family_poverty_2022 <- cleaned_uethda_school_family_poverty_2022 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_family_poverty_2022 <- cleaned_uethda_school_family_poverty_2022 %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_cleaned_uethda_school_family_poverty_2022 <- cleaned_uethda_school_family_poverty_2022 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_family_poverty_2022 <- cleaned_uethda_school_family_poverty_2022 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_family_poverty_2022 <- cleaned_uethda_school_family_poverty_2022 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_family_poverty_2022 <- cleaned_uethda_school_family_poverty_2022 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_family_poverty_2022 <- rbind(carter_county_family_poverty_2022, elizabethton_family_poverty_2022, greene_city_family_poverty_2022, greene_cleaned_uethda_school_family_poverty_2022,hancock_cleaned_uethda_school_family_poverty_2022,hawkins_cleaned_uethda_school_family_poverty_2022, 
+                                            johnson_cleaned_uethda_school_family_poverty_2022, kpt_city_family_poverty_2022, bristol_city_family_poverty_2022, sullivan_cleaned_uethda_school_family_poverty_2022,unicoi_cleaned_uethda_school_family_poverty_2022, jc_cleaned_uethda_school_family_poverty_2022, 
+                                            wash_co_cleaned_uethda_school_family_poverty_2022)
+
+uethda_schools_family_poverty_2022
+
+#S1703 - characteristics of poverty level 
+#### S1703 characteristics_poverty IN PAST 12 MONTHS ####
+# 2022
+
+# school districts
+tn_school_districts_characteristics_poverty_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1703", year = 2022, geometry = TRUE)
+
+# carter 
+
+Carter_tract_characteristics_poverty_2022 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S1703", year = 2022, geometry = TRUE)
+
+Carter_county_characteristics_poverty_2022 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S1703", year = 2022, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_characteristics_poverty_2022 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S1703", year = 2022, geometry = TRUE)
+
+Greene_county_characteristics_poverty_2022 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S1703", year = 2022, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_characteristics_poverty_2022 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S1703", year = 2022, geometry = TRUE)
+
+Hancock_county_characteristics_poverty_2022 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S1703", year = 2022, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_characteristics_poverty_2022 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S1703", year = 2022, geometry = TRUE)
+
+Hawkins_county_characteristics_poverty_2022 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S1703", year = 2022, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_characteristics_poverty_2022 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S1703", year = 2022, geometry = TRUE)
+
+Johnson_county_characteristics_poverty_2022 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S1703", year = 2022, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_characteristics_poverty_2022 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S1703", year = 2022, geometry = TRUE)
+
+Sullivan_county_characteristics_poverty_2022 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S1703", year = 2022, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_characteristics_poverty_2022 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S1703", year = 2022, geometry = TRUE)
+
+Unicoi_county_characteristics_poverty_2022 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S1703", year = 2022, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_characteristics_poverty_2022 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S1703", year = 2022, geometry = TRUE)
+
+Washington_county_characteristics_poverty_2022 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1703", year = 2022, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_characteristics_poverty_2022 <- rbind(Carter_county_characteristics_poverty_2022, Greene_county_characteristics_poverty_2022, Hancock_county_characteristics_poverty_2022, Hawkins_county_characteristics_poverty_2022, Johnson_county_characteristics_poverty_2022,
+                                                    Sullivan_county_characteristics_poverty_2022, Unicoi_county_characteristics_poverty_2022, Washington_county_characteristics_poverty_2022)
+
+uethda_tract_characteristics_poverty_2022 <- rbind(Carter_tract_characteristics_poverty_2022, Greene_tract_characteristics_poverty_2022, Hancock_tract_characteristics_poverty_2022, Hawkins_tract_characteristics_poverty_2022,
+                                                   Johnson_tract_characteristics_poverty_2022, Sullivan_tract_characteristics_poverty_2022, Unicoi_tract_characteristics_poverty_2022, Washington_tract_characteristics_poverty_2022)
+
+#join the names 
+
+named_uethda_county_characteristics_poverty_2022 <- inner_join(uethda_county_characteristics_poverty_2022, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_characteristics_poverty_2022 <- inner_join(uethda_tract_characteristics_poverty_2022,subject_table_variables_22, by = "variable")
+
+named_uethda_school_characteristics_poverty_2022 <- inner_join(tn_school_districts_characteristics_poverty_2022, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_characteristics_poverty_2022 <- named_uethda_county_characteristics_poverty_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_characteristics_poverty_2022 <- named_uethda_tract_characteristics_poverty_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_characteristics_poverty_2022 <- named_uethda_school_characteristics_poverty_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_characteristics_poverty_2022 <- cleaned_uethda_school_characteristics_poverty_2022 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_characteristics_poverty_2022 <- cleaned_uethda_school_characteristics_poverty_2022 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_characteristics_poverty_2022 <- cleaned_uethda_school_characteristics_poverty_2022 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_characteristics_poverty_2022 <- cleaned_uethda_school_characteristics_poverty_2022 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_characteristics_poverty_2022 <- cleaned_uethda_school_characteristics_poverty_2022 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_characteristics_poverty_2022 <- cleaned_uethda_school_characteristics_poverty_2022 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_characteristics_poverty_2022 <- cleaned_uethda_school_characteristics_poverty_2022 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_characteristics_poverty_2022 <- cleaned_uethda_school_characteristics_poverty_2022 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_characteristics_poverty_2022 <- cleaned_uethda_school_characteristics_poverty_2022 %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_cleaned_uethda_school_characteristics_poverty_2022 <- cleaned_uethda_school_characteristics_poverty_2022 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_characteristics_poverty_2022 <- cleaned_uethda_school_characteristics_poverty_2022 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_characteristics_poverty_2022 <- cleaned_uethda_school_characteristics_poverty_2022 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_characteristics_poverty_2022 <- cleaned_uethda_school_characteristics_poverty_2022 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_characteristics_poverty_2022 <- rbind(carter_county_characteristics_poverty_2022, elizabethton_characteristics_poverty_2022, greene_city_characteristics_poverty_2022, greene_cleaned_uethda_school_characteristics_poverty_2022,hancock_cleaned_uethda_school_characteristics_poverty_2022,hawkins_cleaned_uethda_school_characteristics_poverty_2022, 
+                                                     johnson_cleaned_uethda_school_characteristics_poverty_2022, kpt_city_characteristics_poverty_2022, bristol_city_characteristics_poverty_2022, sullivan_cleaned_uethda_school_characteristics_poverty_2022,unicoi_cleaned_uethda_school_characteristics_poverty_2022, jc_cleaned_uethda_school_characteristics_poverty_2022, 
+                                                     wash_co_cleaned_uethda_school_characteristics_poverty_2022)
+
+uethda_schools_characteristics_poverty_2022
+
+#S1703 - characteristics of poverty level 
+#### S1703 characteristics_poverty IN PAST 12 MONTHS ####
+# 2021
+
+# school districts
+tn_school_districts_characteristics_poverty_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+# carter 
+
+Carter_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+Carter_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+Greene_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+Hancock_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+Hawkins_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+Johnson_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+Sullivan_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+Unicoi_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+Washington_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_characteristics_poverty_2021 <- rbind(Carter_county_characteristics_poverty_2021, Greene_county_characteristics_poverty_2021, Hancock_county_characteristics_poverty_2021, Hawkins_county_characteristics_poverty_2021, Johnson_county_characteristics_poverty_2021,
+                                                    Sullivan_county_characteristics_poverty_2021, Unicoi_county_characteristics_poverty_2021, Washington_county_characteristics_poverty_2021)
+
+uethda_tract_characteristics_poverty_2021 <- rbind(Carter_tract_characteristics_poverty_2021, Greene_tract_characteristics_poverty_2021, Hancock_tract_characteristics_poverty_2021, Hawkins_tract_characteristics_poverty_2021,
+                                                   Johnson_tract_characteristics_poverty_2021, Sullivan_tract_characteristics_poverty_2021, Unicoi_tract_characteristics_poverty_2021, Washington_tract_characteristics_poverty_2021)
+
+#join the names 
+
+named_uethda_county_characteristics_poverty_2021 <- inner_join(uethda_county_characteristics_poverty_2021, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_characteristics_poverty_2021 <- inner_join(uethda_tract_characteristics_poverty_2021,subject_table_variables_22, by = "variable")
+
+named_uethda_school_characteristics_poverty_2021 <- inner_join(tn_school_districts_characteristics_poverty_2021, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_characteristics_poverty_2021 <- named_uethda_county_characteristics_poverty_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_characteristics_poverty_2021 <- named_uethda_tract_characteristics_poverty_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_characteristics_poverty_2021 <- named_uethda_school_characteristics_poverty_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_characteristics_poverty_2021 <- rbind(carter_county_characteristics_poverty_2021, elizabethton_characteristics_poverty_2021, greene_city_characteristics_poverty_2021, greene_cleaned_uethda_school_characteristics_poverty_2021,hancock_cleaned_uethda_school_characteristics_poverty_2021,hawkins_cleaned_uethda_school_characteristics_poverty_2021, 
+                                                     johnson_cleaned_uethda_school_characteristics_poverty_2021, kpt_city_characteristics_poverty_2021, bristol_city_characteristics_poverty_2021, sullivan_cleaned_uethda_school_characteristics_poverty_2021,unicoi_cleaned_uethda_school_characteristics_poverty_2021, jc_cleaned_uethda_school_characteristics_poverty_2021, 
+                                                     wash_co_cleaned_uethda_school_characteristics_poverty_2021)
+
+uethda_schools_characteristics_poverty_2021
+
+#S1702 - poverty status families 
+#### S1702 family_poverty IN PAST 12 MONTHS ####
+# 2021
+
+# school districts
+tn_school_districts_family_poverty_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+# carter 
+
+Carter_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+Carter_county_family_poverty_2021 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+Greene_county_family_poverty_2021 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+Hancock_county_family_poverty_2021 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+Hawkins_county_family_poverty_2021 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+Johnson_county_family_poverty_2021 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+Sullivan_county_family_poverty_2021 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+Unicoi_county_family_poverty_2021 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+Washington_county_family_poverty_2021 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_family_poverty_2021 <- rbind(Carter_county_family_poverty_2021, Greene_county_family_poverty_2021, Hancock_county_family_poverty_2021, Hawkins_county_family_poverty_2021, Johnson_county_family_poverty_2021,
+                                           Sullivan_county_family_poverty_2021, Unicoi_county_family_poverty_2021, Washington_county_family_poverty_2021)
+
+uethda_tract_family_poverty_2021 <- rbind(Carter_tract_family_poverty_2021, Greene_tract_family_poverty_2021, Hancock_tract_family_poverty_2021, Hawkins_tract_family_poverty_2021,
+                                          Johnson_tract_family_poverty_2021, Sullivan_tract_family_poverty_2021, Unicoi_tract_family_poverty_2021, Washington_tract_family_poverty_2021)
+
+#join the names 
+
+named_uethda_county_family_poverty_2021 <- inner_join(uethda_county_family_poverty_2021, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_family_poverty_2021 <- inner_join(uethda_tract_family_poverty_2021,subject_table_variables_22, by = "variable")
+
+named_uethda_school_family_poverty_2021 <- inner_join(tn_school_districts_family_poverty_2021, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_family_poverty_2021 <- named_uethda_county_family_poverty_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_family_poverty_2021 <- named_uethda_tract_family_poverty_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_family_poverty_2021 <- named_uethda_school_family_poverty_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_family_poverty_2021 <- rbind(carter_county_family_poverty_2021, elizabethton_family_poverty_2021, greene_city_family_poverty_2021, greene_cleaned_uethda_school_family_poverty_2021,hancock_cleaned_uethda_school_family_poverty_2021,hawkins_cleaned_uethda_school_family_poverty_2021, 
+                                            johnson_cleaned_uethda_school_family_poverty_2021, kpt_city_family_poverty_2021, bristol_city_family_poverty_2021, sullivan_cleaned_uethda_school_family_poverty_2021,unicoi_cleaned_uethda_school_family_poverty_2021, jc_cleaned_uethda_school_family_poverty_2021, 
+                                            wash_co_cleaned_uethda_school_family_poverty_2021)
+
+uethda_schools_family_poverty_2021
+
+#### S1701 individual_poverty IN PAST 12 MONTHS ####
+# 2021
+
+# school districts
+tn_school_districts_individual_poverty_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1701", year = 2021, geometry = TRUE)
+
+# carter 
+
+Carter_tract_individual_poverty_2021 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S1701", year = 2021, geometry = TRUE)
+
+Carter_county_individual_poverty_2021 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S1701", year = 2021, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_individual_poverty_2021 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S1701", year = 2021, geometry = TRUE)
+
+Greene_county_individual_poverty_2021 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S1701", year = 2021, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_individual_poverty_2021 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S1701", year = 2021, geometry = TRUE)
+
+Hancock_county_individual_poverty_2021 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S1701", year = 2021, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_individual_poverty_2021 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S1701", year = 2021, geometry = TRUE)
+
+Hawkins_county_individual_poverty_2021 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S1701", year = 2021, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_individual_poverty_2021 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S1701", year = 2021, geometry = TRUE)
+
+Johnson_county_individual_poverty_2021 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S1701", year = 2021, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_individual_poverty_2021 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S1701", year = 2021, geometry = TRUE)
+
+Sullivan_county_individual_poverty_2021 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S1701", year = 2021, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_individual_poverty_2021 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S1701", year = 2021, geometry = TRUE)
+
+Unicoi_county_individual_poverty_2021 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S1701", year = 2021, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_individual_poverty_2021 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S1701", year = 2021, geometry = TRUE)
+
+Washington_county_individual_poverty_2021 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1701", year = 2021, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_individual_poverty_2021 <- rbind(Carter_county_individual_poverty_2021, Greene_county_individual_poverty_2021, Hancock_county_individual_poverty_2021, Hawkins_county_individual_poverty_2021, Johnson_county_individual_poverty_2021,
+                                               Sullivan_county_individual_poverty_2021, Unicoi_county_individual_poverty_2021, Washington_county_individual_poverty_2021)
+
+uethda_tract_individual_poverty_2021 <- rbind(Carter_tract_individual_poverty_2021, Greene_tract_individual_poverty_2021, Hancock_tract_individual_poverty_2021, Hawkins_tract_individual_poverty_2021,
+                                              Johnson_tract_individual_poverty_2021, Sullivan_tract_individual_poverty_2021, Unicoi_tract_individual_poverty_2021, Washington_tract_individual_poverty_2021)
+
+#join the names 
+
+named_uethda_county_individual_poverty_2021 <- inner_join(uethda_county_individual_poverty_2021, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_individual_poverty_2021 <- inner_join(uethda_tract_individual_poverty_2021,subject_table_variables_22, by = "variable")
+
+named_uethda_school_individual_poverty_2021 <- inner_join(tn_school_districts_individual_poverty_2021, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_individual_poverty_2021 <- named_uethda_county_individual_poverty_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_individual_poverty_2021 <- named_uethda_tract_individual_poverty_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_individual_poverty_2021 <- named_uethda_school_individual_poverty_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_individual_poverty_2021 <- cleaned_uethda_school_individual_poverty_2021 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_individual_poverty_2021 <- cleaned_uethda_school_individual_poverty_2021 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_individual_poverty_2021 <- cleaned_uethda_school_individual_poverty_2021 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_individual_poverty_2021 <- cleaned_uethda_school_individual_poverty_2021 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_individual_poverty_2021 <- cleaned_uethda_school_individual_poverty_2021 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_individual_poverty_2021 <- cleaned_uethda_school_individual_poverty_2021 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_individual_poverty_2021 <- cleaned_uethda_school_individual_poverty_2021 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_individual_poverty_2021 <- cleaned_uethda_school_individual_poverty_2021 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_individual_poverty_2021 <- cleaned_uethda_school_individual_poverty_2021 %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_cleaned_uethda_school_individual_poverty_2021 <- cleaned_uethda_school_individual_poverty_2021 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_individual_poverty_2021 <- cleaned_uethda_school_individual_poverty_2021 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_individual_poverty_2021 <- cleaned_uethda_school_individual_poverty_2021 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_individual_poverty_2021 <- cleaned_uethda_school_individual_poverty_2021 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_individual_poverty_2021 <- rbind(carter_county_individual_poverty_2021, elizabethton_individual_poverty_2021, greene_city_individual_poverty_2021, greene_cleaned_uethda_school_individual_poverty_2021,hancock_cleaned_uethda_school_individual_poverty_2021,hawkins_cleaned_uethda_school_individual_poverty_2021, 
+                                                johnson_cleaned_uethda_school_individual_poverty_2021, kpt_city_individual_poverty_2021, bristol_city_individual_poverty_2021, sullivan_cleaned_uethda_school_individual_poverty_2021,unicoi_cleaned_uethda_school_individual_poverty_2021, jc_cleaned_uethda_school_individual_poverty_2021, 
+                                                wash_co_cleaned_uethda_school_individual_poverty_2021)
+
+uethda_schools_individual_poverty_2021
+
+#S1903 - Median Income past 12 months
+
+#### S1903 median_income IN PAST 12 MONTHS ####
+# 2022
+
+# school districts
+tn_school_districts_median_income_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
+
+# carter 
+
+Carter_tract_median_income_2022 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
+
+Carter_county_median_income_2022 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_median_income_2022 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
+
+Greene_county_median_income_2022 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_median_income_2022 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
+
+Hancock_county_median_income_2022 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_median_income_2022 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
+
+Hawkins_county_median_income_2022 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_median_income_2022 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
+
+Johnson_county_median_income_2022 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_median_income_2022 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
+
+Sullivan_county_median_income_2022 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_median_income_2022 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
+
+Unicoi_county_median_income_2022 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_median_income_2022 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
+
+Washington_county_median_income_2022 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_median_income_2022 <- rbind(Carter_county_median_income_2022, Greene_county_median_income_2022, Hancock_county_median_income_2022, Hawkins_county_median_income_2022, Johnson_county_median_income_2022,
+                                          Sullivan_county_median_income_2022, Unicoi_county_median_income_2022, Washington_county_median_income_2022)
+
+uethda_tract_median_income_2022 <- rbind(Carter_tract_median_income_2022, Greene_tract_median_income_2022, Hancock_tract_median_income_2022, Hawkins_tract_median_income_2022,
+                                         Johnson_tract_median_income_2022, Sullivan_tract_median_income_2022, Unicoi_tract_median_income_2022, Washington_tract_median_income_2022)
+
+#join the names 
+
+named_uethda_county_median_income_2022 <- inner_join(uethda_county_median_income_2022, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_median_income_2022 <- inner_join(uethda_tract_median_income_2022,subject_table_variables_22, by = "variable")
+
+named_uethda_school_median_income_2022 <- inner_join(tn_school_districts_median_income_2022, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_median_income_2022 <- named_uethda_county_median_income_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_median_income_2022 <- named_uethda_tract_median_income_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_median_income_2022 <- named_uethda_school_median_income_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_median_income_2022 <- cleaned_uethda_school_median_income_2022 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_median_income_2022 <- cleaned_uethda_school_median_income_2022 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_median_income_2022 <- cleaned_uethda_school_median_income_2022 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_median_income_2022 <- cleaned_uethda_school_median_income_2022 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_median_income_2022 <- cleaned_uethda_school_median_income_2022 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_median_income_2022 <- cleaned_uethda_school_median_income_2022 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_median_income_2022 <- cleaned_uethda_school_median_income_2022 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_median_income_2022 <- cleaned_uethda_school_median_income_2022 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_median_income_2022 <- cleaned_uethda_school_median_income_2022 %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_cleaned_uethda_school_median_income_2022 <- cleaned_uethda_school_median_income_2022 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_median_income_2022 <- cleaned_uethda_school_median_income_2022 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_median_income_2022 <- cleaned_uethda_school_median_income_2022 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_median_income_2022 <- cleaned_uethda_school_median_income_2022 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_median_income_2022 <- rbind(carter_county_median_income_2022, elizabethton_median_income_2022, greene_city_median_income_2022, greene_cleaned_uethda_school_median_income_2022,hancock_cleaned_uethda_school_median_income_2022,hawkins_cleaned_uethda_school_median_income_2022, 
+                                           johnson_cleaned_uethda_school_median_income_2022, kpt_city_median_income_2022, bristol_city_median_income_2022, sullivan_cleaned_uethda_school_median_income_2022,unicoi_cleaned_uethda_school_median_income_2022, jc_cleaned_uethda_school_median_income_2022, 
+                                           wash_co_cleaned_uethda_school_median_income_2022)
+
+uethda_schools_median_income_2022
+
+
+# 2021
+
+# school districts
+tn_school_districts_median_income_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
+
+# carter 
+
+Carter_tract_median_income_2021 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
+
+Carter_county_median_income_2021 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_median_income_2021 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
+
+Greene_county_median_income_2021 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_median_income_2021 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
+
+Hancock_county_median_income_2021 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_median_income_2021 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
+
+Hawkins_county_median_income_2021 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_median_income_2021 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
+
+Johnson_county_median_income_2021 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_median_income_2021 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
+
+Sullivan_county_median_income_2021 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_median_income_2021 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
+
+Unicoi_county_median_income_2021 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_median_income_2021 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
+
+Washington_county_median_income_2021 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_median_income_2021 <- rbind(Carter_county_median_income_2021, Greene_county_median_income_2021, Hancock_county_median_income_2021, Hawkins_county_median_income_2021, Johnson_county_median_income_2021,
+                                          Sullivan_county_median_income_2021, Unicoi_county_median_income_2021, Washington_county_median_income_2021)
+
+uethda_tract_median_income_2021 <- rbind(Carter_tract_median_income_2021, Greene_tract_median_income_2021, Hancock_tract_median_income_2021, Hawkins_tract_median_income_2021,
+                                         Johnson_tract_median_income_2021, Sullivan_tract_median_income_2021, Unicoi_tract_median_income_2021, Washington_tract_median_income_2021)
+
+#join the names 
+
+named_uethda_county_median_income_2021 <- inner_join(uethda_county_median_income_2021, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_median_income_2021 <- inner_join(uethda_tract_median_income_2021,subject_table_variables_22, by = "variable")
+
+named_uethda_school_median_income_2021 <- inner_join(tn_school_districts_median_income_2021, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_median_income_2021 <- named_uethda_county_median_income_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_median_income_2021 <- named_uethda_tract_median_income_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_median_income_2021 <- named_uethda_school_median_income_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_median_income_2021 <- cleaned_uethda_school_median_income_2021 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_median_income_2021 <- cleaned_uethda_school_median_income_2021 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_median_income_2021 <- cleaned_uethda_school_median_income_2021 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_median_income_2021 <- cleaned_uethda_school_median_income_2021 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_median_income_2021 <- cleaned_uethda_school_median_income_2021 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_median_income_2021 <- cleaned_uethda_school_median_income_2021 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_median_income_2021 <- cleaned_uethda_school_median_income_2021 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_median_income_2021 <- cleaned_uethda_school_median_income_2021 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_median_income_2021 <- cleaned_uethda_school_median_income_2021 %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_cleaned_uethda_school_median_income_2021 <- cleaned_uethda_school_median_income_2021 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_median_income_2021 <- cleaned_uethda_school_median_income_2021 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_median_income_2021 <- cleaned_uethda_school_median_income_2021 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_median_income_2021 <- cleaned_uethda_school_median_income_2021 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_median_income_2021 <- rbind(carter_county_median_income_2021, elizabethton_median_income_2021, greene_city_median_income_2021, greene_cleaned_uethda_school_median_income_2021,hancock_cleaned_uethda_school_median_income_2021,hawkins_cleaned_uethda_school_median_income_2021, 
+                                           johnson_cleaned_uethda_school_median_income_2021, kpt_city_median_income_2021, bristol_city_median_income_2021, sullivan_cleaned_uethda_school_median_income_2021,unicoi_cleaned_uethda_school_median_income_2021, jc_cleaned_uethda_school_median_income_2021, 
+                                           wash_co_cleaned_uethda_school_median_income_2021)
+
+uethda_schools_median_income_2021
+
+#S1902 - mean income in past 12 months
+#### S1902 mean_income IN PAST 12 MONTHS ####
+# 2022
+
+# school districts
+tn_school_districts_mean_income_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1902", year = 2022, geometry = TRUE)
+
+# carter 
+
+Carter_tract_mean_income_2022 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S1902", year = 2022, geometry = TRUE)
+
+Carter_county_mean_income_2022 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S1902", year = 2022, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_mean_income_2022 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S1902", year = 2022, geometry = TRUE)
+
+Greene_county_mean_income_2022 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S1902", year = 2022, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_mean_income_2022 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S1902", year = 2022, geometry = TRUE)
+
+Hancock_county_mean_income_2022 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S1902", year = 2022, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_mean_income_2022 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S1902", year = 2022, geometry = TRUE)
+
+Hawkins_county_mean_income_2022 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S1902", year = 2022, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_mean_income_2022 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S1902", year = 2022, geometry = TRUE)
+
+Johnson_county_mean_income_2022 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S1902", year = 2022, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_mean_income_2022 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S1902", year = 2022, geometry = TRUE)
+
+Sullivan_county_mean_income_2022 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S1902", year = 2022, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_mean_income_2022 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S1902", year = 2022, geometry = TRUE)
+
+Unicoi_county_mean_income_2022 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S1902", year = 2022, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_mean_income_2022 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S1902", year = 2022, geometry = TRUE)
+
+Washington_county_mean_income_2022 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1902", year = 2022, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_mean_income_2022 <- rbind(Carter_county_mean_income_2022, Greene_county_mean_income_2022, Hancock_county_mean_income_2022, Hawkins_county_mean_income_2022, Johnson_county_mean_income_2022,
+                                        Sullivan_county_mean_income_2022, Unicoi_county_mean_income_2022, Washington_county_mean_income_2022)
+
+uethda_tract_mean_income_2022 <- rbind(Carter_tract_mean_income_2022, Greene_tract_mean_income_2022, Hancock_tract_mean_income_2022, Hawkins_tract_mean_income_2022,
+                                       Johnson_tract_mean_income_2022, Sullivan_tract_mean_income_2022, Unicoi_tract_mean_income_2022, Washington_tract_mean_income_2022)
+
+#join the names 
+
+named_uethda_county_mean_income_2022 <- inner_join(uethda_county_mean_income_2022, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_mean_income_2022 <- inner_join(uethda_tract_mean_income_2022,subject_table_variables_22, by = "variable")
+
+named_uethda_school_mean_income_2022 <- inner_join(tn_school_districts_mean_income_2022, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_mean_income_2022 <- named_uethda_county_mean_income_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_mean_income_2022 <- named_uethda_tract_mean_income_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_mean_income_2022 <- named_uethda_school_mean_income_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_mean_income_2022 <- cleaned_uethda_school_mean_income_2022 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_mean_income_2022 <- cleaned_uethda_school_mean_income_2022 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_mean_income_2022 <- cleaned_uethda_school_mean_income_2022 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_mean_income_2022 <- cleaned_uethda_school_mean_income_2022 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_mean_income_2022 <- cleaned_uethda_school_mean_income_2022 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_mean_income_2022 <- cleaned_uethda_school_mean_income_2022 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_mean_income_2022 <- cleaned_uethda_school_mean_income_2022 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_mean_income_2022 <- cleaned_uethda_school_mean_income_2022 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_mean_income_2022 <- cleaned_uethda_school_mean_income_2022 %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_cleaned_uethda_school_mean_income_2022 <- cleaned_uethda_school_mean_income_2022 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_mean_income_2022 <- cleaned_uethda_school_mean_income_2022 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_mean_income_2022 <- cleaned_uethda_school_mean_income_2022 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_mean_income_2022 <- cleaned_uethda_school_mean_income_2022 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_mean_income_2022 <- rbind(carter_county_mean_income_2022, elizabethton_mean_income_2022, greene_city_mean_income_2022, greene_cleaned_uethda_school_mean_income_2022,hancock_cleaned_uethda_school_mean_income_2022,hawkins_cleaned_uethda_school_mean_income_2022, 
+                                         johnson_cleaned_uethda_school_mean_income_2022, kpt_city_mean_income_2022, bristol_city_mean_income_2022, sullivan_cleaned_uethda_school_mean_income_2022,unicoi_cleaned_uethda_school_mean_income_2022, jc_cleaned_uethda_school_mean_income_2022, 
+                                         wash_co_cleaned_uethda_school_mean_income_2022)
+
+uethda_schools_mean_income_2022
+
+
+# 2021
+
+# school districts
+tn_school_districts_mean_income_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1902", year = 2021, geometry = TRUE)
+
+# carter 
+
+Carter_tract_mean_income_2021 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S1902", year = 2021, geometry = TRUE)
+
+Carter_county_mean_income_2021 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S1902", year = 2021, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_mean_income_2021 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S1902", year = 2021, geometry = TRUE)
+
+Greene_county_mean_income_2021 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S1902", year = 2021, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_mean_income_2021 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S1902", year = 2021, geometry = TRUE)
+
+Hancock_county_mean_income_2021 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S1902", year = 2021, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_mean_income_2021 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S1902", year = 2021, geometry = TRUE)
+
+Hawkins_county_mean_income_2021 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S1902", year = 2021, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_mean_income_2021 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S1902", year = 2021, geometry = TRUE)
+
+Johnson_county_mean_income_2021 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S1902", year = 2021, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_mean_income_2021 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S1902", year = 2021, geometry = TRUE)
+
+Sullivan_county_mean_income_2021 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S1902", year = 2021, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_mean_income_2021 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S1902", year = 2021, geometry = TRUE)
+
+Unicoi_county_mean_income_2021 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S1902", year = 2021, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_mean_income_2021 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S1902", year = 2021, geometry = TRUE)
+
+Washington_county_mean_income_2021 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1902", year = 2021, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_mean_income_2021 <- rbind(Carter_county_mean_income_2021, Greene_county_mean_income_2021, Hancock_county_mean_income_2021, Hawkins_county_mean_income_2021, Johnson_county_mean_income_2021,
+                                        Sullivan_county_mean_income_2021, Unicoi_county_mean_income_2021, Washington_county_mean_income_2021)
+
+uethda_tract_mean_income_2021 <- rbind(Carter_tract_mean_income_2021, Greene_tract_mean_income_2021, Hancock_tract_mean_income_2021, Hawkins_tract_mean_income_2021,
+                                       Johnson_tract_mean_income_2021, Sullivan_tract_mean_income_2021, Unicoi_tract_mean_income_2021, Washington_tract_mean_income_2021)
+
+#join the names 
+
+named_uethda_county_mean_income_2021 <- inner_join(uethda_county_mean_income_2021, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_mean_income_2021 <- inner_join(uethda_tract_mean_income_2021,subject_table_variables_22, by = "variable")
+
+named_uethda_school_mean_income_2021 <- inner_join(tn_school_districts_mean_income_2021, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_mean_income_2021 <- named_uethda_county_mean_income_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_mean_income_2021 <- named_uethda_tract_mean_income_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_mean_income_2021 <- named_uethda_school_mean_income_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_mean_income_2021 <- cleaned_uethda_school_mean_income_2021 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_mean_income_2021 <- cleaned_uethda_school_mean_income_2021 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_mean_income_2021 <- cleaned_uethda_school_mean_income_2021 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_mean_income_2021 <- cleaned_uethda_school_mean_income_2021 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_mean_income_2021 <- cleaned_uethda_school_mean_income_2021 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_mean_income_2021 <- cleaned_uethda_school_mean_income_2021 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_mean_income_2021 <- cleaned_uethda_school_mean_income_2021 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_mean_income_2021 <- cleaned_uethda_school_mean_income_2021 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_mean_income_2021 <- cleaned_uethda_school_mean_income_2021 %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_cleaned_uethda_school_mean_income_2021 <- cleaned_uethda_school_mean_income_2021 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_mean_income_2021 <- cleaned_uethda_school_mean_income_2021 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_mean_income_2021 <- cleaned_uethda_school_mean_income_2021 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_mean_income_2021 <- cleaned_uethda_school_mean_income_2021 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_mean_income_2021 <- rbind(carter_county_mean_income_2021, elizabethton_mean_income_2021, greene_city_mean_income_2021, greene_cleaned_uethda_school_mean_income_2021,hancock_cleaned_uethda_school_mean_income_2021,hawkins_cleaned_uethda_school_mean_income_2021, 
+                                         johnson_cleaned_uethda_school_mean_income_2021, kpt_city_mean_income_2021, bristol_city_mean_income_2021, sullivan_cleaned_uethda_school_mean_income_2021,unicoi_cleaned_uethda_school_mean_income_2021, jc_cleaned_uethda_school_mean_income_2021, 
+                                         wash_co_cleaned_uethda_school_mean_income_2021)
+
+uethda_schools_mean_income_2021
+
+#S1901 - income in past 12 months
+#### S1901 INCOME IN PAST 12 MONTHS ####
+# 2022
+
+# school districts
+tn_school_districts_income_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
+
+# carter 
+
+Carter_tract_income_2022 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
+
+Carter_county_income_2022 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_income_2022 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
+
+Greene_county_income_2022 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_income_2022 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
+
+Hancock_county_income_2022 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_income_2022 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
+
+Hawkins_county_income_2022 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_income_2022 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
+
+Johnson_county_income_2022 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_income_2022 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
+
+Sullivan_county_income_2022 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_income_2022 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
+
+Unicoi_county_income_2022 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_income_2022 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
+
+Washington_county_income_2022 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_income_2022 <- rbind(Carter_county_income_2022, Greene_county_income_2022, Hancock_county_income_2022, Hawkins_county_income_2022, Johnson_county_income_2022,
+                                   Sullivan_county_income_2022, Unicoi_county_income_2022, Washington_county_income_2022)
+
+uethda_tract_income_2022 <- rbind(Carter_tract_income_2022, Greene_tract_income_2022, Hancock_tract_income_2022, Hawkins_tract_income_2022,
+                                  Johnson_tract_income_2022, Sullivan_tract_income_2022, Unicoi_tract_income_2022, Washington_tract_income_2022)
+
+#join the names 
+
+named_uethda_county_income_2022 <- inner_join(uethda_county_income_2022, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_income_2022 <- inner_join(uethda_tract_income_2022,subject_table_variables_22, by = "variable")
+
+named_uethda_school_income_2022 <- inner_join(tn_school_districts_income_2022, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_income_2022 <- named_uethda_county_income_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_income_2022 <- named_uethda_tract_income_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_income_2022 <- named_uethda_school_income_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_income_2022 <- cleaned_uethda_school_income_2022 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_income_2022 <- cleaned_uethda_school_income_2022 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_income_2022 <- cleaned_uethda_school_income_2022 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_income_2022 <- cleaned_uethda_school_income_2022 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_income_2022 <- cleaned_uethda_school_income_2022 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_income_2022 <- cleaned_uethda_school_income_2022 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_income_2022 <- cleaned_uethda_school_income_2022 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_income_2022 <- cleaned_uethda_school_income_2022 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_income_2022 <- cleaned_uethda_school_income_2022 %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_cleaned_uethda_school_income_2022 <- cleaned_uethda_school_income_2022 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_income_2022 <- cleaned_uethda_school_income_2022 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_income_2022 <- cleaned_uethda_school_income_2022 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_income_2022 <- cleaned_uethda_school_income_2022 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_income_2022 <- rbind(carter_county_income_2022, elizabethton_income_2022, greene_city_income_2022, greene_cleaned_uethda_school_income_2022,hancock_cleaned_uethda_school_income_2022,hawkins_cleaned_uethda_school_income_2022, 
+                                    johnson_cleaned_uethda_school_income_2022, kpt_city_income_2022, bristol_city_income_2022, sullivan_cleaned_uethda_school_income_2022,unicoi_cleaned_uethda_school_income_2022, jc_cleaned_uethda_school_income_2022, 
+                                    wash_co_cleaned_uethda_school_income_2022)
+
+uethda_schools_income_2022
+
+
+# 2021
+
+# school districts
+tn_school_districts_income_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
+
+# carter 
+
+Carter_tract_income_2021 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
+
+Carter_county_income_2021 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_income_2021 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
+
+Greene_county_income_2021 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_income_2021 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
+
+Hancock_county_income_2021 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_income_2021 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
+
+Hawkins_county_income_2021 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_income_2021 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
+
+Johnson_county_income_2021 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_income_2021 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
+
+Sullivan_county_income_2021 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_income_2021 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
+
+Unicoi_county_income_2021 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_income_2021 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
+
+Washington_county_income_2021 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_income_2021 <- rbind(Carter_county_income_2021, Greene_county_income_2021, Hancock_county_income_2021, Hawkins_county_income_2021, Johnson_county_income_2021,
+                                   Sullivan_county_income_2021, Unicoi_county_income_2021, Washington_county_income_2021)
+
+uethda_tract_income_2021 <- rbind(Carter_tract_income_2021, Greene_tract_income_2021, Hancock_tract_income_2021, Hawkins_tract_income_2021,
+                                  Johnson_tract_income_2021, Sullivan_tract_income_2021, Unicoi_tract_income_2021, Washington_tract_income_2021)
+
+#join the names 
+
+named_uethda_county_income_2021 <- inner_join(uethda_county_income_2021, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_income_2021 <- inner_join(uethda_tract_income_2021,subject_table_variables_22, by = "variable")
+
+named_uethda_school_income_2021 <- inner_join(tn_school_districts_income_2021, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_income_2021 <- named_uethda_county_income_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_income_2021 <- named_uethda_tract_income_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_income_2021 <- named_uethda_school_income_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_income_2021 <- cleaned_uethda_school_income_2021 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_income_2021 <- cleaned_uethda_school_income_2021 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_income_2021 <- cleaned_uethda_school_income_2021 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_income_2021 <- cleaned_uethda_school_income_2021 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_income_2021 <- cleaned_uethda_school_income_2021 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_income_2021 <- cleaned_uethda_school_income_2021 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_income_2021 <- cleaned_uethda_school_income_2021 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_income_2021 <- cleaned_uethda_school_income_2021 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_income_2021 <- cleaned_uethda_school_income_2021 %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_cleaned_uethda_school_income_2021 <- cleaned_uethda_school_income_2021 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_income_2021 <- cleaned_uethda_school_income_2021 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_income_2021 <- cleaned_uethda_school_income_2021 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_income_2021 <- cleaned_uethda_school_income_2021 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_income_2021 <- rbind(carter_county_income_2021, elizabethton_income_2021, greene_city_income_2021, greene_cleaned_uethda_school_income_2021,hancock_cleaned_uethda_school_income_2021,hawkins_cleaned_uethda_school_income_2021, 
+                                    johnson_cleaned_uethda_school_income_2021, kpt_city_income_2021, bristol_city_income_2021, sullivan_cleaned_uethda_school_income_2021,unicoi_cleaned_uethda_school_income_2021, jc_cleaned_uethda_school_income_2021, 
+                                    wash_co_cleaned_uethda_school_income_2021)
+
+uethda_schools_income_2021
+
+######S0701 - geographic mobility ######
+
+# 2022
+
+# school districts
+tn_school_districts_mobility_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S0701", year = 2022, geometry = TRUE)
+
+# carter 
+
+Carter_tract_mobility_2022 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S0701", year = 2022, geometry = TRUE)
+
+Carter_county_mobility_2022 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S0701", year = 2022, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_mobility_2022 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S0701", year = 2022, geometry = TRUE)
+
+Greene_county_mobility_2022 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S0701", year = 2022, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_mobility_2022 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S0701", year = 2022, geometry = TRUE)
+
+Hancock_county_mobility_2022 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S0701", year = 2022, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_mobility_2022 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S0701", year = 2022, geometry = TRUE)
+
+Hawkins_county_mobility_2022 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S0701", year = 2022, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_mobility_2022 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S0701", year = 2022, geometry = TRUE)
+
+Johnson_county_mobility_2022 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S0701", year = 2022, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_mobility_2022 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S0701", year = 2022, geometry = TRUE)
+
+Sullivan_county_mobility_2022 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S0701", year = 2022, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_mobility_2022 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S0701", year = 2022, geometry = TRUE)
+
+Unicoi_county_mobility_2022 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S0701", year = 2022, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_mobility_2022 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S0701", year = 2022, geometry = TRUE)
+
+Washington_county_mobility_2022 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S0701", year = 2022, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_mobility_2022 <- rbind(Carter_county_mobility_2022, Greene_county_mobility_2022, Hancock_county_mobility_2022, Hawkins_county_mobility_2022, Johnson_county_mobility_2022,
+                                     Sullivan_county_mobility_2022, Unicoi_county_mobility_2022, Washington_county_mobility_2022)
+
+uethda_tract_mobility_2022 <- rbind(Carter_tract_mobility_2022, Greene_tract_mobility_2022, Hancock_tract_mobility_2022, Hawkins_tract_mobility_2022,
+                                    Johnson_tract_mobility_2022, Sullivan_tract_mobility_2022, Unicoi_tract_mobility_2022, Washington_tract_mobility_2022)
+
+#join the names 
+
+named_uethda_county_mobility_2022 <- inner_join(uethda_county_mobility_2022, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_mobility_2022 <- inner_join(uethda_tract_mobility_2022,subject_table_variables_22, by = "variable")
+
+named_uethda_school_mobility_2022 <- inner_join(tn_school_districts_mobility_2022, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_mobility_2022 <- named_uethda_county_mobility_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_mobility_2022 <- named_uethda_tract_mobility_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_mobility_2022 <- named_uethda_school_mobility_2022 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_mobility_2022 <- cleaned_uethda_school_mobility_2022 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_mobility_2022 <- cleaned_uethda_school_mobility_2022 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_mobility_2022 <- cleaned_uethda_school_mobility_2022 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_mobility_2022 <- cleaned_uethda_school_mobility_2022 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_mobility_2022 <- cleaned_uethda_school_mobility_2022 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_mobility_2022 <- cleaned_uethda_school_mobility_2022 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_mobility_2022 <- cleaned_uethda_school_mobility_2022 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_mobility_2022 <- cleaned_uethda_school_mobility_2022 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_mobility_2022 <- cleaned_uethda_school_mobility_2022 %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_cleaned_uethda_school_mobility_2022 <- cleaned_uethda_school_mobility_2022 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_mobility_2022 <- cleaned_uethda_school_mobility_2022 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_mobility_2022 <- cleaned_uethda_school_mobility_2022 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_mobility_2022 <- cleaned_uethda_school_mobility_2022 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_mobility_2022 <- rbind(carter_county_mobility_2022, elizabethton_mobility_2022, greene_city_mobility_2022, greene_cleaned_uethda_school_mobility_2022,hancock_cleaned_uethda_school_mobility_2022,hawkins_cleaned_uethda_school_mobility_2022, 
+                                      johnson_cleaned_uethda_school_mobility_2022, kpt_city_mobility_2022, bristol_city_mobility_2022, sullivan_cleaned_uethda_school_mobility_2022,unicoi_cleaned_uethda_school_mobility_2022, jc_cleaned_uethda_school_mobility_2022, 
+                                      wash_co_cleaned_uethda_school_mobility_2022)
+
+uethda_schools_mobility_2022
+
+######S0701 - geographic mobility ######
+
+# 2021
+
+# school districts
+tn_school_districts_mobility_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S0701", year = 2021, geometry = TRUE)
+
+# carter 
+
+Carter_tract_mobility_2021 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S0701", year = 2021, geometry = TRUE)
+
+Carter_county_mobility_2021 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S0701", year = 2021, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_mobility_2021 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S0701", year = 2021, geometry = TRUE)
+
+Greene_county_mobility_2021 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S0701", year = 2021, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_mobility_2021 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S0701", year = 2021, geometry = TRUE)
+
+Hancock_county_mobility_2021 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S0701", year = 2021, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_mobility_2021 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S0701", year = 2021, geometry = TRUE)
+
+Hawkins_county_mobility_2021 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S0701", year = 2021, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_mobility_2021 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S0701", year = 2021, geometry = TRUE)
+
+Johnson_county_mobility_2021 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S0701", year = 2021, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_mobility_2021 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S0701", year = 2021, geometry = TRUE)
+
+Sullivan_county_mobility_2021 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S0701", year = 2021, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_mobility_2021 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S0701", year = 2021, geometry = TRUE)
+
+Unicoi_county_mobility_2021 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S0701", year = 2021, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_mobility_2021 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S0701", year = 2021, geometry = TRUE)
+
+Washington_county_mobility_2021 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S0701", year = 2021, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_mobility_2021 <- rbind(Carter_county_mobility_2021, Greene_county_mobility_2021, Hancock_county_mobility_2021, Hawkins_county_mobility_2021, Johnson_county_mobility_2021,
+                                     Sullivan_county_mobility_2021, Unicoi_county_mobility_2021, Washington_county_mobility_2021)
+
+uethda_tract_mobility_2021 <- rbind(Carter_tract_mobility_2021, Greene_tract_mobility_2021, Hancock_tract_mobility_2021, Hawkins_tract_mobility_2021,
+                                    Johnson_tract_mobility_2021, Sullivan_tract_mobility_2021, Unicoi_tract_mobility_2021, Washington_tract_mobility_2021)
+
+#join the names 
+
+named_uethda_county_mobility_2021 <- inner_join(uethda_county_mobility_2021, subject_table_variables_21, by = "variable")
+
+named_uethda_tract_mobility_2021 <- inner_join(uethda_tract_mobility_2021,subject_table_variables_21, by = "variable")
+
+named_uethda_school_mobility_2021 <- inner_join(tn_school_districts_mobility_2021, subject_table_variables_21, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_mobility_2021 <- named_uethda_county_mobility_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_mobility_2021 <- named_uethda_tract_mobility_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_mobility_2021 <- named_uethda_school_mobility_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_mobility_2021 <- cleaned_uethda_school_mobility_2021 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_mobility_2021 <- cleaned_uethda_school_mobility_2021 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_mobility_2021 <- cleaned_uethda_school_mobility_2021 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_mobility_2021 <- cleaned_uethda_school_mobility_2021 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_mobility_2021 <- cleaned_uethda_school_mobility_2021 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_mobility_2021 <- cleaned_uethda_school_mobility_2021 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_mobility_2021 <- cleaned_uethda_school_mobility_2021 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_mobility_2021 <- cleaned_uethda_school_mobility_2021 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_mobility_2021 <- cleaned_uethda_school_mobility_2021 %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_cleaned_uethda_school_mobility_2021 <- cleaned_uethda_school_mobility_2021 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_mobility_2021 <- cleaned_uethda_school_mobility_2021 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_mobility_2021 <- cleaned_uethda_school_mobility_2021 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_mobility_2021 <- cleaned_uethda_school_mobility_2021 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_mobility_2021 <- rbind(carter_county_mobility_2021, elizabethton_mobility_2021, greene_city_mobility_2021, greene_cleaned_uethda_school_mobility_2021,hancock_cleaned_uethda_school_mobility_2021,hawkins_cleaned_uethda_school_mobility_2021, 
+                                      johnson_cleaned_uethda_school_mobility_2021, kpt_city_mobility_2021, bristol_city_mobility_2021, sullivan_cleaned_uethda_school_mobility_2021,unicoi_cleaned_uethda_school_mobility_2021, jc_cleaned_uethda_school_mobility_2021, 
+                                      wash_co_cleaned_uethda_school_mobility_2021)
+
+uethda_schools_mobility_2021
+
+# 2020
+
+# school districts
+tn_school_districts_mobility_2020 <- get_acs(geography = "school district (unified)", state = "TN", table = "S0701", year = 2020, geometry = TRUE)
+
+# carter 
+
+Carter_tract_mobility_2020 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S0701", year = 2020, geometry = TRUE)
+
+Carter_county_mobility_2020 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S0701", year = 2020, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_mobility_2020 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S0701", year = 2020, geometry = TRUE)
+
+Greene_county_mobility_2020 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S0701", year = 2020, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_mobility_2020 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S0701", year = 2020, geometry = TRUE)
+
+Hancock_county_mobility_2020 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S0701", year = 2020, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_mobility_2020 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S0701", year = 2020, geometry = TRUE)
+
+Hawkins_county_mobility_2020 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S0701", year = 2020, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_mobility_2020 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S0701", year = 2020, geometry = TRUE)
+
+Johnson_county_mobility_2020 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S0701", year = 2020, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_mobility_2020 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S0701", year = 2020, geometry = TRUE)
+
+Sullivan_county_mobility_2020 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S0701", year = 2020, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_mobility_2020 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S0701", year = 2020, geometry = TRUE)
+
+Unicoi_county_mobility_2020 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S0701", year = 2020, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_mobility_2020 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S0701", year = 2020, geometry = TRUE)
+
+Washington_county_mobility_2020 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S0701", year = 2020, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_mobility_2020 <- rbind(Carter_county_mobility_2020, Greene_county_mobility_2020, Hancock_county_mobility_2020, Hawkins_county_mobility_2020, Johnson_county_mobility_2020,
+                                     Sullivan_county_mobility_2020, Unicoi_county_mobility_2020, Washington_county_mobility_2020)
+
+uethda_tract_mobility_2020 <- rbind(Carter_tract_mobility_2020, Greene_tract_mobility_2020, Hancock_tract_mobility_2020, Hawkins_tract_mobility_2020,
+                                    Johnson_tract_mobility_2020, Sullivan_tract_mobility_2020, Unicoi_tract_mobility_2020, Washington_tract_mobility_2020)
+
+#join the names 
+
+named_uethda_county_mobility_2020 <- inner_join(uethda_county_mobility_2020, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_mobility_2020 <- inner_join(uethda_tract_mobility_2020,subject_table_variables_22, by = "variable")
+
+named_uethda_school_mobility_2020 <- inner_join(tn_school_districts_mobility_2020, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_mobility_2020 <- named_uethda_county_mobility_2020 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2020)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_mobility_2020 <- named_uethda_tract_mobility_2020 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2020)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_mobility_2020 <- named_uethda_school_mobility_2020 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2020)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_mobility_2020 <- cleaned_uethda_school_mobility_2020 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_mobility_2020 <- cleaned_uethda_school_mobility_2020 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_mobility_2020 <- cleaned_uethda_school_mobility_2020 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_mobility_2020 <- cleaned_uethda_school_mobility_2020 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_mobility_2020 <- cleaned_uethda_school_mobility_2020 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_mobility_2020 <- cleaned_uethda_school_mobility_2020 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_mobility_2020 <- cleaned_uethda_school_mobility_2020 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_mobility_2020 <- cleaned_uethda_school_mobility_2020 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_mobility_2020 <- cleaned_uethda_school_mobility_2020 %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_cleaned_uethda_school_mobility_2020 <- cleaned_uethda_school_mobility_2020 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_mobility_2020 <- cleaned_uethda_school_mobility_2020 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_mobility_2020 <- cleaned_uethda_school_mobility_2020 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_mobility_2020 <- cleaned_uethda_school_mobility_2020 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_mobility_2020 <- rbind(carter_county_mobility_2020, elizabethton_mobility_2020, greene_city_mobility_2020, greene_cleaned_uethda_school_mobility_2020,hancock_cleaned_uethda_school_mobility_2020,hawkins_cleaned_uethda_school_mobility_2020, 
+                                      johnson_cleaned_uethda_school_mobility_2020, kpt_city_mobility_2020, bristol_city_mobility_2020, sullivan_cleaned_uethda_school_mobility_2020,unicoi_cleaned_uethda_school_mobility_2020, jc_cleaned_uethda_school_mobility_2020, 
+                                      wash_co_cleaned_uethda_school_mobility_2020)
+
+uethda_schools_mobility_2020
+
+
+
+# 2019
+
+# school districts
+tn_school_districts_mobility_2019 <- get_acs(geography = "school district (unified)", state = "TN", table = "S0701", year = 2019, geometry = TRUE)
+
+# carter 
+
+Carter_tract_mobility_2019 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S0701", year = 2019, geometry = TRUE)
+
+Carter_county_mobility_2019 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S0701", year = 2019, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_mobility_2019 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S0701", year = 2019, geometry = TRUE)
+
+Greene_county_mobility_2019 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S0701", year = 2019, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_mobility_2019 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S0701", year = 2019, geometry = TRUE)
+
+Hancock_county_mobility_2019 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S0701", year = 2019, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_mobility_2019 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S0701", year = 2019, geometry = TRUE)
+
+Hawkins_county_mobility_2019 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S0701", year = 2019, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_mobility_2019 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S0701", year = 2019, geometry = TRUE)
+
+Johnson_county_mobility_2019 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S0701", year = 2019, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_mobility_2019 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S0701", year = 2019, geometry = TRUE)
+
+Sullivan_county_mobility_2019 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S0701", year = 2019, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_mobility_2019 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S0701", year = 2019, geometry = TRUE)
+
+Unicoi_county_mobility_2019 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S0701", year = 2019, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_mobility_2019 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S0701", year = 2019, geometry = TRUE)
+
+Washington_county_mobility_2019 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S0701", year = 2019, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_mobility_2019 <- rbind(Carter_county_mobility_2019, Greene_county_mobility_2019, Hancock_county_mobility_2019, Hawkins_county_mobility_2019, Johnson_county_mobility_2019,
+                                     Sullivan_county_mobility_2019, Unicoi_county_mobility_2019, Washington_county_mobility_2019)
+
+uethda_tract_mobility_2019 <- rbind(Carter_tract_mobility_2019, Greene_tract_mobility_2019, Hancock_tract_mobility_2019, Hawkins_tract_mobility_2019,
+                                    Johnson_tract_mobility_2019, Sullivan_tract_mobility_2019, Unicoi_tract_mobility_2019, Washington_tract_mobility_2019)
+
+#join the names 
+
+named_uethda_county_mobility_2019 <- inner_join(uethda_county_mobility_2019, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_mobility_2019 <- inner_join(uethda_tract_mobility_2019,subject_table_variables_22, by = "variable")
+
+named_uethda_school_mobility_2019 <- inner_join(tn_school_districts_mobility_2019, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_mobility_2019 <- named_uethda_county_mobility_2019 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2019)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_mobility_2019 <- named_uethda_tract_mobility_2019 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2019)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_mobility_2019 <- named_uethda_school_mobility_2019 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2019)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_mobility_2019 <- cleaned_uethda_school_mobility_2019 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_mobility_2019 <- cleaned_uethda_school_mobility_2019 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_mobility_2019 <- cleaned_uethda_school_mobility_2019 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_mobility_2019 <- cleaned_uethda_school_mobility_2019 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_mobility_2019 <- cleaned_uethda_school_mobility_2019 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_mobility_2019 <- cleaned_uethda_school_mobility_2019 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_mobility_2019 <- cleaned_uethda_school_mobility_2019 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_mobility_2019 <- cleaned_uethda_school_mobility_2019 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_mobility_2019 <- cleaned_uethda_school_mobility_2019 %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_cleaned_uethda_school_mobility_2019 <- cleaned_uethda_school_mobility_2019 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_mobility_2019 <- cleaned_uethda_school_mobility_2019 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_mobility_2019 <- cleaned_uethda_school_mobility_2019 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_mobility_2019 <- cleaned_uethda_school_mobility_2019 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_mobility_2019 <- rbind(carter_county_mobility_2019, elizabethton_mobility_2019, greene_city_mobility_2019, greene_cleaned_uethda_school_mobility_2019,hancock_cleaned_uethda_school_mobility_2019,hawkins_cleaned_uethda_school_mobility_2019, 
+                                      johnson_cleaned_uethda_school_mobility_2019, kpt_city_mobility_2019, bristol_city_mobility_2019, sullivan_cleaned_uethda_school_mobility_2019,unicoi_cleaned_uethda_school_mobility_2019, jc_cleaned_uethda_school_mobility_2019, 
+                                      wash_co_cleaned_uethda_school_mobility_2019)
+
+uethda_schools_mobility_2019
+
+
+
+# 2018
+
+# school districts
+tn_school_districts_mobility_2018 <- get_acs(geography = "school district (unified)", state = "TN", table = "S0701", year = 2018, geometry = TRUE)
+
+# carter 
+
+Carter_tract_mobility_2018 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S0701", year = 2018, geometry = TRUE)
+
+Carter_county_mobility_2018 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S0701", year = 2018, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_mobility_2018 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S0701", year = 2018, geometry = TRUE)
+
+Greene_county_mobility_2018 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S0701", year = 2018, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_mobility_2018 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S0701", year = 2018, geometry = TRUE)
+
+Hancock_county_mobility_2018 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S0701", year = 2018, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_mobility_2018 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S0701", year = 2018, geometry = TRUE)
+
+Hawkins_county_mobility_2018 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S0701", year = 2018, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_mobility_2018 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S0701", year = 2018, geometry = TRUE)
+
+Johnson_county_mobility_2018 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S0701", year = 2018, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_mobility_2018 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S0701", year = 2018, geometry = TRUE)
+
+Sullivan_county_mobility_2018 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S0701", year = 2018, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_mobility_2018 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S0701", year = 2018, geometry = TRUE)
+
+Unicoi_county_mobility_2018 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S0701", year = 2018, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_mobility_2018 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S0701", year = 2018, geometry = TRUE)
+
+Washington_county_mobility_2018 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S0701", year = 2018, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_mobility_2018 <- rbind(Carter_county_mobility_2018, Greene_county_mobility_2018, Hancock_county_mobility_2018, Hawkins_county_mobility_2018, Johnson_county_mobility_2018,
+                                     Sullivan_county_mobility_2018, Unicoi_county_mobility_2018, Washington_county_mobility_2018)
+
+uethda_tract_mobility_2018 <- rbind(Carter_tract_mobility_2018, Greene_tract_mobility_2018, Hancock_tract_mobility_2018, Hawkins_tract_mobility_2018,
+                                    Johnson_tract_mobility_2018, Sullivan_tract_mobility_2018, Unicoi_tract_mobility_2018, Washington_tract_mobility_2018)
+
+#join the names 
+
+named_uethda_county_mobility_2018 <- inner_join(uethda_county_mobility_2018, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_mobility_2018 <- inner_join(uethda_tract_mobility_2018,subject_table_variables_22, by = "variable")
+
+named_uethda_school_mobility_2018 <- inner_join(tn_school_districts_mobility_2018, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_mobility_2018 <- named_uethda_county_mobility_2018 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2018)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_mobility_2018 <- named_uethda_tract_mobility_2018 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2018)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_mobility_2018 <- named_uethda_school_mobility_2018 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2018)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_mobility_2018 <- cleaned_uethda_school_mobility_2018 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_mobility_2018 <- cleaned_uethda_school_mobility_2018 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_mobility_2018 <- cleaned_uethda_school_mobility_2018 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_mobility_2018 <- cleaned_uethda_school_mobility_2018 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_mobility_2018 <- cleaned_uethda_school_mobility_2018 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_mobility_2018 <- cleaned_uethda_school_mobility_2018 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_mobility_2018 <- cleaned_uethda_school_mobility_2018 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_mobility_2018 <- cleaned_uethda_school_mobility_2018 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_mobility_2018 <- cleaned_uethda_school_mobility_2018 %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_cleaned_uethda_school_mobility_2018 <- cleaned_uethda_school_mobility_2018 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_mobility_2018 <- cleaned_uethda_school_mobility_2018 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_mobility_2018 <- cleaned_uethda_school_mobility_2018 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_mobility_2018 <- cleaned_uethda_school_mobility_2018 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_mobility_2018 <- rbind(carter_county_mobility_2018, elizabethton_mobility_2018, greene_city_mobility_2018, greene_cleaned_uethda_school_mobility_2018,hancock_cleaned_uethda_school_mobility_2018,hawkins_cleaned_uethda_school_mobility_2018, 
+                                      johnson_cleaned_uethda_school_mobility_2018, kpt_city_mobility_2018, bristol_city_mobility_2018, sullivan_cleaned_uethda_school_mobility_2018,unicoi_cleaned_uethda_school_mobility_2018, jc_cleaned_uethda_school_mobility_2018, 
+                                      wash_co_cleaned_uethda_school_mobility_2018)
+
+uethda_schools_mobility_2018
+
+
+
+# 2017
+
+# school districts
+tn_school_districts_mobility_2017 <- get_acs(geography = "school district (unified)", state = "TN", table = "S0701", year = 2017, geometry = TRUE)
+
+# carter 
+
+Carter_tract_mobility_2017 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S0701", year = 2017, geometry = TRUE)
+
+Carter_county_mobility_2017 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S0701", year = 2017, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_mobility_2017 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S0701", year = 2017, geometry = TRUE)
+
+Greene_county_mobility_2017 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S0701", year = 2017, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_mobility_2017 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S0701", year = 2017, geometry = TRUE)
+
+Hancock_county_mobility_2017 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S0701", year = 2017, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_mobility_2017 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S0701", year = 2017, geometry = TRUE)
+
+Hawkins_county_mobility_2017 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S0701", year = 2017, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_mobility_2017 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S0701", year = 2017, geometry = TRUE)
+
+Johnson_county_mobility_2017 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S0701", year = 2017, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_mobility_2017 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S0701", year = 2017, geometry = TRUE)
+
+Sullivan_county_mobility_2017 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S0701", year = 2017, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_mobility_2017 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S0701", year = 2017, geometry = TRUE)
+
+Unicoi_county_mobility_2017 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S0701", year = 2017, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_mobility_2017 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S0701", year = 2017, geometry = TRUE)
+
+Washington_county_mobility_2017 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S0701", year = 2017, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_mobility_2017 <- rbind(Carter_county_mobility_2017, Greene_county_mobility_2017, Hancock_county_mobility_2017, Hawkins_county_mobility_2017, Johnson_county_mobility_2017,
+                                     Sullivan_county_mobility_2017, Unicoi_county_mobility_2017, Washington_county_mobility_2017)
+
+uethda_tract_mobility_2017 <- rbind(Carter_tract_mobility_2017, Greene_tract_mobility_2017, Hancock_tract_mobility_2017, Hawkins_tract_mobility_2017,
+                                    Johnson_tract_mobility_2017, Sullivan_tract_mobility_2017, Unicoi_tract_mobility_2017, Washington_tract_mobility_2017)
+
+#join the names 
+
+named_uethda_county_mobility_2017 <- inner_join(uethda_county_mobility_2017, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_mobility_2017 <- inner_join(uethda_tract_mobility_2017,subject_table_variables_22, by = "variable")
+
+named_uethda_school_mobility_2017 <- inner_join(tn_school_districts_mobility_2017, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_mobility_2017 <- named_uethda_county_mobility_2017 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2017)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_mobility_2017 <- named_uethda_tract_mobility_2017 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2017)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_mobility_2017 <- named_uethda_school_mobility_2017 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2017)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_mobility_2017 <- cleaned_uethda_school_mobility_2017 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_mobility_2017 <- cleaned_uethda_school_mobility_2017 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_mobility_2017 <- cleaned_uethda_school_mobility_2017 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_mobility_2017 <- cleaned_uethda_school_mobility_2017 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_mobility_2017 <- cleaned_uethda_school_mobility_2017 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_mobility_2017 <- cleaned_uethda_school_mobility_2017 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_mobility_2017 <- cleaned_uethda_school_mobility_2017 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_mobility_2017 <- cleaned_uethda_school_mobility_2017 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_mobility_2017 <- cleaned_uethda_school_mobility_2017 %>%
+  filter(str_detect(Location, "Bristol"))
+
+sullivan_cleaned_uethda_school_mobility_2017 <- cleaned_uethda_school_mobility_2017 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_mobility_2017 <- cleaned_uethda_school_mobility_2017 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_mobility_2017 <- cleaned_uethda_school_mobility_2017 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_mobility_2017 <- cleaned_uethda_school_mobility_2017 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_mobility_2017 <- rbind(carter_county_mobility_2017, elizabethton_mobility_2017, greene_city_mobility_2017, greene_cleaned_uethda_school_mobility_2017,hancock_cleaned_uethda_school_mobility_2017,hawkins_cleaned_uethda_school_mobility_2017, 
+                                      johnson_cleaned_uethda_school_mobility_2017, kpt_city_mobility_2017, bristol_city_mobility_2017, sullivan_cleaned_uethda_school_mobility_2017,unicoi_cleaned_uethda_school_mobility_2017, jc_cleaned_uethda_school_mobility_2017, 
+                                      wash_co_cleaned_uethda_school_mobility_2017)
+
+uethda_schools_mobility_2017
+
+## bind all the years together ##
+uethda_tract_mobility <- rbind(cleaned_uethda_tract_mobility_2022, cleaned_uethda_tract_mobility_2021,cleaned_uethda_tract_mobility_2020, cleaned_uethda_tract_mobility_2019, 
+                               cleaned_uethda_tract_mobility_2018, cleaned_uethda_tract_mobility_2017)
+
+uethda_county_mobility  <- rbind(cleaned_uethda_county_mobility_2022, cleaned_uethda_county_mobility_2021,cleaned_uethda_county_mobility_2020, cleaned_uethda_county_mobility_2019, 
+                                 cleaned_uethda_county_mobility_2018, cleaned_uethda_county_mobility_2017)
+
+uethda_schools_mobility <- rbind(uethda_schools_mobility_2022, uethda_schools_mobility_2021,uethda_schools_mobility_2020, uethda_schools_mobility_2019, uethda_schools_mobility_2018, 
+                                 uethda_schools_mobility_2017)
