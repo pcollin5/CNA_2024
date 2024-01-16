@@ -294,7 +294,7 @@ county_fams_below_pov %>%
   theme(legend.text = element_text(face = "bold"))+
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank())+
-  ggtitle("Percent Differnece in Percentage of Families in Poverty from 2021 to 2022")
+  ggtitle("Percent Difference in Percentage of Families in Poverty from 2021 to 2022")
 
 ####
 county_family_poverty_total

@@ -496,6 +496,16 @@ county_individual_poverty_below_total
 
 county_individual_poverty_percent
 
+#### pop pov status ####
+
+table_function(county_individual_poverty_total %>%
+  filter(Variable == "Population for whom Poverty Status is Determined") %>%
+  mutate(`Percent Difference` = round(100*(`2022 Estimate` - `2021 Estimate`)/ `2021 Estimate`,2))%>%
+  mutate(Significant = significance(`2022 Estimate`, `2021 Estimate`, `2022 MOE`, `2021 MOE`, clevel = 0.95))%>%
+  select(Location, Variable, `2022 Estimate`, `2021 Estimate`, `Percent Difference`, `Significant`)%>%
+  st_drop_geometry(), `Population for whom Poverty Status is Determined Change from 2022 to 2021`)
+
+
 # next is taken from dp03
 
 dp03_poverty_vars <- c("Percent of All People below Poverty Level","Percent of All People below Poverty Level Under 18", "Percent of All People below Poverty Level 18-64",

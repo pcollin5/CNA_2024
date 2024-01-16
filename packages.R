@@ -180,11 +180,5 @@ ztcas = c(37445, 37463, 37565, 37569, 37587, 37600, 37601, 37602, 37604, 37605, 
 ztcas_char <- as.character(ztcas)
 
 
-?get_acs
 
-individual_poverty_table_tn <- get_acs(geography =  "zip code tabulation area",table = "S1701",geometry = TRUE)
-
-uethda_ztcas_poverty <- individual_poverty_table_tn %>%
-  filter(GEOID %in% ztcas_char) %>%
-  rename(ZIP = "GEOID")
 
