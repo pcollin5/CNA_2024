@@ -494,7 +494,7 @@ family_vs_nf_mean_median %>%
   theme(legend.text = element_text(face = "bold"))+
   theme(axis.text.y = element_text(size = rel(1.5)))+
   theme(axis.text.y = element_text(face = "bold"))+
-  ggtitle("Percent Changes in Nonfamily vs All Households Mean and Median Incomes from 2021 to 2022", subtitle = "*2021 has been adjusted for 12.9% inflation to 2022")
+  ggtitle("Percent Changes in Nonfamily vs All Households Mean and Median Incomes from 2021 to 2022", subtitle = "*2021 has been adjusted for 7.8% inflation to 2022")
 
 num_workers <- c("Total Families No Workers", "Total Families 1 Worker", "Total Families 2 Workers", "Total Families 3+ Workers")
 

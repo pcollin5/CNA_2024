@@ -1,3 +1,17 @@
+#### poverty guidelines ####
+
+table_function(poverty_guidelines %>%
+  filter(str_detect(`Household Size`, "For", negate = TRUE))%>%
+  mutate(`Poverty Guideline` = as.numeric(`Poverty Guideline`))%>%
+  pivot_wider(names_from = "Year", values_from = `Poverty Guideline`)%>%
+  mutate(`Difference 23-24` = `2024` - `2023`)%>%
+  mutate(`Difference 16-23` = `2023` - `2016`)%>%
+  mutate(`Percent Change 23-24` = round(100*(`2024` - `2023`) / `2023`,2))%>%
+  mutate(`Percent Change 16-23` = round(100*(`2023` - `2016`) / `2016`,2))%>%
+  rename("2024 Guideline" = "2024", "2023 Guideline" = "2023")%>%
+  rename("2016 Guideline" = "2016"), `Poverty Guidelines Changes`)
+
+
 ##### S1701 POVERTY ####
 
 View(subject_table_variables_22)
@@ -1062,3 +1076,9 @@ table_function(county_ind_pov_perc_emp_tested %>%
                  st_drop_geometry()%>%
                  pivot_wider(names_from = "Variable", values_from = c("2022 Estimate"), names_sep = " "), `2022 Percentage of People in Poverty by Employment Status`)
 
+#### kingsport #####
+
+schools_individual_poverty_total %>%
+  filter(Variable %in% pov_levels_names)%>%
+  filter(str_detect(Location, "Kingsport"))%>%
+  filter(str_detect(Variable, "200"))
