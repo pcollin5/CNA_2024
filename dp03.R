@@ -595,6 +595,125 @@ tract_hh_income <- left_join(tract_hh_income_22, tract_hh_income_21, by = c("Loc
 schools_hh_income <- left_join(schools_hh_income_22, schools_hh_income_21, by = c("Location", "Variable"))
 
 
+full_hh_income %>%
+  filter(str_detect(Variable, "Percent"))%>%
+  filter(Location == "Carter County")
+
+full_hh_income_sub25_percent  <- full_hh_income %>%
+  filter(Year == "2022")%>%
+  filter(Variable != "Median Household Income")%>%
+  filter(Variable != "Mean Household Income")%>%
+  filter(Variable != "Total Households")%>%
+  filter(Variable != "Percent Household Income in the past 12 month")%>%
+  filter(Variable != "placeholder")%>%
+  filter(Variable != "placeholder2") %>%
+  filter(Variable == "Percent HH Income < 10,000"|
+           Variable == "Percent HH Income 10,000-14,999"|
+           Variable == "Percent HH Income 15,000-24,999")%>%
+  group_by(Location)%>%
+  summarise(`Estimate` = sum(`Estimate`), `MOE` = moe_sum(`MOE`, `Estimate`),
+            Variable = "Percent HH Income < 25,000") %>%
+  select(Location, Variable, `Estimate`, `MOE`)
+
+full_hh_income_sub25_percent
+
+full_hh_income_25_50_percent <- full_hh_income %>%
+  filter(Year == 2022)%>%
+  filter(Variable != "Median Household Income")%>%
+  filter(Variable != "Mean Household Income")%>%
+  filter(Variable != "Total Households")%>%
+  filter(Variable != "Percent Household Income in the past 12 month")%>%
+  filter(Variable != "placeholder")%>%
+  filter(Variable != "placeholder2")%>% 
+  filter(Variable == "Percent HH Income 25,000-34,999"|
+           Variable == "Percent HH Income 35,000-49,999")%>%
+  group_by(Location)%>%
+  summarise(`Estimate` = sum(`Estimate`), `MOE` = moe_sum(`MOE`, `Estimate`),
+            
+            Variable = "Percent HH Income 25,000-49,999")%>%
+  select(Location, Variable, `Estimate`, `MOE`)
+
+full_hh_income_25_50_percent
+
+full_hh_income_50_75_percent <- full_hh_income %>%
+  filter(Year == 2022)%>%
+  filter(Variable != "Median Household Income")%>%
+  filter(Variable != "Mean Household Income")%>%
+  filter(Variable != "Total Households")%>%
+  filter(Variable != "Percent Household Income in the past 12 month")%>%
+  filter(Variable != "placeholder")%>%
+  filter(Variable != "placeholder2")%>% 
+  filter(Variable == "Percent HH Income 50,000-74,999")%>%
+  select(Location, Variable, `Estimate`, `MOE`)
+
+full_hh_income
+
+full_hh_income_75_100_percent <- full_hh_income %>%
+  filter(Year == 2022)%>%
+  filter(Variable != "Median Household Income")%>%
+  filter(Variable != "Mean Household Income")%>%
+  filter(Variable != "Total Households")%>%
+  filter(Variable != "Percent Household Income in the past 12 month")%>%
+  filter(Variable != "placeholder")%>%
+  filter(Variable != "placeholder2")%>% 
+  filter(Variable == "Percent HH Income 75,000-99,999")%>%
+  select(Location, Variable, `Estimate`, `MOE`)
+
+full_hh_income_75_100_percent
+
+full_hh_income_over100_percent  <- full_hh_income %>%
+  filter(Year == 2022)%>%
+  filter(Variable != "Median Household Income")%>%
+  filter(Variable != "Mean Household Income")%>%
+  filter(Variable != "Total Households")%>%
+  filter(Variable != "Percent Household Income in the past 12 month")%>%
+  filter(Variable != "placeholder")%>%
+  filter(Variable != "placeholder2")%>%
+  filter(Variable == "Percent HH Income 100,000-149,999"|
+           Variable == "Percent HH Income 150,000-199,999"|
+           Variable == "Percent HH Income > 200,000")%>%
+  group_by(Location)%>%
+  summarise(`Estimate` = sum(`Estimate`), `MOE` = moe_sum(`MOE`, `Estimate`),
+            Variable = "Percent Households $100,000+")%>%
+  select(Location, Variable, `Estimate`, `MOE`)
+
+
+bound_new_income_brackets_full <- rbind(full_hh_income_sub25_percent,full_hh_income_50_75_percent,full_hh_income_75_100_percent,full_hh_income_over100_percent)
+
+temp1 <- bound_new_income_brackets_full %>%
+  select(Variable)%>%
+  reframe(Variable)%>%
+  unique()
+
+temp1
+
+new_hh_income_vars_full <- temp1$Variable
+
+bound_new_income_brackets_full %>%
+  mutate(Variable = factor(Variable, levels = new_hh_income_vars_full))%>%
+  mutate(Location = factor(Location, levels = location_factors_for_graph))%>%
+  ggplot(aes(y = fct_rev(Variable), x = `Estimate`, fill = Location))+
+  geom_bar(stat = "identity")+
+  facet_wrap(~Location)+
+  geom_errorbar(aes(x=`Estimate`, xmin=`Estimate` - `MOE`, xmax = `Estimate` + `MOE`), width=0.2, linewidth=1, color="black")+
+  geom_label(aes(group = Variable,label = `Estimate`), position = position_dodge(width = 1),color = "black", angle = 90, show.legend = FALSE, size = 3)+
+  theme(text = element_text("Calibri"))+
+  scale_fill_brewer(palette = "Set3")+
+  labs(y = " ", x = " ")+
+  theme(strip.text.x = element_text(size = rel(1.5)))+
+  theme(strip.text.x = element_text(face = "bold"))+
+  theme(strip.text.x = element_text(face = "bold"))+
+  theme(plot.title = element_text(size=rel(2.25)))+
+  theme(plot.title = element_text(face = "bold"))+
+  theme(plot.subtitle = element_text(size = rel(1.5)))+
+  theme(plot.subtitle = element_text(face = "italic"))+
+  theme(axis.text.x = element_text(size = rel(1.5)))+
+  theme(axis.text.x = element_text(face = "bold"))+
+  theme(legend.text=element_text(size=rel(1)))+
+  theme(legend.text = element_text(face = "bold"))+
+  ggtitle("2022 Household Income Distribution")
+
+
 #methods_of_income_vars
 full_methods_of_income_22 <- Full_dp_2022 %>%
   filter(variable %in% methods_of_income_vars)%>%

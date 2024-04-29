@@ -1,15 +1,16 @@
 #### poverty guidelines ####
 
+
+
 table_function(poverty_guidelines %>%
+                 filter(Year != 2016)%>%
   filter(str_detect(`Household Size`, "For", negate = TRUE))%>%
   mutate(`Poverty Guideline` = as.numeric(`Poverty Guideline`))%>%
   pivot_wider(names_from = "Year", values_from = `Poverty Guideline`)%>%
   mutate(`Difference 23-24` = `2024` - `2023`)%>%
-  mutate(`Difference 16-23` = `2023` - `2016`)%>%
   mutate(`Percent Change 23-24` = round(100*(`2024` - `2023`) / `2023`,2))%>%
-  mutate(`Percent Change 16-23` = round(100*(`2023` - `2016`) / `2016`,2))%>%
-  rename("2024 Guideline" = "2024", "2023 Guideline" = "2023")%>%
-  rename("2016 Guideline" = "2016"), `Poverty Guidelines Changes`)
+  rename("2024 Guideline" = "2024", "2023 Guideline" = "2023"),
+   `Poverty Guidelines Changes`)
 
 
 ##### S1701 POVERTY ####

@@ -93,6 +93,13 @@ remove_after_comma_function <- function(string){
   gsub(",.*","",string) 
 }
 
+remove_after_space_function <- function(string){
+  gsub(" .*","",string) 
+}
+
+replace_semicolon_function <- function(string){
+  gsub(";.8", ",", string)
+}
 
 #### ggplot map function for tracts  ####
 tract_map_function_orange <- function(outline, data, fill, label){
