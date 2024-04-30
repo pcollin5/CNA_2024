@@ -422,17 +422,120 @@ tn_long_pit_counts %>%
   theme(axis.text.y = element_text(face = "bold"))+
   theme(legend.text=element_text(size=rel(1)))+
   theme(legend.text = element_text(face = "bold"))+
-  ggtitle("TN CoC Total Counts of Homeless and Chronically Homeless from 2007-2023")
+  ggtitle("TN CoC Total Counts of Homeless and Chronically Homeless from 2019-2023")
 
 
-tn_homelessness_change %>%
-  pivot_longer(-State, names_to = "Variable", values_to = "Value")%>%
-  mutate(Value = round(100*Value,2)) %>%
-  ggplot(aes(x = Value, y = Variable, fill = State))+
-  geom_bar(stat = "identity")+
-  facet_wrap(~State)
+tn_long_pit_counts %>%
+  mutate(Variable = remove_after_comma_function(Variable))%>%
+  filter(Variable == "Overall Homeless"|
+           Variable == "Sheltered Total Homeless"|
+           Variable == "Unsheltered Homeless"|
+           Variable == "Overall Chronically Homeless"|
+           Variable == "Sheltered Total Chronically Homeless"|
+           Variable == "Unsheltered Chronically Homeless")%>%
+  ggplot(aes(x = Year, y = Count, group = Variable, color = Variable))+
+  geom_line()+
+  facet_wrap(~`CoC Name`)+
+  theme(text = element_text("Calibri"))+
+  scale_color_brewer(palette = "Set1")+
+  geom_dl(aes(label=Variable),method=list("last.points"))+
+  labs(y = " ", x = " ")+
+  xlim(c(2019, 2025))+
+  theme(strip.text.x = element_text(size = rel(1.5)))+
+  theme(strip.text.x = element_text(face = "bold"))+
+  theme(strip.text.x = element_text(face = "bold"))+
+  theme(plot.title = element_text(size=rel(2.25)))+
+  theme(plot.title = element_text(face = "bold"))+
+  theme(plot.subtitle = element_text(size = rel(1.5)))+
+  theme(plot.subtitle = element_text(face = "italic"))+
+  theme(axis.text.x = element_text(size = rel(1.5)))+
+  theme(axis.text.x = element_text(face = "bold"))+
+  theme(axis.text.y = element_text(size = rel(1.5)))+
+  theme(axis.text.y = element_text(face = "bold"))+
+  theme(legend.text=element_text(size=rel(1)))+
+  theme(legend.text = element_text(face = "bold"))+
+  ggtitle("TN CoC Total Counts of Homeless and Chronically Homeless from 2019-2023")
+
+
+
 
 #### state pit data set ####
+
+### importing these
+
+x2023_state_pit_year <- x2023_state_pit %>%
+  mutate(Year = 2023)%>%
+  select(!c(`Number of CoCs`))%>%
+  pivot_longer(-c(State,Year), names_to = "Variable", values_to = "Count")
+
+x2022_pit_state
+
+x2022_state_pit_year <- x2022_pit_state %>%
+  mutate(Year = 2022)%>%
+  select(!c(`Number of CoCs`))%>%
+  pivot_longer(-c(State,Year), names_to = "Variable", values_to = "Count")
+
+x2021_state_pit_year <- x2021_state_pit %>%
+  mutate(Year = 2021)%>%
+  select(!c(`Number of CoCs`))%>%
+  pivot_longer(-c(State,Year), names_to = "Variable", values_to = "Count")
+
+x2020_state_pit_year <- x2020_state_pit %>%
+  mutate(Year = 2020)%>%
+  select(!c(`Number of CoCs`))%>%
+  pivot_longer(-c(State,Year), names_to = "Variable", values_to = "Count")
+
+x2019_state_pit_year <- x2019_state_pit %>%
+  mutate(Year = 2019)%>%
+  select(!c(`Number of CoCs`))%>%
+  pivot_longer(-c(State,Year), names_to = "Variable", values_to = "Count")
+
+
+long_full_state_pit <- rbind(x2023_state_pit_year, x2022_state_pit_year, x2021_state_pit_year, x2020_state_pit_year, x2019_state_pit_year)
+
+options(scipen = 999)
+
+long_full_state_pit %>%
+  filter(State == "TN"|
+           State == "Total"|
+           State == "KY"|
+           State == "GA"|
+           State == "VA"|
+           State == "NC"|
+           State == "SC")%>%
+  mutate(Variable = remove_after_comma_function(Variable))%>%
+  filter(Variable == "Overall Homeless"|
+           Variable == "Sheltered Total Homeless"|
+           Variable == "Unsheltered Homeless"|
+           Variable == "Overall Chronically Homeless"|
+           Variable == "Sheltered Total Chronically Homeless"|
+           Variable == "Unsheltered Chronically Homeless")%>%
+  mutate(State = factor(State, levels = c("Total", "TN", "GA", "KY", "VA", "NC", "SC")))%>%
+  ggplot(aes(x = Year, y = Count, group = Variable, color = Variable))+
+  geom_line()+
+  facet_wrap(~State, scales = "free_y")+
+  theme(text = element_text("Calibri"))+
+  scale_color_brewer(palette = "Set1")+
+  geom_dl(aes(label=Variable),method=list("last.points"))+
+  labs(y = " ", x = " ")+
+  xlim(c(2019, 2025))+
+  theme(strip.text.x = element_text(size = rel(1.5)))+
+  theme(strip.text.x = element_text(face = "bold"))+
+  theme(strip.text.x = element_text(face = "bold"))+
+  theme(plot.title = element_text(size=rel(2.25)))+
+  theme(plot.title = element_text(face = "bold"))+
+  theme(plot.subtitle = element_text(size = rel(1.5)))+
+  theme(plot.subtitle = element_text(face = "italic"))+
+  theme(axis.text.x = element_text(size = rel(1.5)))+
+  theme(axis.text.x = element_text(face = "bold"))+
+  theme(axis.text.y = element_text(size = rel(1.5)))+
+  theme(axis.text.y = element_text(face = "bold"))+
+  theme(legend.text=element_text(size=rel(1)))+
+  theme(legend.text = element_text(face = "bold"))+
+  ggtitle("TN and Relavent Total Counts of Homeless and Chronically Homeless from 2019-2023")
+
+
+###### 
 
 state_pit_counts %>%
   select(!`Number of CoCs`)%>%
@@ -742,7 +845,15 @@ coc_2007_2023 %>%
 
 #picture
 
+hud_picture_2023 <- hudPicture2023_502928
+
 names(hud_picture)
+
+hud_picture <- hud_picture_2023 %>%
+  mutate(Year = 2023)
+
+
+uethda_counties <- c("Carter County", "Greene County", "Hancock County", "Johnson County", "Sullivan County", "Unicoi County", "Washington County")
 
 picture_vars <- c("Year", "Name", "Subsidized units available",
                   "% Occupied", "% moved in past year",
@@ -773,6 +884,7 @@ picture_vars <- c("Year", "Name", "Subsidized units available",
 
 table_function(hud_picture %>%
                  select(picture_vars)%>%
+                 filter(Name %in% uethda_counties)%>%
                  mutate(across(.cols = -c(Year, Name), .fns = as.numeric)) %>%
                  filter(Year == 2023)%>%
                  select(!Year), `2023 HUD Public Housing Picture`)
@@ -780,6 +892,7 @@ table_function(hud_picture %>%
 
 hud_picture_23 <- hud_picture %>%
   select(picture_vars)%>%
+  filter(Name %in% uethda_counties)%>%
   mutate(across(.cols = -c(Year, Name), .fns = as.numeric)) %>%
   pivot_longer(-c(Year, Name), names_to = "Variable", values_to = "2023 Value")%>%
   filter(Year == 2023)%>%
@@ -787,7 +900,7 @@ hud_picture_23 <- hud_picture %>%
 
 hud_picture_23
 
-hud_picture_22 <- hud_picture %>%
+hud_picture_22 <- hud_picture_2022 %>%
   select(picture_vars)%>%
   mutate(across(.cols = -c(Year, Name), .fns = as.numeric)) %>%
   pivot_longer(-c(Year, Name), names_to = "Variable", values_to = "2022 Value")%>%
@@ -795,6 +908,8 @@ hud_picture_22 <- hud_picture %>%
   select(!Year)
 
 hud_picture_22
+
+hud_picture_23
 
 joined_hud_picture <- left_join(hud_picture_23, hud_picture_22, by = c("Name", "Variable"))
 
@@ -812,6 +927,8 @@ totals_hud_picture<- joined_hud_picture %>%
 
 totals_hud_levels <- totals_hud_picture$Variable
 
+
+joined_hud_picture
 
 joined_hud_picture %>%
   filter(str_detect(Variable, "%"))%>%
@@ -873,7 +990,20 @@ joined_hud_picture %>%
 
 #county
 
+
+#### have to delete the extra columns at the end, and sumlevel and subprogram from beginning ######
+
 names(hud_county)
+
+View(hud_county)
+
+hud_county <- hud_county %>%
+  filter(str_detect(states, "TN"))%>%
+  filter(Location %in% uethda_counties)
+
+names(hud_county_22)
+
+names(hud_county) <- names(hud_county_22)
 
 hud_county_vars <- c("Year", "Location", "Program Label", 
                      "Subsidized Units Available","% Occupied",
@@ -899,9 +1029,12 @@ hud_county_vars <- c("Year", "Location", "Program Label",
 
 
 table_function(hud_county %>%
+                 filter(str_detect(states, "TN"))%>%
                  select(hud_county_vars)%>%
+                 filter(Location %in% uethda_counties)%>%
                  mutate(across(.cols = -c(Year, Location, `Program Label`), .fns = as.numeric)) %>%
-                 filter(Year == 2023)%>%
+                 filter(Year ==  as.Date("2023-12-31"))%>%
+                 arrange(Location)%>%
                  select(!Year), `2023 HUD Public Housing by Program`)
 
 
@@ -909,13 +1042,13 @@ hud_county_23 <- hud_county %>%
   select(hud_county_vars)%>%
   mutate(across(.cols = -c(Year, Location, `Program Label`), .fns = as.numeric)) %>%
   pivot_longer(-c(Year, Location, `Program Label`), names_to = "Variable", values_to = "2023 Value")%>%
-  filter(Year == 2023)%>%
+  filter(Year == as.Date("2023-12-31"))%>%
   select(!Year)%>%
   filter(str_detect(`Program Label`, "Summary", negate = TRUE))
 
 hud_county_23
 
-hud_county_22 <- hud_county %>%
+hud_county_22 <- hud_county_22 %>%
   select(hud_county_vars)%>%
   mutate(across(.cols = -c(Year, Location, `Program Label`), .fns = as.numeric)) %>%
   pivot_longer(-c(Year, Location, `Program Label`), names_to = "Variable", values_to = "2022 Value")%>%
