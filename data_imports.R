@@ -3227,6 +3227,13 @@ uethda_schools_individual_poverty_2021
 #### S1903 median_income IN PAST 12 MONTHS ####
 # 2022
 
+# United States and TN
+
+US_median_income_2022 <- get_acs(geography = "us", table = "S1903", year = 2022)
+
+tn_median_income_2022 <- get_acs(geography = "state", state = "TN", table = "S1903", year = 2022)
+
+
 # school districts
 tn_school_districts_median_income_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
 
@@ -3280,8 +3287,15 @@ Washington_county_median_income_2022 <- get_acs(geography = "county", county = "
 
 #bind the counties
 
+
+
 uethda_county_median_income_2022 <- rbind(Carter_county_median_income_2022, Greene_county_median_income_2022, Hancock_county_median_income_2022, Hawkins_county_median_income_2022, Johnson_county_median_income_2022,
                                           Sullivan_county_median_income_2022, Unicoi_county_median_income_2022, Washington_county_median_income_2022)
+
+uethda_county_median_income_2022_no_geo <- uethda_county_median_income_2022 %>%
+  st_drop_geometry()
+
+full_median_income_2022 <- rbind(US_median_income_2022, tn_median_income_2022,uethda_county_median_income_2022_no_geo)
 
 uethda_tract_median_income_2022 <- rbind(Carter_tract_median_income_2022, Greene_tract_median_income_2022, Hancock_tract_median_income_2022, Hawkins_tract_median_income_2022,
                                          Johnson_tract_median_income_2022, Sullivan_tract_median_income_2022, Unicoi_tract_median_income_2022, Washington_tract_median_income_2022)
@@ -3289,6 +3303,9 @@ uethda_tract_median_income_2022 <- rbind(Carter_tract_median_income_2022, Greene
 #join the names 
 
 named_uethda_county_median_income_2022 <- inner_join(uethda_county_median_income_2022, subject_table_variables_22, by = "variable")
+
+named_full_median_income_2022 <- inner_join(full_median_income_2022, subject_table_variables_22, by = "variable")
+
 
 named_uethda_tract_median_income_2022 <- inner_join(uethda_tract_median_income_2022,subject_table_variables_22, by = "variable")
 
@@ -3298,6 +3315,11 @@ named_uethda_school_median_income_2022 <- inner_join(tn_school_districts_median_
 
 cleaned_uethda_county_median_income_2022 <- named_uethda_county_median_income_2022 %>%
   select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_full_median_income_2022 <- named_full_median_income_2022 %>%
+  select(NAME, variable,estimate, moe, label)%>%
   mutate(Year = 2022)%>%
   rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
@@ -3359,6 +3381,13 @@ uethda_schools_median_income_2022
 
 # 2021
 
+# United States and TN
+
+US_median_income_2021 <- get_acs(geography = "us", table = "S1903", year = 2021)
+
+tn_median_income_2021 <- get_acs(geography = "state", state = "TN", table = "S1903", year = 2021)
+
+
 # school districts
 tn_school_districts_median_income_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
 
@@ -3412,8 +3441,15 @@ Washington_county_median_income_2021 <- get_acs(geography = "county", county = "
 
 #bind the counties
 
+
+
 uethda_county_median_income_2021 <- rbind(Carter_county_median_income_2021, Greene_county_median_income_2021, Hancock_county_median_income_2021, Hawkins_county_median_income_2021, Johnson_county_median_income_2021,
                                           Sullivan_county_median_income_2021, Unicoi_county_median_income_2021, Washington_county_median_income_2021)
+
+uethda_county_median_income_2021_no_geo <- uethda_county_median_income_2021 %>%
+  st_drop_geometry()
+
+full_median_income_2021 <- rbind(US_median_income_2021, tn_median_income_2021,uethda_county_median_income_2021_no_geo)
 
 uethda_tract_median_income_2021 <- rbind(Carter_tract_median_income_2021, Greene_tract_median_income_2021, Hancock_tract_median_income_2021, Hawkins_tract_median_income_2021,
                                          Johnson_tract_median_income_2021, Sullivan_tract_median_income_2021, Unicoi_tract_median_income_2021, Washington_tract_median_income_2021)
@@ -3421,6 +3457,9 @@ uethda_tract_median_income_2021 <- rbind(Carter_tract_median_income_2021, Greene
 #join the names 
 
 named_uethda_county_median_income_2021 <- inner_join(uethda_county_median_income_2021, subject_table_variables_22, by = "variable")
+
+named_full_median_income_2021 <- inner_join(full_median_income_2021, subject_table_variables_22, by = "variable")
+
 
 named_uethda_tract_median_income_2021 <- inner_join(uethda_tract_median_income_2021,subject_table_variables_22, by = "variable")
 
@@ -3430,6 +3469,11 @@ named_uethda_school_median_income_2021 <- inner_join(tn_school_districts_median_
 
 cleaned_uethda_county_median_income_2021 <- named_uethda_county_median_income_2021 %>%
   select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_full_median_income_2021 <- named_full_median_income_2021 %>%
+  select(NAME, variable,estimate, moe, label)%>%
   mutate(Year = 2021)%>%
   rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
@@ -3757,6 +3801,12 @@ uethda_schools_mean_income_2021
 #### S1901 INCOME IN PAST 12 MONTHS ####
 # 2022
 
+# United States and TN
+
+US_income_2022 <- get_acs(geography = "us", table = "S1901", year = 2022)
+
+tn_income_2022 <- get_acs(geography = "state", state = "TN", table = "S1901", year = 2022)
+
 # school districts
 tn_school_districts_income_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
 
@@ -3813,12 +3863,19 @@ Washington_county_income_2022 <- get_acs(geography = "county", county = "Washing
 uethda_county_income_2022 <- rbind(Carter_county_income_2022, Greene_county_income_2022, Hancock_county_income_2022, Hawkins_county_income_2022, Johnson_county_income_2022,
                                    Sullivan_county_income_2022, Unicoi_county_income_2022, Washington_county_income_2022)
 
+uethda_county_income_2022_no_geo <- uethda_county_income_2022 %>%
+  st_drop_geometry()
+
+full_income_2022 <- rbind(US_income_2022, tn_income_2022, uethda_county_income_2022_no_geo)
+
 uethda_tract_income_2022 <- rbind(Carter_tract_income_2022, Greene_tract_income_2022, Hancock_tract_income_2022, Hawkins_tract_income_2022,
                                   Johnson_tract_income_2022, Sullivan_tract_income_2022, Unicoi_tract_income_2022, Washington_tract_income_2022)
 
 #join the names 
 
 named_uethda_county_income_2022 <- inner_join(uethda_county_income_2022, subject_table_variables_22, by = "variable")
+
+named_full_income_2022 <- inner_join(full_income_2022, subject_table_variables_22, by = "variable")
 
 named_uethda_tract_income_2022 <- inner_join(uethda_tract_income_2022,subject_table_variables_22, by = "variable")
 
@@ -3828,6 +3885,11 @@ named_uethda_school_income_2022 <- inner_join(tn_school_districts_income_2022, s
 
 cleaned_uethda_county_income_2022 <- named_uethda_county_income_2022 %>%
   select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2022)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_full_income_2022 <- named_full_income_2022 %>%
+  select(NAME, variable,estimate, moe, label)%>%
   mutate(Year = 2022)%>%
   rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
@@ -3886,8 +3948,13 @@ uethda_schools_income_2022 <- rbind(carter_county_income_2022, elizabethton_inco
 
 uethda_schools_income_2022
 
-
 # 2021
+
+# United States and TN
+
+US_income_2021 <- get_acs(geography = "us", table = "S1901", year = 2021)
+
+tn_income_2021 <- get_acs(geography = "state", state = "TN", table = "S1901", year = 2021)
 
 # school districts
 tn_school_districts_income_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
@@ -3945,12 +4012,19 @@ Washington_county_income_2021 <- get_acs(geography = "county", county = "Washing
 uethda_county_income_2021 <- rbind(Carter_county_income_2021, Greene_county_income_2021, Hancock_county_income_2021, Hawkins_county_income_2021, Johnson_county_income_2021,
                                    Sullivan_county_income_2021, Unicoi_county_income_2021, Washington_county_income_2021)
 
+uethda_county_income_2021_no_geo <- uethda_county_income_2021 %>%
+  st_drop_geometry()
+
+full_income_2021 <- rbind(US_income_2021, tn_income_2021, uethda_county_income_2021_no_geo)
+
 uethda_tract_income_2021 <- rbind(Carter_tract_income_2021, Greene_tract_income_2021, Hancock_tract_income_2021, Hawkins_tract_income_2021,
                                   Johnson_tract_income_2021, Sullivan_tract_income_2021, Unicoi_tract_income_2021, Washington_tract_income_2021)
 
 #join the names 
 
 named_uethda_county_income_2021 <- inner_join(uethda_county_income_2021, subject_table_variables_22, by = "variable")
+
+named_full_income_2021 <- inner_join(full_income_2021, subject_table_variables_22, by = "variable")
 
 named_uethda_tract_income_2021 <- inner_join(uethda_tract_income_2021,subject_table_variables_22, by = "variable")
 
@@ -3960,6 +4034,11 @@ named_uethda_school_income_2021 <- inner_join(tn_school_districts_income_2021, s
 
 cleaned_uethda_county_income_2021 <- named_uethda_county_income_2021 %>%
   select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_full_income_2021 <- named_full_income_2021 %>%
+  select(NAME, variable,estimate, moe, label)%>%
   mutate(Year = 2021)%>%
   rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 

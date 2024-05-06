@@ -275,7 +275,7 @@ county_fams_below_pov %>%
   ggplot(aes( y = fct_rev(Variable), x = `Percent Difference`, fill = Significant))+
   geom_bar(stat = "identity", position = position_dodge(width = 1))+
   facet_wrap(~Location)+
-  geom_label(aes(group = Variable,label = `Percent Difference`), position = position_dodge(width = 1),color = "black", angle = 90, show.legend = FALSE, size = 3)+
+  geom_label(aes(group = Variable,label = `Percent Difference`), position = position_dodge(width = 1),color = "black", show.legend = FALSE, size = 3)+
   theme(text = element_text("Calibri"))+
   scale_fill_brewer(palette = "Paired")+
   labs(y = " ", x = " ")+
@@ -318,7 +318,7 @@ county_family_poverty_percent %>%
   ggplot(aes( y = fct_rev(Variable), x = `Percent Difference`, fill = Significant))+
   geom_bar(stat = "identity", position = position_dodge(width = 1))+
   facet_wrap(~Location)+
-  geom_label(aes(group = Variable,label = `Percent Difference`), position = position_dodge(width = 1),color = "black", angle = 90, show.legend = FALSE, size = 3)+
+  geom_label(aes(group = Variable,label = `Percent Difference`), position = position_dodge(width = 1),color = "black",  show.legend = FALSE, size = 3)+
   theme(text = element_text("Calibri"))+
   scale_fill_brewer(palette = "Paired")+
   labs(y = " ", x = " ")+
@@ -366,7 +366,7 @@ county_family_poverty_percent %>%
   ggplot(aes( y = fct_rev(Variable), x = `Percent Difference`, fill = Significant))+
   geom_bar(stat = "identity", position = position_dodge(width = 1))+
   facet_wrap(~Location)+
-  geom_label(aes(group = Variable,label = `Percent Difference`), position = position_dodge(width = 1),color = "black", angle = 90, show.legend = FALSE, size = 3)+
+  geom_label(aes(group = Variable,label = `Percent Difference`), position = position_dodge(width = 1),color = "black",  show.legend = FALSE, size = 3)+
   theme(text = element_text("Calibri"))+
   scale_fill_brewer(palette = "Paired")+
   labs(y = " ", x = " ")+
@@ -414,7 +414,7 @@ county_family_poverty_percent %>%
   ggplot(aes( y = fct_rev(Variable), x = `Percent Difference`, fill = Significant))+
   geom_bar(stat = "identity", position = position_dodge(width = 1))+
   facet_wrap(~Location)+
-  geom_label(aes(group = Variable,label = `Percent Difference`), position = position_dodge(width = 1),color = "black", angle = 90, show.legend = FALSE, size = 3)+
+  geom_label(aes(group = Variable,label = `Percent Difference`), position = position_dodge(width = 1),color = "black",show.legend = FALSE, size = 3)+
   theme(text = element_text("Calibri"))+
   scale_fill_brewer(palette = "Paired")+
   labs(y = " ", x = " ")+
@@ -466,7 +466,7 @@ county_family_poverty_percent %>%
   ggplot(aes( y = fct_rev(Variable), x = `Percent Difference`, fill = Significant))+
   geom_bar(stat = "identity", position = position_dodge(width = 1))+
   facet_wrap(~Location)+
-  geom_label(aes(group = Variable,label = `Percent Difference`), position = position_dodge(width = 1),color = "black", angle = 90, show.legend = FALSE, size = 3)+
+  geom_label(aes(group = Variable,label = `Percent Difference`), position = position_dodge(width = 1),color = "black",  show.legend = FALSE, size = 3)+
   theme(text = element_text("Calibri"))+
   scale_fill_brewer(palette = "Paired")+
   labs(y = " ", x = " ")+

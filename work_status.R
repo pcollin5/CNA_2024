@@ -534,7 +534,7 @@ county_total_pop_work_status%>%
   ggplot(aes( y = fct_rev(Variable), x = `Percent Change`, fill = Significant))+
   geom_bar(stat = "identity", position = position_dodge(width = 1))+
   facet_wrap(~Location, scales = "free_x")+
-  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "white", angle = 90, show.legend = FALSE, size = 3)+
+  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "white",  show.legend = FALSE, size = 3)+
   theme(text = element_text("Calibri"))+
   scale_fill_brewer(palette = "Set1")+
   labs(y = " ", x = " ")+

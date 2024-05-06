@@ -1011,6 +1011,51 @@ county_labor_force <- full_labor_force %>%
   rename("2022 Estimate" = "Estimate_2022", "2021 Estimate" = "Estimate_2021", "2022 MOE" = "MOE_2022", "2021 MOE" = "MOE_2021")%>%
   select(Location, Variable, "2022 Estimate", "2022 MOE", "2021 Estimate", "2021 MOE")
 
+
+county_all_people_below_pov
+
+county_fams_below_pov
+
+fams_below_pov_vars
+
+county_fams_below_pov %>%
+  mutate(`Percent Change` = round(100*(`2022 Estimate` - `2021 Estimate`)/`2021 Estimate`,2)) %>%
+  mutate(Significant = significance(`2022 Estimate`, `2021 Estimate`, `2022 MOE`, `2021 MOE`, clevel = 0.95))%>%
+  mutate(Location = factor(Location, levels = location_factors_for_graph))%>%
+  mutate(Variable = factor(Variable, levels = fams_below_pov_names))%>%
+  ggplot(aes( y = fct_rev(Variable), x = `Percent Change`, fill = Significant))+
+  geom_bar(stat = "identity", position = position_dodge(width = 1))+
+  facet_wrap(~Location)+
+  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "black", show.legend = FALSE, size = 3)+
+  theme(text = element_text("Calibri"))+
+  scale_fill_brewer(palette = "Set3")+
+  labs(y = " ", x = " ")+
+  theme(strip.text.x = element_text(size = rel(1.5)))+
+  theme(strip.text.x = element_text(face = "bold"))+
+  theme(strip.text.x = element_text(face = "bold"))+
+  theme(plot.title = element_text(size=rel(2.25)))+
+  theme(plot.title = element_text(face = "bold"))+
+  theme(plot.subtitle = element_text(size = rel(1.5)))+
+  theme(plot.subtitle = element_text(face = "italic"))+
+  theme(axis.text.x = element_text(size = rel(1.5)))+
+  theme(axis.text.x = element_text(face = "bold"))+
+  theme(axis.text.y = element_text(size = rel(1.5)))+
+  theme(axis.text.y = element_text(face = "bold"))+
+  theme(legend.text=element_text(size=rel(1)))+
+  theme(legend.text = element_text(face = "bold"))+
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())+
+  ggtitle("Percent Change in Families in Poverty from 2021 to 2022")
+
+table_function(county_fams_below_pov %>%
+                 select(Location, Variable, `2022 Estimate`)%>%
+                 pivot_wider(names_from = "Variable", values_from = "2022 Estimate"), `2022 Family Poverty Percentages`)
+
+##### NEED TO PULL OUT 65+ for DP02 ####
+
+county_65_pov <- county_all_people_below_pov %>%
+  filter(str_detect(Variable, "65"))
+
 ### labor force profile ####
 
 lab_force_vars <- c("Population 16+ Years", "Percent Population 16+ Years",

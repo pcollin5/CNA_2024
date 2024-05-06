@@ -14,6 +14,10 @@ packages <- c("tidyverse", "tidycensus", "leaflet", "mapview", "DT", "sf",
 lapply(packages, library, character.only = TRUE)
 
 
+install.packages("layer")
+
+install.packages("rtools")
+
 #### load color scheme ####
 
 #### color vectors ####
@@ -172,6 +176,7 @@ tract_map_function <- function(outline, data, fill, label){
     theme(text = element_text("Calibri"))+
     ggtitle({{label}})
 }
+
 
 
 location_factors_for_graph <- c("United States", "Tennessee", "Carter County", "Greene County", "Hancock County", "Hawkins County", "Johnson County", "Sullivan County", "Unicoi County", "Washington County")

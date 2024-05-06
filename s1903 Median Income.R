@@ -2,11 +2,15 @@
 
 View(uethda_county_median_income_2022)
 
-View(uethda_county_median_income_2021)
+uethda_county_median_income_2021
 
 uethda_tract_median_income_2022
 
 uethda_tract_median_income_2021
+
+full_median_income_2022
+
+full_median_income_2021
 
 uethda_schools_median_income_2022
 
@@ -14,13 +18,14 @@ uethda_schools_median_income_2021
 
 #### join the names ####
 
-county_median_income_2022 <- uethda_county_median_income_2022 %>%
+county_median_income_2022 <- full_median_income_2022 %>%
   left_join(subject_table_variables_22)
+
 
 tract_median_income_2022 <- uethda_tract_median_income_2022 %>%
   left_join(subject_table_variables_22)
 
-county_median_income_2021 <- uethda_county_median_income_2021 %>%
+county_median_income_2021 <- full_median_income_2021 %>%
   left_join(subject_table_variables_21)
 
 tract_median_income_2021 <- uethda_tract_median_income_2021 %>%
@@ -176,7 +181,7 @@ county_median_income %>%
   geom_bar(stat = "identity")+
   facet_wrap(~Location, scales = "free_x")+
   geom_errorbar(aes(x=`2022 Estimate`, xmin=`2022 Estimate` - `2022 MOE`, xmax = `2022 Estimate` + `2022 MOE`), width=0.2, linewidth=1, color="black")+
-  geom_label(aes(group = Variable,label = `2022 Estimate`), position = position_dodge(width = 1),color = "black", angle = 90, show.legend = FALSE, size = 3)+
+  geom_label(aes(group = Variable,label = `2022 Estimate`), position = position_dodge(width = 1),color = "black", show.legend = FALSE, size = 3)+
   theme(text = element_text("Calibri"))+
   scale_fill_brewer(palette = "Set3")+
   labs(y = " ", x = " ")+
@@ -193,6 +198,6 @@ county_median_income %>%
   theme(legend.text = element_text(face = "bold"))+
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank())+
-  ggtitle("2022 Household Income Distribution")
+  ggtitle("2022 Household Median Income by Race/Ethnicity")
 
 
