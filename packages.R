@@ -6,18 +6,21 @@ packages <- c("tidyverse", "tidycensus", "leaflet", "mapview", "DT", "sf",
               "brms", "ggridges", "shinystan", "bayesplot", "tidybayes",
               "ggmcmc", "forecast", "tseries", "parsnip", "DALEX", "config","DataExplorer",
               "skimr", "recipes", "yardstick", "iBreakDown", "tidyquant",
-              "leaflet", "plotly", "crosstalk", "DT", "realEstAnalytics", "ZillowR")
+              "leaflet", "plotly", "crosstalk", "DT", "ggthemes", "blsR", "blscrapeR", "blsAPI")
 
 
+library(blsR)
+
+library("blsAPI")
 
 
 lapply(packages, library, character.only = TRUE)
 
+library(ggthemes)
 
-install.packages("layer")
+library(extrafont)
 
-install.packages("rtools")
-
+loadfonts()
 #### load color scheme ####
 
 #### color vectors ####

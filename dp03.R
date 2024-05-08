@@ -1082,7 +1082,7 @@ county_labor_force %>%
   ggplot(aes( y = fct_rev(Variable), x = `Percent Change`, fill = Significant))+
   geom_bar(stat = "identity", position = position_dodge(width = 1))+
   facet_wrap(~Location)+
-  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "black", angle = 90, show.legend = FALSE, size = 3)+
+  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "black", show.legend = FALSE, size = 3)+
   theme(text = element_text("Calibri"))+
   scale_fill_brewer(palette = "Set3")+
   labs(y = " ", x = " ")+
@@ -1117,7 +1117,7 @@ county_labor_force %>%
   ggplot(aes( y = fct_rev(Variable), x = `Percent Change`, fill = Significant))+
   geom_bar(stat = "identity", position = position_dodge(width = 1))+
   facet_wrap(~Location)+
-  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "black", angle = 90, show.legend = FALSE, size = 3)+
+  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "black", show.legend = FALSE, size = 3)+
   theme(text = element_text("Calibri"))+
   scale_fill_brewer(palette = "Set3")+
   labs(y = " ", x = " ")+
@@ -1156,7 +1156,7 @@ county_industry %>%
   ggplot(aes( y = fct_rev(Variable), x = `Percent Change`, fill = Significant))+
   geom_bar(stat = "identity", position = position_dodge(width = 1))+
   facet_wrap(~Location, scales = "free_x")+
-  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "black", angle = 90, show.legend = FALSE, size = 3)+
+  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "black", show.legend = FALSE, size = 3)+
   theme(text = element_text("Calibri"))+
   scale_fill_brewer(palette = "Set1")+
   labs(y = " ", x = " ")+
@@ -1193,7 +1193,7 @@ county_occupation %>%
   ggplot(aes( y = fct_rev(Variable), x = `Percent Change`, fill = Significant))+
   geom_bar(stat = "identity", position = position_dodge(width = 1))+
   facet_wrap(~Location)+
-  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "black", angle = 90, show.legend = FALSE, size = 3)+
+  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "white", show.legend = FALSE, size = 3)+
   theme(text = element_text("Calibri"))+
   scale_fill_brewer(palette = "Set1")+
   labs(y = " ", x = " ")+
@@ -1248,8 +1248,8 @@ full_per_capita <- per_capita %>%
   pivot_wider(names_from = Year, values_from = c("Estimate", "MOE"))%>%
   rename("2022 Estimate" = "Estimate_2022", "2021 Estimate" = "Estimate_2021", "2022 MOE" = "MOE_2022", "2021 MOE" = "MOE_2021")%>%
   select(Location, Variable, "2022 Estimate", "2022 MOE", "2021 Estimate", "2021 MOE")%>%
-  mutate("2021 Inf Adj Estimate" = 1.129 * `2021 Estimate`)%>%
-  mutate("2021 Inf Adj MOE" = 1.129 * `2021 MOE`)
+  mutate("2021 Inf Adj Estimate" = 1.078 * `2021 Estimate`)%>%
+  mutate("2021 Inf Adj MOE" = 1.078 * `2021 MOE`)
 
 full_per_capita %>%  
   mutate(`Percent Change` = round(100*(`2022 Estimate` - `2021 Inf Adj Estimate`)/`2021 Inf Adj Estimate`,2))%>%
@@ -1258,7 +1258,34 @@ full_per_capita %>%
   ggplot(aes( y = fct_rev(Variable), x = `Percent Change`, fill = Significant))+
   geom_bar(stat = "identity", position = position_dodge(width = 1))+
   facet_wrap(~Location)+
-  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "black", angle = 90, show.legend = FALSE, size = 3)+
+  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "white", show.legend = FALSE, size = 3)+
+  theme(text = element_text("Calibri"))+
+  scale_fill_brewer(palette = "Set1")+
+  labs(y = " ", x = " ")+
+  theme(strip.text.x = element_text(size = rel(1.5)))+
+  theme(strip.text.x = element_text(face = "bold"))+
+  theme(strip.text.x = element_text(face = "bold"))+
+  theme(plot.title = element_text(size=rel(2.25)))+
+  theme(plot.title = element_text(face = "bold"))+
+  theme(plot.subtitle = element_text(size = rel(1.5)))+
+  theme(plot.subtitle = element_text(face = "italic"))+
+  theme(axis.text.x = element_text(size = rel(1.5)))+
+  theme(axis.text.x = element_text(face = "bold"))+
+  theme(axis.text.y = element_text(size = rel(1.5)))+
+  theme(axis.text.y = element_text(face = "bold"))+
+  theme(legend.text=element_text(size=rel(1)))+
+  theme(legend.text = element_text(face = "bold"))+
+  ggtitle("Per Capita Income Changes from 2021 to 2022",
+          subtitle = "7.8% Inflation Adjusted")
+
+full_per_capita %>%  
+  mutate(`Percent Change` = round(100*(`2022 Estimate` - `2021 Estimate`)/`2021 Estimate`,2))%>%
+  mutate(Significant = significance(`2022 Estimate`, `2021 Estimate`, `2022 MOE`, `2021 MOE`, clevel = 0.95))%>%
+  mutate(Location = factor(Location, levels = location_factors_for_graph))%>%
+  ggplot(aes( y = fct_rev(Variable), x = `Percent Change`, fill = Significant))+
+  geom_bar(stat = "identity", position = position_dodge(width = 1))+
+  facet_wrap(~Location)+
+  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "white", show.legend = FALSE, size = 3)+
   theme(text = element_text("Calibri"))+
   scale_fill_brewer(palette = "Set1")+
   labs(y = " ", x = " ")+
@@ -1277,6 +1304,7 @@ full_per_capita %>%
   theme(legend.text = element_text(face = "bold"))+
   ggtitle("Per Capita Income Changes from 2021 to 2022")
 
+
 table_function(full_per_capita %>%
                  mutate(`Percent Change` = round(100*(`2022 Estimate` - `2021 Inf Adj Estimate`)/`2021 Inf Adj Estimate`,2))%>%
                  mutate(Significant = significance(`2022 Estimate`, `2021 Inf Adj Estimate`, `2022 MOE`, `2021 Inf Adj MOE`, clevel = 0.95))%>%
@@ -1291,7 +1319,7 @@ county_class_of_workers %>%
   ggplot(aes( y = fct_rev(Variable), x = `Percent Change`, fill = Significant))+
   geom_bar(stat = "identity", position = position_dodge(width = 1))+
   facet_wrap(~Location, scales = "free_x")+
-  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "black", angle = 90, show.legend = FALSE, size = 3)+
+  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "black", show.legend = FALSE, size = 3)+
   theme(text = element_text("Calibri"))+
   scale_fill_brewer(palette = "Set2")+
   labs(y = " ", x = " ")+
@@ -1344,7 +1372,7 @@ county_transportation_to_work %>%
   ggplot(aes( y = fct_rev(Variable), x = `Percent Change`, fill = Significant))+
   geom_bar(stat = "identity", position = position_dodge(width = 1))+
   facet_wrap(~Location, scales = "free_x")+
-  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "black", angle = 90, show.legend = FALSE, size = 3)+
+  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "white", show.legend = FALSE, size = 3)+
   theme(text = element_text("Calibri"))+
   scale_fill_brewer(palette = "Set1")+
   labs(y = " ", x = " ")+
@@ -1394,7 +1422,7 @@ county_health_insurance %>%
   ggplot(aes( y = fct_rev(Variable), x = `Percent Difference`, fill = Significant))+
   geom_bar(stat = "identity", position = position_dodge(width = 1))+
   facet_wrap(~Location, scales = "free_x")+
-  geom_label(aes(group = Variable,label = `Percent Difference`), position = position_dodge(width = 1),color = "black", angle = 90, show.legend = FALSE, size = 3)+
+  geom_label(aes(group = Variable,label = `Percent Difference`), position = position_dodge(width = 1),color = "white",  show.legend = FALSE, size = 3)+
   theme(text = element_text("Calibri"))+
   scale_fill_brewer(palette = "Set1")+
   labs(y = " ", x = " ")+

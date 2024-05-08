@@ -603,9 +603,9 @@ table_function(childcare_differences_23_24 %>%
 
 #### head starts ####
 
-names(childcare_listing)
+names(childcare_listing_24)
 
-childcare_listing %>%
+childcare_listing_24 %>%
   select(County,  `Agency Name`, City, Zip, `Minimum Age Served`, `Maximum Age Served`, 
          `Capacity`, `Open Time`, `Close Time`, `Date Open`)%>%
   mutate(Count = 1)%>%
@@ -615,7 +615,7 @@ childcare_listing %>%
   filter(`Date Open` >= as_date("2020-01-01"))%>%
   summarise(sum(Count), sum(Capacity, na.rm = TRUE))
 
-childcare_listing %>%
+childcare_listing_24 %>%
   filter(County %in% counties)%>%
   select(County,  `Agency Name`, City, Zip, `Minimum Age Served`, `Maximum Age Served`, 
          `Capacity`, `Open Time`, `Close Time`, `Date Open`)%>%
@@ -628,83 +628,241 @@ childcare_listing %>%
 
 #### school district profile ####
 
+fixed_district_profile <- district_profile_2022_2023 %>%
+  mutate(across(4:21, as.numeric))
+
+names(fixed_district_profile)
+
+district_profile_names <- c("School Year", "District ID", "District", "Total",
+                            "Black %", "Asian %", "Black, Hispanic, Native %",
+                            "Economically Disadvantaged %", "Female %", "Foster %",
+                            "Pacific Islander %", "Hispanic %", "Homeless %", 
+                            "Limited English %", "Male %", "Migrant %", "Military %", 
+                            "Multirace %", "Native %", "Students with Disabilities %", "White %")
+
+school_district_names <- c("State of Tennessee", "Carter County", "Elizabethon", "Greene County", "Greeneville", 
+                           "Hancock County", "Hawkins County", "Johnson County", "Sullivan County", "Bristol",
+                           "Kingsport", "Unicoi County", "Washington County", "Johnson City")
+
+names(fixed_district_profile) <- district_profile_names
+
+table_function(fixed_district_profile %>%
+  filter(`School Year` == "2022-23")%>%
+  filter(District %in% school_district_names)%>%  
+  select(!`District ID`), `2022-23 School District Profile`)
+
+
 table_function(X2017_20222_district_profile %>%
                  filter(`School Year` == "2022-22"), `2022-2022 School District Profile`)
 
+grade_level <- district_profile_2022_2023
+
+names(grade_level) <- c("School Year", "District Number", "District", "Grade", "Student Count")
+
+uethda_grade_level <- grade_level_23 %>%
+  filter(District %in% school_district_names)
+
+district_total <- uethda_grade_level %>%
+  filter(Grade == "All Grades")%>%
+  select(!Grade)%>%
+  rename("Total" = "Student Count")
+
+joined_uethda_grade_levels <- left_join(uethda_grade_level, district_total, by = c("School Year", "District Number", "District"))
+
+uethda_grade_levels_percents <- joined_uethda_grade_levels %>%
+  filter(Grade != "All Grades")%>%
+  group_by(`School Year`, District)%>%
+  mutate("Percent" = round(100*(`Student Count` / Total),2))%>%
+  select(!`District Number`)
+
+uethda_grade_levels_percents %>%
+  filter(`School Year` == "2022-23")%>%
+  mutate(Grade = factor(Grade, levels = c("PK", "K", "1", "2", "3", "4", "5", "6",
+                                          "7", "8", "9", "10", "11", "12")))%>%
+  mutate(District = factor(District, levels = school_district_names))%>%
+  ggplot(aes(y = fct_rev(Grade), x = Percent, fill = District))+
+  geom_bar(stat = "identity")+
+  geom_label(aes(label = Percent), position = position_dodge(width = 1),fill = "white", show.legend = FALSE, size = 3)+
+  facet_wrap(~District)+
+  theme(text = element_text("Calibri"))+
+  labs(y = " ", x = " ")+
+  theme(strip.text.x = element_text(size = rel(1.5)))+
+  theme(strip.text.x = element_text(face = "bold"))+
+  theme(plot.title = element_text(size=rel(2.25)))+
+  theme(plot.title = element_text(face = "bold"))+
+  theme(plot.subtitle = element_text(size = rel(1.5)))+
+  theme(plot.subtitle = element_text(face = "italic"))+
+  theme(axis.text.x = element_text(size = rel(1)))+
+  theme(axis.text.x = element_text(face = "bold"))+
+  theme(legend.text=element_text(size=rel(1.5)))+
+  theme(legend.text = element_text(face = "bold"))+
+  theme(legend.position = "none")+
+  ggtitle("2022-2023 Percent of Students at Each Grade Level")
+
+uethda_grade_levels_percents %>%
+  filter(`School Year` == "2021-22")%>%
+  mutate(Grade = factor(Grade, levels = c("PK", "K", "1", "2", "3", "4", "5", "6",
+                                          "7", "8", "9", "10", "11", "12")))%>%
+  mutate(District = factor(District, levels = school_district_names))%>%
+  ggplot(aes(y = fct_rev(Grade), x = Percent, fill = District))+
+  geom_bar(stat = "identity")+
+  geom_label(aes(label = Percent), position = position_dodge(width = 1),fill = "white", show.legend = FALSE, size = 3)+
+  facet_wrap(~District)+
+  theme(text = element_text("Calibri"))+
+  labs(y = " ", x = " ")+
+  theme(strip.text.x = element_text(size = rel(1.5)))+
+  theme(strip.text.x = element_text(face = "bold"))+
+  theme(plot.title = element_text(size=rel(2.25)))+
+  theme(plot.title = element_text(face = "bold"))+
+  theme(plot.subtitle = element_text(size = rel(1.5)))+
+  theme(plot.subtitle = element_text(face = "italic"))+
+  theme(axis.text.x = element_text(size = rel(1)))+
+  theme(axis.text.x = element_text(face = "bold"))+
+  theme(legend.text=element_text(size=rel(1.5)))+
+  theme(legend.text = element_text(face = "bold"))+
+  theme(legend.position = "none")+
+  ggtitle("2021-2022 Percent of Students at Each Grade Level")
+
+
 #### act scores ####
 
-act_2117 <- data_ACT_Data_by_District_2021_17
+act_2223 <- X2022_23_ACT_district_suppressed %>%
+  mutate(across(5:15, as.numeric))%>%
+  select(!District)
 
-act_2222 <- X2022_22_ACT_district_suppressed
+View(act_2223)
 
-names(act_2117) == names(act_2222)
-
-act_2117
-
-act_2222
-
-long_act_2222 <- act_2222 %>%
-  select(!c(`District`))%>%
-  pivot_longer(-c(Year, `District Name`, Subgroup), names_to = "Measure", values_to = "22-22 Value")%>%
+long_act_23 <- act_2223 %>%
+  filter(Year == "2022-23")%>%
+  pivot_longer(-c(Year, `District Name`, Subgroup), names_to = "Measure", values_to = "23 Value")%>%
   select(!Year)
 
-long_act_2117 <- act_2117 %>%
-  select(!c(`District`))%>%
-  pivot_longer(-c(Year, `District Name`, Subgroup), names_to = "Measure", values_to = "21-17 Value")%>%
+long_act_23
+
+long_act_22 <- act_2223 %>%
+  filter(Year == "2021-2022")%>%
+  pivot_longer(-c(Year, `District Name`, Subgroup), names_to = "Measure", values_to = "22 Value")%>%
   select(!Year)
 
+long_act_22
 
-joined_act <- left_join(long_act_2222, long_act_2117, by = c("District Name", "Subgroup", "Measure"))
+
+
+joined_act <- left_join(long_act_23, long_act_22, by = c("District Name", "Subgroup", "Measure"))
 
 table_function(joined_act %>%
-                 mutate(Difference = `22-22 Value` - `21-17 Value`)%>%
-                 select(!`21-17 Value`)%>%
-                 rename("22-22" = "22-22 Value")%>%
+                 mutate(Difference = `23 Value` - `22 Value`)%>%
+                 select(!`22 Value`)%>%
                  filter(Subgroup == "All Students")%>%  
-                 pivot_wider(names_from = c(Subgroup, Measure), values_from = c("22-22", "Difference"), names_sep = " "), `2022-2022 ACT Scores and Difference from 2021-2017`)
+                 pivot_wider(names_from = c(Subgroup, Measure), values_from = c("23 Value", "Difference"), names_sep = " "), `2023 ACT Scores and Difference from 2022`)
 
 #### graduation ####
 
-names(graduation) <- c("Year", "System", "System Name", "Group", "Cohort", "Count", "Graduation Rate")
+graduation <- X2022_23_district_grad_rate_suppressed
+
+names(graduation) <- c("Year", "System", "System Name", "Group", "Cohort", "Count", "Graduation Rate", "Count Federal", "Graduation Rate Federal")
 
 table_function(graduation %>%
-                 filter(Year == 2022)%>%
-                 select(!c(System, Year, Count, Cohort))%>%
-                 pivot_wider( names_from = Group, values_from = c("Graduation Rate"), names_sep = " "), `2022 Graduation Rates`)
+                 filter(`System Name` %in% school_district_names)%>%
+                 filter(Year == 2023)%>%
+                 select(!c(System, Year, Count, Cohort, `Count Federal`, `Graduation Rate Federal`))%>%
+                 pivot_wider( names_from = Group, values_from = c("Graduation Rate"), names_sep = " "), `2023 State Graduation Rates`)
+
+table_function(graduation %>%
+                 filter(`System Name` %in% school_district_names)%>%
+                 filter(Year == 2023)%>%
+                 select(!c(System, Year, Count, Cohort, `Count Federal`, `Graduation Rate`))%>%
+                 pivot_wider( names_from = Group, values_from = c("Graduation Rate Federal"), names_sep = " "), `2023 Federal Graduation Rates`)
+
+
+
+
+grad_23_rate <- graduation %>%
+  filter(Year == 2023)%>%
+  filter(`System Name` %in% school_district_names)%>%
+  select(!c(System, Year, Count, Cohort, `Count Federal`, `Graduation Rate Federal`))%>%
+  pivot_wider( names_from = Group, values_from = c("Graduation Rate"), names_sep = " ")
 
 grad_22_rate <- graduation %>%
   filter(Year == 2022)%>%
-  select(!c(System, Year, Count, Cohort))%>%
+  filter(`System Name` %in% school_district_names)%>%
+  select(!c(System, Year, Count, Cohort,`Count Federal`, `Graduation Rate Federal`))%>%
   pivot_wider( names_from = Group, values_from = c("Graduation Rate"), names_sep = " ")
 
-grad_17_rate <- graduation %>%
-  filter(Year == 2017)%>%
-  select(!c(System, Year, Count, Cohort))%>%
-  pivot_wider( names_from = Group, values_from = c("Graduation Rate"), names_sep = " ")
+grad_23 <- graduation %>%
+  filter(`System Name` %in% school_district_names)%>%
+  filter(Year == 2023)%>%
+  select(!c(Year, System,`Count Federal`, `Graduation Rate Federal`))%>%
+  rename("2023 Cohort" = "Cohort",
+         "2023 Count" = "Count",
+         "2023 Graduation Rate" = "Graduation Rate")
 
 grad_22 <- graduation %>%
-  filter(Year == 2022)%>%
-  select(!c(Year, System))%>%
+  filter(`System Name` %in% school_district_names)%>%
+  filter(Year == 2022) %>%
+  select(!c(Year, System,`Count Federal`, `Graduation Rate Federal`))%>%
   rename("2022 Cohort" = "Cohort",
          "2022 Count" = "Count",
          "2022 Graduation Rate" = "Graduation Rate")
 
-grad_17 <- graduation %>%
-  filter(Year == 2017) %>%
-  select(!c(Year, System))%>%
-  rename("2017 Cohort" = "Cohort",
-         "2017 Count" = "Count",
-         "2017 Graduation Rate" = "Graduation Rate")
-
-joined_grad <- left_join(grad_22, grad_17, by = c("System Name", "Group"))
+joined_grad <- left_join(grad_23, grad_22, by = c("System Name", "Group"))
 
 table_function(joined_grad %>%
-                 mutate("Cohort Difference" = `2022 Cohort` - `2017 Cohort`)%>%
-                 mutate("Graduation Count Difference" = `2022 Count` - `2017 Count`)%>%
-                 mutate("Graduation Rate Difference" = `2022 Graduation Rate` - `2017 Graduation Rate`)%>%
+                 mutate("Cohort Difference" = `2023 Cohort` - `2022 Cohort`)%>%
+                 mutate("Graduation Count Difference" = `2023 Count` - `2022 Count`)%>%
+                 mutate("Graduation Rate Difference" = `2023 Graduation Rate` - `2022 Graduation Rate`)%>%
                  select(`System Name`, Group, "Graduation Rate Difference")%>%
                  filter(!is.na(`Graduation Rate Difference`))%>%
-                 pivot_wider(names_from = Group, values_from = c(`Graduation Rate Difference`), names_sep = " "), `2022-2017 Graduation Rate Difference`)
+                 pivot_wider(names_from = Group, values_from = c(`Graduation Rate Difference`), names_sep = " "), `2023-2022 Graduation Rate Difference`)
+
+joined_grad %>%
+  mutate("Cohort Difference" = `2023 Cohort` - `2022 Cohort`)%>%
+  mutate("Graduation Count Difference" = `2023 Count` - `2022 Count`)%>%
+  mutate("Graduation Rate Difference" = `2023 Graduation Rate` - `2022 Graduation Rate`)%>%
+  pivot_longer(-c(`System Name`, `Group`), names_to = "Measure", values_to = "Value")%>%
+  filter(Measure == "Graduation Rate Difference")%>%
+  mutate(Value = round(Value,2))%>%
+  ggplot(aes(x = Value, y = Group, fill = `System Name`))+
+  geom_bar(stat = 'identity', position = "dodge")+
+  facet_wrap(~`System Name`, scales = "free")+
+  geom_label(aes(label = Value), position = position_dodge(width = 1),fill = "white", show.legend = FALSE, size = 3)+
+  theme(text = element_text("Calibri"))+
+  labs(y = " ", x = " ")+
+  theme(strip.text.x = element_text(size = rel(1.5)))+
+  theme(strip.text.x = element_text(face = "bold"))+
+  theme(plot.title = element_text(size=rel(2.25)))+
+  theme(plot.title = element_text(face = "bold"))+
+  theme(plot.subtitle = element_text(size = rel(1.5)))+
+  theme(plot.subtitle = element_text(face = "italic"))+
+  theme(axis.text.x = element_text(size = rel(1)))+
+  theme(axis.text.x = element_text(face = "bold"))+
+  theme(legend.text=element_text(size=rel(1.5)))+
+  theme(legend.text = element_text(face = "bold"))+
+  theme(legend.position = "none")+
+  ggtitle("2023 to 2022 Graduate Rate Difference")
+
+  
+
+
+ggplot(aes(y = fct_rev(), x = Percent, fill = District))+
+  geom_bar(stat = "identity")+
+  geom_label(aes(label = Percent), position = position_dodge(width = 1),fill = "white", show.legend = FALSE, size = 3)+
+  facet_wrap(~District)+
+  theme(text = element_text("Calibri"))+
+  labs(y = " ", x = " ")+
+  theme(strip.text.x = element_text(size = rel(1.5)))+
+  theme(strip.text.x = element_text(face = "bold"))+
+  theme(plot.title = element_text(size=rel(2.25)))+
+  theme(plot.title = element_text(face = "bold"))+
+  theme(plot.subtitle = element_text(size = rel(1.5)))+
+  theme(plot.subtitle = element_text(face = "italic"))+
+  theme(axis.text.x = element_text(size = rel(1)))+
+  theme(axis.text.x = element_text(face = "bold"))+
+  theme(legend.text=element_text(size=rel(1.5)))+
+  theme(legend.text = element_text(face = "bold"))+
+  theme(legend.position = "none")+
+  ggtitle("2021-2022 Percent of Students at Each Grade Level")
+
 
 ##### child care cost #####
 
@@ -734,7 +892,7 @@ joined_mrs_childcare %>%
   ggplot(aes( y = Type, x = `52 Week % Change`, fill = Location))+
   geom_bar(stat = "identity", position = position_dodge(width = 1))+
   facet_wrap(~Location, scales = "free_x")+
-  geom_label(aes(group = Type,label = `52 Week % Change`), position = position_dodge(width = 1),color = "black", angle = 90, show.legend = FALSE, size = 3)+
+  geom_label(aes(group = Type,label = `52 Week % Change`), position = position_dodge(width = 1),color = "black", show.legend = FALSE, size = 3)+
   theme(text = element_text("Calibri"))+
   labs(y = " ", x = " ")+
   theme(strip.text.x = element_text(size = rel(1.5)))+
@@ -963,3 +1121,18 @@ childcare_state_rankings %>%
   theme(legend.text = element_text(face = "bold"))+
   theme(legend.position = "none")+ 
   ggtitle("Childcare Burden as Percent of Median HH Income for 2 Children", subtitle = "State County Ranking in Black")
+
+
+#### special education ####
+
+View(Special_education_from_K_to_12th_grade)
+
+locations <- c("Tennessee", "Carter", "Greene", "Hancock", "Hawkins", "Johnson", "Sullivan", "Unicoi", "Washington")
+
+uethda_special_education <- Special_education_from_K_to_12th_grade %>%
+  filter(Location %in% locations)%>%
+  select(!LocationType)
+
+uethda_special_education %>%
+  filter(Location == 'Tennessee')%>%
+  tail()

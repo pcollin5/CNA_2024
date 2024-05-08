@@ -1,5 +1,7 @@
 #### bls stuff ####
 
+library(blscrapeR)
+
 set_bls_key('8015a2fa8c3b42f2b6e73a1bb924a831', overwrite = TRUE)
 
 sullivan_county_ids <- search_ids(keyword = c("Sullivan County", "Tn"))
@@ -84,6 +86,10 @@ bristol_bls_ids
 
 bristol_bls_series_ids <- c("LAUCT470854000000003", "LAUCT470854000000004",
                             "LAUCT470854000000005", "LAUCT470854000000006")
+library(devtools)
+install_github('mikeasilva/blsAPI')
+
+install.packages("blsAPI")
 
 # carter
 carter_bls_ids <- search_ids(keyword = c("Carter County", "Tn"))
@@ -184,7 +190,7 @@ named_unemployment_rate %>%
   theme(legend.text=element_text(size=rel(1)))+
   theme(legend.text = element_text(face = "bold"))+
   theme(legend.position = "none")+
-  ggtitle("Unemployement Rate from 2016 to January 2024")
+  ggtitle("Unemployement Rate from 2016 to March 2024")
 
 named_unemployment%>%
   mutate(latest = as.logical(latest))%>%
@@ -210,7 +216,7 @@ named_unemployment%>%
   theme(legend.text=element_text(size=rel(1)))+
   theme(legend.text = element_text(face = "bold"))+
   theme(legend.position = "none")+
-  ggtitle("Unemployed People from 2016 to January 2024")
+  ggtitle("Unemployed People from 2016 to March 2024")
 
 named_employment %>%
   mutate(latest = as.logical(latest))%>%
@@ -236,7 +242,7 @@ named_employment %>%
   theme(legend.text=element_text(size=rel(1)))+
   theme(legend.text = element_text(face = "bold"))+
   theme(legend.position = "none")+
-  ggtitle("Employed People from 2016 to January 2024")
+  ggtitle("Employed People from 2016 to March 2024")
 
 named_labor_force %>%
   mutate(latest = as.logical(latest))%>%
@@ -262,7 +268,7 @@ named_labor_force %>%
   theme(legend.text=element_text(size=rel(1)))+
   theme(legend.text = element_text(face = "bold"))+
   theme(legend.position = "none")+
-  ggtitle("Labor Force from 2016 to January 2024")
+  ggtitle("Labor Force from 2016 to March 2024")
 
 
 named_labor_force %>%
@@ -289,7 +295,7 @@ named_labor_force %>%
   theme(legend.text=element_text(size=rel(1)))+
   theme(legend.text = element_text(face = "bold"))+
   theme(legend.position = "none")+
-  ggtitle("Labor Force from 2016 to January 2024")
+  ggtitle("Labor Force from 2016 to March 2024")
 
 #### 
 search_ids(keyword = c("Labor Force Demographics", "Tn"))

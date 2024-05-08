@@ -580,17 +580,15 @@ table_function(joined_county_work_status %>%
                  select(Location, Variable, `2022 Estimate`)%>%
                  pivot_wider(names_from = "Variable", values_from = `2022 Estimate`), `2022 Work Status and Hours Worked`)
 
-county_total_pop_work_status%>%
-  filter(Variable %in% total_work_status_vars)%>%
-  mutate(`Percent Change` = round(100*(`2022 Estimate` - `2021 Estimate`)/`2021 Estimate`,2))%>%
+county_percent_work_status_to_join %>%
+  mutate(`Percent Difference` = round((`2022 Estimate` - `2021 Estimate`),2))%>%
   mutate(Significant = significance(`2022 Estimate`, `2021 Estimate`, `2022 MOE`, `2021 MOE`, clevel = 0.95))%>%
-  filter(str_detect(Variable, "Percent", negate = TRUE))%>%
+  filter(str_detect(Variable, "Percent"))%>%
   mutate(Location = factor(Location, levels = location_factors_for_graph))%>%
-  mutate(Variable = factor(Variable, levels = total_work_status_factor))%>%
-  ggplot(aes( y = fct_rev(Variable), x = `Percent Change`, fill = Significant))+
+  ggplot(aes( y = fct_rev(Variable), x = `Percent Difference`, fill = Significant))+
   geom_bar(stat = "identity", position = position_dodge(width = 1))+
   facet_wrap(~Location, scales = "free_x")+
-  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "black", angle = 90, show.legend = FALSE, size = 3)+
+  geom_label(aes(group = Variable,label = `Percent Difference`), position = position_dodge(width = 1),color = "white", show.legend = FALSE, size = 3)+
   theme(text = element_text("Calibri"))+
   scale_fill_brewer(palette = "Set1")+
   labs(y = " ", x = " ")+
@@ -609,7 +607,7 @@ county_total_pop_work_status%>%
   theme(legend.text = element_text(face = "bold"))+
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank())+
-  ggtitle("Percent Change in Total Population Hours Worked from 2021 to 2022")
+  ggtitle("Percent Difference in Total Population Hours Worked from 2021 to 2022")
 
 
 
@@ -684,7 +682,7 @@ joined_gended_work_status %>%
   ggplot(aes( y = fct_rev(Variable), x = `Percent Change`, fill = Significant))+
   geom_bar(stat = "identity", position = position_dodge(width = 1))+
   facet_wrap(~Location, scales = "free_x")+
-  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "white", angle = 90, show.legend = FALSE, size = 3)+
+  geom_label(aes(group = Variable,label = `Percent Change`), position = position_dodge(width = 1),color = "white", show.legend = FALSE, size = 3)+
   theme(text = element_text("Calibri"))+
   scale_fill_brewer(palette = "Set1")+
   labs(y = " ", x = " ")+
