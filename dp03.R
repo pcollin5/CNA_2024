@@ -774,6 +774,8 @@ tract_methods_of_income <- left_join(tract_methods_of_income_22, tract_methods_o
 
 schools_methods_of_income <- left_join(schools_methods_of_income_22, schools_methods_of_income_21, by = c("Location", "Variable"))
 
+full_methods_of_income
+
 #health_insurance_vars
 full_health_insurance_22 <- Full_dp_2022 %>%
   filter(variable %in% health_insurance_vars)%>%
@@ -1442,6 +1444,32 @@ county_health_insurance %>%
   theme(axis.text.x=element_blank(),
         axis.ticks.x=element_blank())+
   ggtitle("Percent Difference in Health Insurance from 2021 to 2022")
+
+
+### snap ####
+
+
+full_methods_of_income %>%
+  filter(str_detect(Variable, "SNAP"))%>%
+  filter(str_detect(Variable, "Percent"))%>%
+  ggplot(aes(x = TimeFrame, y = Data, group = Location))+
+  geom_line(aes(color = Location), linewidth = 2)+
+  geom_label(aes(label = Data), position = position_dodge(width = 1),fill = "white", show.legend = FALSE, size = 3)+
+  facet_wrap(~Location, scales = "free")+
+  theme(text = element_text("Calibri"))+
+  scale_fill_brewer(palette = "BrBG")+
+  labs(y = " ", x = " ")+
+  theme(strip.text.x = element_text(size = rel(1.5)))+
+  theme(strip.text.x = element_text(face = "bold"))+
+  theme(plot.title = element_text(size=rel(2.25)))+
+  theme(plot.title = element_text(face = "bold"))+
+  theme(plot.subtitle = element_text(size = rel(1.5)))+
+  theme(plot.subtitle = element_text(face = "italic"))+
+  theme(axis.text.x = element_text(size = rel(1)))+
+  theme(axis.text.x = element_text(face = "bold"))+
+  theme(legend.text=element_text(size=rel(1.5)))+
+  theme(legend.text = element_text(face = "bold"))+
+  ggtitle("Total Number of Early Childhood Intervention since 2019")
 
 
 #kpt

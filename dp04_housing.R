@@ -350,6 +350,7 @@ county_housing_tenure_22 <- Full_dp_2022 %>%
   mutate(Location = remove_after_comma_function(Location))%>%
   select(Location, Variable, Estimate, MOE)
 
+
 county_housing_tenure_21 <- Full_dp_2021 %>%
   filter(variable %in% housing_tenure_vars)%>%
   cbind(housing_tenure_names) %>%
@@ -1911,7 +1912,7 @@ table_function(county_smoc%>%
                  filter(Variable != "Percent Owner Occupied Housing Units")%>%
                  filter(Variable != "Percent Median Mortgage")%>%
                  st_drop_geometry()%>%
-                 pivot_wider(names_from = Variable, values_from = `2022 Estimate`), `2022 Home Value`)
+                 pivot_wider(names_from = Variable, values_from = `2022 Estimate`), `2022 Mortgage Costs`)
 
 
 median_mortgage_22 <- county_smoc %>%
