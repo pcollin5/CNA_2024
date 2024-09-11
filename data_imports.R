@@ -979,8 +979,26 @@ tn_school_districts_DP05_22 <- get_acs(geography = "school district (unified)", 
 
 tn_school_districts_2022 <- rbind(tn_school_districts_DP02_22, tn_school_districts_DP03_22, tn_school_districts_DP04_22, tn_school_districts_DP05_22)
 
+tn_school_districts_2022
+
 joined_tn_school_districts_2022 <- inner_join(tn_school_districts_2022, dp_table_variables_22, by = "variable")
 
+joined_tn_school_districts_2022
+
+# 2022
+
+bristol_va_school_district_DP02_22 <- get_acs(geography = "school district (unified)", state = "VA", table = "DP02", year = 2022, geometry = TRUE)
+
+bristol_va_school_district_DP03_22 <- get_acs(geography = "school district (unified)", state = "VA", table = "DP03", year = 2022, geometry = TRUE)
+
+bristol_va_school_district_DP04_22 <- get_acs(geography = "school district (unified)", state = "VA", table = "DP04", year = 2022, geometry = TRUE)
+
+bristol_va_school_district_DP05_22 <- get_acs(geography = "school district (unified)", state = "VA", table = "DP05", year = 2022, geometry = TRUE)
+
+bristol_va_school_district_2022 <- rbind(bristol_va_school_district_DP02_22, bristol_va_school_district_DP03_22, bristol_va_school_district_DP04_22, bristol_va_school_district_DP05_22)
+
+bristol_va_school_districts_2022 <- bristol_va_school_district_2022 %>%
+  filter(str_detect(NAME, "Bristol"))
 
 # 2021
 
@@ -994,7 +1012,26 @@ tn_school_districts_DP05_21 <- get_acs(geography = "school district (unified)", 
 
 tn_school_districts_2021 <- rbind(tn_school_districts_DP02_21, tn_school_districts_DP03_21, tn_school_districts_DP04_21, tn_school_districts_DP05_21)
 
-joined_tn_school_districts_2021 <- inner_join(tn_school_districts_2021, dp_table_variables_21, by = "variable")
+
+
+# 2021
+
+bristol_va_school_district_DP02_21 <- get_acs(geography = "school district (unified)", state = "VA", table = "DP02", year = 2021, geometry = TRUE)
+
+bristol_va_school_district_DP03_21 <- get_acs(geography = "school district (unified)", state = "VA", table = "DP03", year = 2021, geometry = TRUE)
+
+bristol_va_school_district_DP04_21 <- get_acs(geography = "school district (unified)", state = "VA", table = "DP04", year = 2021, geometry = TRUE)
+
+bristol_va_school_district_DP05_21 <- get_acs(geography = "school district (unified)", state = "VA", table = "DP05", year = 2021, geometry = TRUE)
+
+bristol_va_school_district_2021 <- rbind(bristol_va_school_district_DP02_21, bristol_va_school_district_DP03_21, bristol_va_school_district_DP04_21, bristol_va_school_district_DP05_21)
+
+joined_va_school_districts_2021 <- inner_join(bristol_va_school_district_2021, dp_table_variables_21, by = "variable")
+
+bristol_va_school_districts_2021 <- bristol_va_school_district_2021 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+bristol_va_school_districts_2021
 
 #### extracting school districts #####
 
@@ -1013,6 +1050,8 @@ tn_school_districts_2021
 # Carter County Schools
 carter_county_schools_22 <- tn_school_districts_2022 %>%
   filter(str_detect(NAME, "Carter County"))
+
+carter_county_schools_22
 
 # Elizabethon City Schools
 elizabethton_schools_22 <- tn_school_districts_2022 %>%
@@ -1068,7 +1107,8 @@ kpt_temp_22 <- kpt_city_schools_22 %>%
 # bristol city school
 
 bristol_schools_22 <- tn_school_districts_2022 %>%
-  filter(str_detect(NAME, "Bristol"))
+  filter(str_detect(NAME, "Bristol"))%>%
+  filter(str_detect(NAME, "Tennessee"))
 
 bristol_temp_22 <- bristol_schools_22 %>%
   mutate(County = "Sullivan")
@@ -1108,9 +1148,14 @@ washington_county_schools_22
 washington_county_temp_22 <- washington_county_schools_22 %>%
   mutate(County = "Washington")
 
+
+carter_county_schools_22
+
 uethda_schools_2022 <- rbind(carter_county_schools_22, elizabethton_schools_22, greeneville_city_schools_22, greene_county_schools_22,
                              hancock_county_schools_22, hawkins_county_schools_22, johnson_county_schools_22, kpt_city_schools_22,
-                             bristol_schools_22, sullivan_schools_22, unicoi_schools_22, jc_schools_22, washington_county_schools_22)
+                             bristol_schools_22, sullivan_schools_22, unicoi_schools_22, jc_schools_22, washington_county_schools_22, bristol_va_school_districts_2022)
+
+
 
 #### 2021 ####
 
@@ -1175,7 +1220,8 @@ kpt_temp_21 <- kpt_city_schools_21 %>%
 # bristol city school
 
 bristol_schools_21 <- tn_school_districts_2021 %>%
-  filter(str_detect(NAME, "Bristol"))
+  filter(str_detect(NAME, "Bristol"))%>%
+  filter(str_detect(NAME, "Tennessee"))
 
 bristol_temp_21 <- bristol_schools_21 %>%
   mutate(County = "Sullivan")
@@ -1217,8 +1263,7 @@ washington_county_temp_21 <- washington_county_schools_21 %>%
 
 uethda_schools_2021 <- rbind(carter_county_schools_21, elizabethton_schools_21, greeneville_city_schools_21, greene_county_schools_21,
                              hancock_county_schools_21, hawkins_county_schools_21, johnson_county_schools_21, kpt_city_schools_21,
-                             bristol_schools_21, sullivan_schools_21, unicoi_schools_21, jc_schools_21, washington_county_schools_21)
-
+                             bristol_schools_21, sullivan_schools_21, unicoi_schools_21, jc_schools_21, washington_county_schools_21, bristol_va_school_districts_2021)
 
 
 
@@ -1264,6 +1309,17 @@ names(subject_table_variables_21) <- new_names_22
 
 # school districts
 tn_school_districts_fertility_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1301", year = 2022, geometry = TRUE)
+
+va_school_districts_fertility_2022 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1301", year = 2022, geometry = TRUE)
+
+bristol_school_district_fertility_2022 <- va_school_districts_fertility_2022 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_fertility_2022 <- rbind(tn_school_districts_fertility_2022, bristol_school_district_fertility_2022)
+
+school_districts_fertility_2022 %>%
+  filter(str_detect(NAME, "Bristol"))%>%
+  filter(str_detect(NAME, "Virginia"))
 
 # carter 
 
@@ -1313,6 +1369,7 @@ Washington_tract_fertility_2022 <- get_acs(geography = "tract", county = "Washin
 
 Washington_county_fertility_2022 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1301", year = 2022, geometry = TRUE)
 
+
 # 2021
 subject_table_variables_2021 <- load_variables(2021, "acs5/subject", cache = TRUE)
 
@@ -1325,9 +1382,16 @@ View(subject_table_variables_2021)
 subject_table_variables_2016 <- load_variables(2016, "acs5/subject", cache = TRUE)
 
 names(subject_table_variables_2016) <- new_names_21
-
 # school districts
 tn_school_districts_fertility_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1301", year = 2021, geometry = TRUE)
+
+va_school_districts_fertility_2021 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1301", year = 2021, geometry = TRUE)
+
+bristol_school_district_fertility_2021 <- va_school_districts_fertility_2021 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_fertility_2021 <- rbind(tn_school_districts_fertility_2021, bristol_school_district_fertility_2021)
+
 
 # carter 
 
@@ -1378,6 +1442,7 @@ Washington_tract_fertility_2021 <- get_acs(geography = "tract", county = "Washin
 Washington_county_fertility_2021 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1301", year = 2021, geometry = TRUE)
 
 
+
 ### 2020
 
 subject_table_variables_20 <- load_variables(2020, "acs5/subject", cache = TRUE)
@@ -1390,6 +1455,14 @@ View(subject_table_variables_20)
 
 # school districts
 tn_school_districts_fertility_2020 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1301", year = 2020, geometry = TRUE)
+
+va_school_districts_fertility_2020 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1301", year = 2020, geometry = TRUE)
+
+bristol_school_district_fertility_2020 <- va_school_districts_fertility_2020 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_fertility_2020 <- rbind(tn_school_districts_fertility_2020, bristol_school_district_fertility_2020)
+
 
 # carter 
 
@@ -1439,6 +1512,7 @@ Washington_tract_fertility_2020 <- get_acs(geography = "tract", county = "Washin
 
 Washington_county_fertility_2020 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1301", year = 2020, geometry = TRUE)
 
+
 #2019
 
 subject_table_variables_19 <- load_variables(2019, "acs5/subject", cache = TRUE)
@@ -1450,6 +1524,14 @@ names(subject_table_variables_19) <- new_names_19
 
 # school districts
 tn_school_districts_fertility_2019 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1301", year = 2019, geometry = TRUE)
+
+va_school_districts_fertility_2019 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1301", year = 2019, geometry = TRUE)
+
+bristol_school_district_fertility_2019 <- va_school_districts_fertility_2019 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_fertility_2019 <- rbind(tn_school_districts_fertility_2019, bristol_school_district_fertility_2019)
+
 
 # carter 
 
@@ -1499,6 +1581,7 @@ Washington_tract_fertility_2019 <- get_acs(geography = "tract", county = "Washin
 
 Washington_county_fertility_2019 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1301", year = 2019, geometry = TRUE)
 
+
 #2018
 
 subject_table_variables_2018 <- load_variables(2018, "acs5/subject", cache = TRUE)
@@ -1511,6 +1594,14 @@ View(subject_table_variables_2018)
 
 # school districts
 tn_school_districts_fertility_2018 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1301", year = 2018, geometry = TRUE)
+
+va_school_districts_fertility_2018 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1301", year = 2018, geometry = TRUE)
+
+bristol_school_district_fertility_2018 <- va_school_districts_fertility_2018 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_fertility_2018 <- rbind(tn_school_districts_fertility_2018, bristol_school_district_fertility_2018)
+
 
 # carter 
 
@@ -1560,6 +1651,7 @@ Washington_tract_fertility_2018 <- get_acs(geography = "tract", county = "Washin
 
 Washington_county_fertility_2018 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1301", year = 2018, geometry = TRUE)
 
+
 #2017
 
 subject_table_variables_2017 <- load_variables(2017, "acs5/subject", cache = TRUE)
@@ -1571,6 +1663,14 @@ names(subject_table_variables_2017) <- new_names_19
 
 # school districts
 tn_school_districts_fertility_2017 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1301", year = 2017, geometry = TRUE)
+
+va_school_districts_fertility_2017 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1301", year = 2017, geometry = TRUE)
+
+bristol_school_district_fertility_2017 <- va_school_districts_fertility_2017 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_fertility_2017 <- rbind(tn_school_districts_fertility_2017, bristol_school_district_fertility_2017)
+
 
 # carter 
 
@@ -1621,6 +1721,7 @@ Washington_tract_fertility_2017 <- get_acs(geography = "tract", county = "Washin
 Washington_county_fertility_2017 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1301", year = 2017, geometry = TRUE)
 
 
+
 #2016
 
 subject_table_variables_2016 <- load_variables(2016, "acs5/subject", cache = TRUE)
@@ -1629,9 +1730,16 @@ new_names_19 <- c("variable", "label", "concept")
 
 names(subject_table_variables_2016) <- new_names_19
 
-
 # school districts
 tn_school_districts_fertility_2016 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1301", year = 2016, geometry = TRUE)
+
+va_school_districts_fertility_2016 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1301", year = 2016, geometry = TRUE)
+
+bristol_school_district_fertility_2016 <- va_school_districts_fertility_2016 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_fertility_2016 <- rbind(tn_school_districts_fertility_2016, bristol_school_district_fertility_2016)
+
 
 # carter 
 
@@ -1681,6 +1789,7 @@ Washington_tract_fertility_2016 <- get_acs(geography = "tract", county = "Washin
 
 Washington_county_fertility_2016 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1301", year = 2016, geometry = TRUE)
 
+
 #2015
 
 subject_table_variables_2015 <- load_variables(2015, "acs5/subject", cache = TRUE)
@@ -1693,6 +1802,14 @@ View(subject_table_variables_2015)
 
 # school districts
 tn_school_districts_fertility_2015 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1301", year = 2015, geometry = TRUE)
+
+va_school_districts_fertility_2015 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1301", year = 2015, geometry = TRUE)
+
+bristol_school_district_fertility_2015 <- va_school_districts_fertility_2015 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_fertility_2015 <- rbind(tn_school_districts_fertility_2015, bristol_school_district_fertility_2015)
+
 
 # carter 
 
@@ -1742,6 +1859,7 @@ Washington_tract_fertility_2015 <- get_acs(geography = "tract", county = "Washin
 
 Washington_county_fertility_2015 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1301", year = 2015, geometry = TRUE)
 
+
 #2014
 
 subject_table_variables_2014 <- load_variables(2014, "acs5/subject", cache = TRUE)
@@ -1753,6 +1871,13 @@ names(subject_table_variables_2014) <- new_names_19
 
 # school districts
 tn_school_districts_fertility_2014 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1301", year = 2014, geometry = TRUE)
+
+va_school_districts_fertility_2014 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1301", year = 2014, geometry = TRUE)
+
+bristol_school_district_fertility_2014 <- va_school_districts_fertility_2014 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_fertility_2014 <- rbind(tn_school_districts_fertility_2014, bristol_school_district_fertility_2014)
 
 # carter 
 
@@ -1802,6 +1927,7 @@ Washington_tract_fertility_2014 <- get_acs(geography = "tract", county = "Washin
 
 Washington_county_fertility_2014 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1301", year = 2014, geometry = TRUE)
 
+
 #2013
 
 subject_table_variables_2013 <- load_variables(2013, "acs5/subject", cache = TRUE)
@@ -1814,6 +1940,14 @@ View(subject_table_variables_2013)
 
 # school districts
 tn_school_districts_fertility_2013 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1301", year = 2013, geometry = TRUE)
+
+va_school_districts_fertility_2013 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1301", year = 2013, geometry = TRUE)
+
+bristol_school_district_fertility_2013 <- va_school_districts_fertility_2013 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_fertility_2013 <- rbind(tn_school_districts_fertility_2013, bristol_school_district_fertility_2013)
+
 
 # carter 
 
@@ -1863,6 +1997,7 @@ Washington_tract_fertility_2013 <- get_acs(geography = "tract", county = "Washin
 
 Washington_county_fertility_2013 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1301", year = 2013, geometry = TRUE)
 
+
 #2012
 
 subject_table_variables_2012 <- load_variables(2012, "acs5/subject", cache = TRUE)
@@ -1874,6 +2009,14 @@ names(subject_table_variables_2012) <- new_names_19
 
 # school districts
 tn_school_districts_fertility_2012 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1301", year = 2012, geometry = TRUE)
+
+va_school_districts_fertility_2012 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1301", year = 2012, geometry = TRUE)
+
+bristol_school_district_fertility_2012 <- va_school_districts_fertility_2012 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_fertility_2012 <- rbind(tn_school_districts_fertility_2012, bristol_school_district_fertility_2012)
+
 
 # carter 
 
@@ -1923,6 +2066,7 @@ Washington_tract_fertility_2012 <- get_acs(geography = "tract", county = "Washin
 
 Washington_county_fertility_2012 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1301", year = 2012, geometry = TRUE)
 
+
 #2011
 
 subject_table_variables_2011 <- load_variables(2011, "acs5/subject", cache = TRUE)
@@ -1935,6 +2079,17 @@ View(subject_table_variables_2011)
 
 # school districts
 tn_school_districts_fertility_2011 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1301", year = 2011, geometry = TRUE)
+
+va_school_districts_fertility_2011 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1301", year = 2011, geometry = TRUE)
+
+bristol_school_district_fertility_2011 <- va_school_districts_fertility_2011 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+bristol_school_district_fertility_2011
+
+school_districts_fertility_2011 <- rbind(tn_school_districts_fertility_2011, bristol_school_district_fertility_2011)
+
+
 
 # carter 
 
@@ -1985,6 +2140,7 @@ Washington_tract_fertility_2011 <- get_acs(geography = "tract", county = "Washin
 Washington_county_fertility_2011 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1301", year = 2011, geometry = TRUE)
 
 
+
 ## bind counties together by year 
 
 county_fertility_2022 <- rbind(Carter_county_fertility_2022, Greene_county_fertility_2022, Hancock_county_fertility_2022, Hawkins_county_fertility_2022, 
@@ -1992,6 +2148,7 @@ county_fertility_2022 <- rbind(Carter_county_fertility_2022, Greene_county_ferti
 
 tract_fertility_2022 <- rbind(Carter_tract_fertility_2022, Greene_tract_fertility_2022, Hancock_tract_fertility_2022, Hawkins_tract_fertility_2022,
                               Johnson_tract_fertility_2022, Sullivan_tract_fertility_2022, Unicoi_tract_fertility_2022, Washington_tract_fertility_2022)
+
 
 county_fertility_2021 <- rbind(Carter_county_fertility_2021, Greene_county_fertility_2021, Hancock_county_fertility_2021, Hawkins_county_fertility_2021, 
                                Johnson_county_fertility_2021, Sullivan_county_fertility_2021, Unicoi_county_fertility_2021, Washington_county_fertility_2021)
@@ -2061,12 +2218,21 @@ tract_fertility_2011 <- rbind(Carter_tract_fertility_2011, Greene_tract_fertilit
 
 
 
+
 # 2022 
-uethda_county_fertility_2022 <- inner_join(county_fertility_2022, subject_table_variables_2022, by = "variable")
+uethda_county_fertility_2022 <- inner_join(county_fertility_2022, subject_table_variables_2022, by = c("variable"))
 
 uethda_tract_fertility_2022 <- inner_join(tract_fertility_2022, subject_table_variables_2022, by = "variable")
 
-school_district_fertility_2022 <- inner_join(tn_school_districts_fertility_2022, subject_table_variables_2022, by = "variable")
+uw_schools_fertility_2022 <- inner_join(school_districts_fertility_2022, subject_table_variables_2022, by = "variable")
+
+school_districts_fertility_2022 %>%
+  filter(str_detect(NAME, "Bristol"))%>%
+  filter(str_detect(NAME, "Vir"))
+
+uw_schools_fertility_2022  %>%
+  filter(str_detect(NAME, "Bristol"))%>%
+  filter(str_detect(NAME, "Vir"))
 
 
 # 2021 
@@ -2074,77 +2240,115 @@ uethda_county_fertility_2021 <- inner_join(county_fertility_2021, subject_table_
 
 uethda_tract_fertility_2021 <- inner_join(tract_fertility_2021, subject_table_variables_2021, by = "variable")
 
-school_district_fertility_2021 <- inner_join(tn_school_districts_fertility_2021, subject_table_variables_2021, by = "variable")
+uw_schools_fertility_2021 <- inner_join(school_districts_fertility_2021, subject_table_variables_2021, by = "variable")
+
+uw_schools_fertility_2021  %>%
+  filter(str_detect(NAME, "Bristol"))%>%
+  filter(str_detect(NAME, "Vir"))
 
 # 2020 
 uethda_county_fertility_2020 <- inner_join(county_fertility_2020, subject_table_variables_20, by = "variable")
 
 uethda_tract_fertility_2020 <- inner_join(tract_fertility_2020, subject_table_variables_20, by = "variable")
 
-school_district_fertility_2020 <- inner_join(tn_school_districts_fertility_2020, subject_table_variables_20, by = "variable")
+uw_schools_fertility_2020 <- inner_join(school_districts_fertility_2020, subject_table_variables_20, by = "variable")
+
+uw_schools_fertility_2020
+
 
 # 2019 
 uethda_county_fertility_2019 <- inner_join(county_fertility_2019, subject_table_variables_19, by = "variable")
 
 uethda_tract_fertility_2019 <- inner_join(tract_fertility_2019, subject_table_variables_19, by = "variable")
 
-school_district_fertility_2019 <- inner_join(tn_school_districts_fertility_2019, subject_table_variables_19, by = "variable")
+uw_schools_fertility_2019 <- inner_join(school_districts_fertility_2019, subject_table_variables_19, by = "variable")
+
+uw_schools_fertility_2019
+
 
 # 2018 
 uethda_county_fertility_2018 <- inner_join(county_fertility_2018, subject_table_variables_19, by = "variable")
 
 uethda_tract_fertility_2018 <- inner_join(tract_fertility_2018, subject_table_variables_19, by = "variable")
 
-school_district_fertility_2018 <- inner_join(tn_school_districts_fertility_2018, subject_table_variables_19, by = "variable")
+uw_schools_fertility_2018 <- inner_join(school_districts_fertility_2018, subject_table_variables_2018, by = "variable")
+
+uw_schools_fertility_2018 %>%
+  filter(str_detect(NAME, "Bristol"))%>%
+  filter(str_detect(NAME, "Vir"))
+
 
 # 2017 
 uethda_county_fertility_2017 <- inner_join(county_fertility_2017, subject_table_variables_19, by = "variable")
 
 uethda_tract_fertility_2017 <- inner_join(tract_fertility_2017, subject_table_variables_19, by = "variable")
 
-school_district_fertility_2017 <- inner_join(tn_school_districts_fertility_2017, subject_table_variables_19, by = "variable")
+uw_schools_fertility_2017 <- inner_join(school_districts_fertility_2017, subject_table_variables_2017, by = "variable")
+
+uw_schools_fertility_2017
+
 
 # 2016 
 uethda_county_fertility_2016 <- inner_join(county_fertility_2016, subject_table_variables_19, by = "variable")
 
 uethda_tract_fertility_2016 <- inner_join(tract_fertility_2016, subject_table_variables_19, by = "variable")
 
-school_district_fertility_2016 <- inner_join(tn_school_districts_fertility_2016, subject_table_variables_19, by = "variable")
+uw_schools_fertility_2016 <- inner_join(school_districts_fertility_2016, subject_table_variables_2016, by = "variable")
+
+uw_schools_fertility_2016
+
 
 # 2015 
 uethda_county_fertility_2015 <- inner_join(county_fertility_2015, subject_table_variables_19, by = "variable")
 
 uethda_tract_fertility_2015 <- inner_join(tract_fertility_2015, subject_table_variables_19, by = "variable")
 
-school_district_fertility_2015 <- inner_join(tn_school_districts_fertility_2015, subject_table_variables_19, by = "variable")
+uw_schools_fertility_2015 <- inner_join(school_districts_fertility_2015, subject_table_variables_2015, by = "variable")
+
+uw_schools_fertility_2015
+
 
 # 2014 
 uethda_county_fertility_2014 <- inner_join(county_fertility_2014, subject_table_variables_19, by = "variable")
 
 uethda_tract_fertility_2014 <- inner_join(tract_fertility_2014, subject_table_variables_19, by = "variable")
 
-school_district_fertility_2014 <- inner_join(tn_school_districts_fertility_2014, subject_table_variables_19, by = "variable")
+uw_schools_fertility_2014 <- inner_join(school_districts_fertility_2014, subject_table_variables_2014, by = "variable")
+
+uw_schools_fertility_2014
+
 
 # 2013 
 uethda_county_fertility_2013 <- inner_join(county_fertility_2013, subject_table_variables_19, by = "variable")
 
 uethda_tract_fertility_2013 <- inner_join(tract_fertility_2013, subject_table_variables_19, by = "variable")
 
-school_district_fertility_2013 <- inner_join(tn_school_districts_fertility_2013, subject_table_variables_19, by = "variable")
+uw_schools_fertility_2013 <- inner_join(school_districts_fertility_2013, subject_table_variables_2013, by = "variable")
+
+uw_schools_fertility_2013
+
 
 # 2012 
 uethda_county_fertility_2012 <- inner_join(county_fertility_2012, subject_table_variables_19, by = "variable")
 
 uethda_tract_fertility_2012 <- inner_join(tract_fertility_2012, subject_table_variables_19, by = "variable")
 
-school_district_fertility_2012 <- inner_join(tn_school_districts_fertility_2012, subject_table_variables_19, by = "variable")
+uw_schools_fertility_2012 <- inner_join(school_districts_fertility_2012, subject_table_variables_2012, by = "variable")
+
+uw_schools_fertility_2012
+
 
 # 2011 
 uethda_county_fertility_2011 <- inner_join(county_fertility_2011, subject_table_variables_19, by = "variable")
 
 uethda_tract_fertility_2011 <- inner_join(tract_fertility_2011, subject_table_variables_19, by = "variable")
 
-school_district_fertility_2011 <- inner_join(tn_school_districts_fertility_2011, subject_table_variables_19, by = "variable")
+uw_schools_fertility_2011 <- inner_join(school_districts_fertility_2011, subject_table_variables_2011, by = "variable")
+
+names(uw_schools_fertility_2013) 
+
+
+
 
 
 # clean the names 
@@ -2152,6 +2356,8 @@ school_district_fertility_2011 <- inner_join(tn_school_districts_fertility_2011,
 # clean the names 
 
 # 2022
+
+names(uethda_tract_fertility_2022)
 
 cleaned_uethda_county_fertility_2022 <- uethda_county_fertility_2022 %>%
   select(NAME, variable,estimate, moe, label, geometry)%>%
@@ -2163,10 +2369,18 @@ cleaned_uethda_tract_fertility_2022 <- uethda_tract_fertility_2022 %>%
   mutate(Year = 2022)%>%
   rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
-cleaned_school_district_fertility_2022 <- school_district_fertility_2022 %>%
+cleaned_school_district_fertility_2022 <- uw_schools_fertility_2022 %>%
   select(NAME, variable,estimate, moe, label, geometry)%>%
   mutate(Year = 2022)%>%
   rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+uw_schools_fertility_2022 %>%
+  filter(str_detect(NAME, "Bristol"))%>%
+  filter(str_detect(NAME, "Virginia"))
+
+cleaned_school_district_fertility_2022 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 # 2021
 
@@ -2180,10 +2394,11 @@ cleaned_uethda_tract_fertility_2021 <- uethda_tract_fertility_2021 %>%
   mutate(Year = 2021)%>%
   rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
-cleaned_school_district_fertility_2021 <- school_district_fertility_2021 %>%
+cleaned_school_district_fertility_2021 <- uw_schools_fertility_2021 %>%
   select(NAME, variable,estimate, moe, label, geometry)%>%
   mutate(Year = 2021)%>%
   rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
 
 # 2020
 
@@ -2197,10 +2412,10 @@ cleaned_uethda_tract_fertility_2020 <- uethda_tract_fertility_2020 %>%
   mutate(Year = 2020)%>%
   rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
-cleaned_school_district_fertility_2020 <- school_district_fertility_2020 %>%
+cleaned_school_district_fertility_2020 <- uw_schools_fertility_2020 %>%
   select(NAME, variable,estimate, moe, label, geometry)%>%
   mutate(Year = 2020)%>%
-  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable") 
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
 # 2019
 uethda_county_fertility_2019
@@ -2215,10 +2430,11 @@ cleaned_uethda_tract_fertility_2019 <- uethda_tract_fertility_2019 %>%
   mutate(Year = 2019)%>%
   rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
-cleaned_school_district_fertility_2019 <- school_district_fertility_2019 %>%
-  select(NAME, variable, estimate, moe, label, geometry)%>%
+cleaned_school_district_fertility_2019 <- uw_schools_fertility_2019 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
   mutate(Year = 2019)%>%
-  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable") 
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
 
 # 2018
 uethda_county_fertility_2018
@@ -2233,10 +2449,10 @@ cleaned_uethda_tract_fertility_2018 <- uethda_tract_fertility_2018 %>%
   mutate(Year = 2018)%>%
   rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
-cleaned_school_district_fertility_2018 <- school_district_fertility_2018 %>%
-  select(NAME, variable, estimate, moe, label, geometry)%>%
+cleaned_school_district_fertility_2018 <- uw_schools_fertility_2018 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
   mutate(Year = 2018)%>%
-  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable") 
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
 # 2017
 uethda_county_fertility_2017
@@ -2251,10 +2467,10 @@ cleaned_uethda_tract_fertility_2017 <- uethda_tract_fertility_2017 %>%
   mutate(Year = 2017)%>%
   rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
-cleaned_school_district_fertility_2017 <- school_district_fertility_2017 %>%
-  select(NAME, variable, estimate, moe, label, geometry)%>%
+cleaned_school_district_fertility_2017 <- uw_schools_fertility_2017 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
   mutate(Year = 2017)%>%
-  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable") 
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
 # 2016
 uethda_county_fertility_2016
@@ -2269,11 +2485,10 @@ cleaned_uethda_tract_fertility_2016 <- uethda_tract_fertility_2016 %>%
   mutate(Year = 2016)%>%
   rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
-cleaned_school_district_fertility_2016 <- school_district_fertility_2016 %>%
-  select(NAME, variable, estimate, moe, label, geometry)%>%
+cleaned_school_district_fertility_2016 <- uw_schools_fertility_2016 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
   mutate(Year = 2016)%>%
-  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable") 
-
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 # 2015
 uethda_county_fertility_2015
 
@@ -2287,10 +2502,10 @@ cleaned_uethda_tract_fertility_2015 <- uethda_tract_fertility_2015 %>%
   mutate(Year = 2015)%>%
   rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
-cleaned_school_district_fertility_2015 <- school_district_fertility_2015 %>%
-  select(NAME, variable, estimate, moe, label, geometry)%>%
+cleaned_school_district_fertility_2015 <- uw_schools_fertility_2015 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
   mutate(Year = 2015)%>%
-  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable") 
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
 # 2014
 uethda_county_fertility_2014
@@ -2305,10 +2520,10 @@ cleaned_uethda_tract_fertility_2014 <- uethda_tract_fertility_2014 %>%
   mutate(Year = 2014)%>%
   rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
-cleaned_school_district_fertility_2014 <- school_district_fertility_2014 %>%
-  select(NAME, variable, estimate, moe, label, geometry)%>%
+cleaned_school_district_fertility_2014 <- uw_schools_fertility_2014 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
   mutate(Year = 2014)%>%
-  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable") 
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
 # 2013
 uethda_county_fertility_2013
@@ -2323,10 +2538,10 @@ cleaned_uethda_tract_fertility_2013 <- uethda_tract_fertility_2013 %>%
   mutate(Year = 2013)%>%
   rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
-cleaned_school_district_fertility_2013 <- school_district_fertility_2013 %>%
-  select(NAME, variable, estimate, moe, label, geometry)%>%
+cleaned_school_district_fertility_2013 <- uw_schools_fertility_2013 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
   mutate(Year = 2013)%>%
-  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable") 
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
 # 2012
 uethda_county_fertility_2012
@@ -2341,10 +2556,10 @@ cleaned_uethda_tract_fertility_2012 <- uethda_tract_fertility_2012 %>%
   mutate(Year = 2012)%>%
   rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
-cleaned_school_district_fertility_2012 <- school_district_fertility_2012 %>%
-  select(NAME, variable, estimate, moe, label, geometry)%>%
+cleaned_school_district_fertility_2012 <- uw_schools_fertility_2012 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
   mutate(Year = 2012)%>%
-  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable") 
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
 # 2011
 uethda_county_fertility_2011
@@ -2359,11 +2574,10 @@ cleaned_uethda_tract_fertility_2011 <- uethda_tract_fertility_2011 %>%
   mutate(Year = 2011)%>%
   rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 
-cleaned_school_district_fertility_2011 <- school_district_fertility_2011 %>%
-  select(NAME, variable, estimate, moe, label, geometry)%>%
+cleaned_school_district_fertility_2011 <- uw_schools_fertility_2011 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
   mutate(Year = 2011)%>%
-  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable") 
-
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
 # join the years together
 
 uethda_county_fertility <- rbind(cleaned_uethda_county_fertility_2022,cleaned_uethda_county_fertility_2021, cleaned_uethda_county_fertility_2020, cleaned_uethda_county_fertility_2019, cleaned_uethda_county_fertility_2018,cleaned_uethda_county_fertility_2017,
@@ -2376,7 +2590,7 @@ school_fertility <- rbind(cleaned_school_district_fertility_2022,cleaned_school_
                           cleaned_school_district_fertility_2016,cleaned_school_district_fertility_2015,cleaned_school_district_fertility_2014,cleaned_school_district_fertility_2013,cleaned_school_district_fertility_2012,cleaned_school_district_fertility_2011)
 
 
-school_fertility
+
 
 #### S1301 FERTILITY #####
 
@@ -2405,7 +2619,8 @@ kpt_city_fertility <- school_fertility %>%
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_fertility <- school_fertility %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
 
 sullivan_school_fertility <- school_fertility %>%
   filter(str_detect(Location, "Sullivan"))
@@ -2419,11 +2634,15 @@ jc_school_fertility <- school_fertility %>%
 wash_co_school_fertility <- school_fertility %>%
   filter(str_detect(Location, "Washington County"))
 
-View(school_fertility)
+bristol_va_fertility <- school_fertility %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
+
+bristol_va_fertility
 
 uethda_schools_fertility <- rbind(carter_county_fertility, elizabethton_fertility, greene_city_fertility, greene_school_fertility,hancock_school_fertility,hawkins_school_fertility, 
                                   johnson_school_fertility, kpt_city_fertility, bristol_city_fertility, sullivan_school_fertility,unicoi_school_fertility, jc_school_fertility, 
-                                  wash_co_school_fertility)
+                                  wash_co_school_fertility, bristol_va_fertility)
 uethda_schools_fertility
 
 #### S1701 individual_poverty IN PAST 12 MONTHS ####
@@ -2431,6 +2650,15 @@ uethda_schools_fertility
 
 # school districts
 tn_school_districts_individual_poverty_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1701", year = 2022, geometry = TRUE)
+
+va_school_districts_individual_poverty_2022 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1701", year = 2022, geometry = TRUE)
+
+bristol_va_school_districts_individual_poverty_2022 <- va_school_districts_individual_poverty_2022 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_invididual_poverty_2022 <- rbind(tn_school_districts_individual_poverty_2022,bristol_va_school_districts_individual_poverty_2022)
+
+
 
 # carter 
 
@@ -2494,7 +2722,7 @@ named_uethda_county_individual_poverty_2022 <- inner_join(uethda_county_individu
 
 named_uethda_tract_individual_poverty_2022 <- inner_join(uethda_tract_individual_poverty_2022,subject_table_variables_22, by = "variable")
 
-named_uethda_school_individual_poverty_2022 <- inner_join(tn_school_districts_individual_poverty_2022, subject_table_variables_22, by = "variable")
+named_uethda_school_individual_poverty_2022 <- inner_join(school_districts_invididual_poverty_2022, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -2538,7 +2766,12 @@ kpt_city_individual_poverty_2022 <- cleaned_uethda_school_individual_poverty_202
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_individual_poverty_2022 <- cleaned_uethda_school_individual_poverty_2022 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_individual_poverty_2022 <- cleaned_uethda_school_individual_poverty_2022 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_individual_poverty_2022 <- cleaned_uethda_school_individual_poverty_2022 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -2554,7 +2787,7 @@ wash_co_cleaned_uethda_school_individual_poverty_2022 <- cleaned_uethda_school_i
 
 uethda_schools_individual_poverty_2022 <- rbind(carter_county_individual_poverty_2022, elizabethton_individual_poverty_2022, greene_city_individual_poverty_2022, greene_cleaned_uethda_school_individual_poverty_2022,hancock_cleaned_uethda_school_individual_poverty_2022,hawkins_cleaned_uethda_school_individual_poverty_2022, 
                                                 johnson_cleaned_uethda_school_individual_poverty_2022, kpt_city_individual_poverty_2022, bristol_city_individual_poverty_2022, sullivan_cleaned_uethda_school_individual_poverty_2022,unicoi_cleaned_uethda_school_individual_poverty_2022, jc_cleaned_uethda_school_individual_poverty_2022, 
-                                                wash_co_cleaned_uethda_school_individual_poverty_2022)
+                                                wash_co_cleaned_uethda_school_individual_poverty_2022,bristol_va_individual_poverty_2022)
 
 uethda_schools_individual_poverty_2022
 
@@ -2564,6 +2797,13 @@ uethda_schools_individual_poverty_2022
 
 # school districts
 tn_school_districts_family_poverty_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1702", year = 2022, geometry = TRUE)
+
+va_school_districts_family_poverty_2022 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1702", year = 2022, geometry = TRUE)
+
+bristol_va_school_districts_family_poverty_2022 <- va_school_districts_family_poverty_2022 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_family_poverty_2022 <- rbind(tn_school_districts_family_poverty_2022,bristol_va_school_districts_family_poverty_2022)
 
 # carter 
 
@@ -2627,7 +2867,7 @@ named_uethda_county_family_poverty_2022 <- inner_join(uethda_county_family_pover
 
 named_uethda_tract_family_poverty_2022 <- inner_join(uethda_tract_family_poverty_2022,subject_table_variables_22, by = "variable")
 
-named_uethda_school_family_poverty_2022 <- inner_join(tn_school_districts_family_poverty_2022, subject_table_variables_22, by = "variable")
+named_uethda_school_family_poverty_2022 <- inner_join(school_districts_family_poverty_2022, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -2671,7 +2911,12 @@ kpt_city_family_poverty_2022 <- cleaned_uethda_school_family_poverty_2022 %>%
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_family_poverty_2022 <- cleaned_uethda_school_family_poverty_2022 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_family_poverty_2022 <- cleaned_uethda_school_family_poverty_2022 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_family_poverty_2022 <- cleaned_uethda_school_family_poverty_2022 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -2687,9 +2932,9 @@ wash_co_cleaned_uethda_school_family_poverty_2022 <- cleaned_uethda_school_famil
 
 uethda_schools_family_poverty_2022 <- rbind(carter_county_family_poverty_2022, elizabethton_family_poverty_2022, greene_city_family_poverty_2022, greene_cleaned_uethda_school_family_poverty_2022,hancock_cleaned_uethda_school_family_poverty_2022,hawkins_cleaned_uethda_school_family_poverty_2022, 
                                             johnson_cleaned_uethda_school_family_poverty_2022, kpt_city_family_poverty_2022, bristol_city_family_poverty_2022, sullivan_cleaned_uethda_school_family_poverty_2022,unicoi_cleaned_uethda_school_family_poverty_2022, jc_cleaned_uethda_school_family_poverty_2022, 
-                                            wash_co_cleaned_uethda_school_family_poverty_2022)
+                                            wash_co_cleaned_uethda_school_family_poverty_2022,bristol_va_family_poverty_2022)
 
-uethda_schools_family_poverty_2022
+
 
 #S1703 - characteristics of poverty level 
 #### S1703 characteristics_poverty IN PAST 12 MONTHS ####
@@ -2697,6 +2942,14 @@ uethda_schools_family_poverty_2022
 
 # school districts
 tn_school_districts_characteristics_poverty_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1703", year = 2022, geometry = TRUE)
+
+va_school_districts_characteristics_poverty_2022 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1703", year = 2022, geometry = TRUE)
+
+bristol_va_school_districts_characteristics_poverty_2022 <- va_school_districts_characteristics_poverty_2022 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_characteristics_poverty_2022 <- rbind(tn_school_districts_family_poverty_2022, bristol_va_school_districts_characteristics_poverty_2022)
+
 
 # carter 
 
@@ -2760,7 +3013,7 @@ named_uethda_county_characteristics_poverty_2022 <- inner_join(uethda_county_cha
 
 named_uethda_tract_characteristics_poverty_2022 <- inner_join(uethda_tract_characteristics_poverty_2022,subject_table_variables_22, by = "variable")
 
-named_uethda_school_characteristics_poverty_2022 <- inner_join(tn_school_districts_characteristics_poverty_2022, subject_table_variables_22, by = "variable")
+named_uethda_school_characteristics_poverty_2022 <- inner_join(school_districts_characteristics_poverty_2022, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -2804,7 +3057,12 @@ kpt_city_characteristics_poverty_2022 <- cleaned_uethda_school_characteristics_p
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_characteristics_poverty_2022 <- cleaned_uethda_school_characteristics_poverty_2022 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_characteristics_poverty_2022 <- cleaned_uethda_school_characteristics_poverty_2022 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_characteristics_poverty_2022 <- cleaned_uethda_school_characteristics_poverty_2022 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -2820,281 +3078,24 @@ wash_co_cleaned_uethda_school_characteristics_poverty_2022 <- cleaned_uethda_sch
 
 uethda_schools_characteristics_poverty_2022 <- rbind(carter_county_characteristics_poverty_2022, elizabethton_characteristics_poverty_2022, greene_city_characteristics_poverty_2022, greene_cleaned_uethda_school_characteristics_poverty_2022,hancock_cleaned_uethda_school_characteristics_poverty_2022,hawkins_cleaned_uethda_school_characteristics_poverty_2022, 
                                                      johnson_cleaned_uethda_school_characteristics_poverty_2022, kpt_city_characteristics_poverty_2022, bristol_city_characteristics_poverty_2022, sullivan_cleaned_uethda_school_characteristics_poverty_2022,unicoi_cleaned_uethda_school_characteristics_poverty_2022, jc_cleaned_uethda_school_characteristics_poverty_2022, 
-                                                     wash_co_cleaned_uethda_school_characteristics_poverty_2022)
+                                                     wash_co_cleaned_uethda_school_characteristics_poverty_2022, bristol_va_characteristics_poverty_2022)
 
 uethda_schools_characteristics_poverty_2022
-
-#S1703 - characteristics of poverty level 
-#### S1703 characteristics_poverty IN PAST 12 MONTHS ####
-# 2021
-
-# school districts
-tn_school_districts_characteristics_poverty_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
-
-# carter 
-
-Carter_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
-
-Carter_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
-
-# Greene 
-
-Greene_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
-
-Greene_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
-
-# Hancock 
-
-Hancock_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
-
-Hancock_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
-
-# Hawkins 
-
-Hawkins_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
-
-Hawkins_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
-
-# Johnson 
-
-Johnson_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
-
-Johnson_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
-
-# Sullivan 
-
-Sullivan_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
-
-Sullivan_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
-
-# Unicoi 
-
-Unicoi_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
-
-Unicoi_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
-
-# Washington 
-
-Washington_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
-
-Washington_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
-
-#bind the counties
-
-uethda_county_characteristics_poverty_2021 <- rbind(Carter_county_characteristics_poverty_2021, Greene_county_characteristics_poverty_2021, Hancock_county_characteristics_poverty_2021, Hawkins_county_characteristics_poverty_2021, Johnson_county_characteristics_poverty_2021,
-                                                    Sullivan_county_characteristics_poverty_2021, Unicoi_county_characteristics_poverty_2021, Washington_county_characteristics_poverty_2021)
-
-uethda_tract_characteristics_poverty_2021 <- rbind(Carter_tract_characteristics_poverty_2021, Greene_tract_characteristics_poverty_2021, Hancock_tract_characteristics_poverty_2021, Hawkins_tract_characteristics_poverty_2021,
-                                                   Johnson_tract_characteristics_poverty_2021, Sullivan_tract_characteristics_poverty_2021, Unicoi_tract_characteristics_poverty_2021, Washington_tract_characteristics_poverty_2021)
-
-#join the names 
-
-named_uethda_county_characteristics_poverty_2021 <- inner_join(uethda_county_characteristics_poverty_2021, subject_table_variables_22, by = "variable")
-
-named_uethda_tract_characteristics_poverty_2021 <- inner_join(uethda_tract_characteristics_poverty_2021,subject_table_variables_22, by = "variable")
-
-named_uethda_school_characteristics_poverty_2021 <- inner_join(tn_school_districts_characteristics_poverty_2021, subject_table_variables_22, by = "variable")
-
-# clean the names 
-
-cleaned_uethda_county_characteristics_poverty_2021 <- named_uethda_county_characteristics_poverty_2021 %>%
-  select(NAME, variable,estimate, moe, label, geometry)%>%
-  mutate(Year = 2021)%>%
-  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
-
-cleaned_uethda_tract_characteristics_poverty_2021 <- named_uethda_tract_characteristics_poverty_2021 %>%
-  select(NAME, variable,estimate, moe, label, geometry)%>%
-  mutate(Year = 2021)%>%
-  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
-
-cleaned_uethda_school_characteristics_poverty_2021 <- named_uethda_school_characteristics_poverty_2021 %>%
-  select(NAME, variable,estimate, moe, label, geometry)%>%
-  mutate(Year = 2021)%>%
-  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
-
-carter_county_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
-  filter(str_detect(Location, "Carter County"))
-
-elizabethton_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
-  filter(str_detect(Location, "Elizabethton"))
-
-greene_city_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
-  filter(str_detect(Location, "Greeneville City"))
-
-greene_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
-  filter(str_detect(Location, "Greene County"))
-
-hancock_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
-  filter(str_detect(Location, "Hancock"))
-
-hawkins_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
-  filter(str_detect(Location, "Hawkins"))
-
-johnson_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
-  filter(str_detect(Location, "Johnson"))
-
-kpt_city_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
-  filter(str_detect(Location, "Kingsport"))
-
-bristol_city_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
-  filter(str_detect(Location, "Bristol"))
-
-sullivan_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
-  filter(str_detect(Location, "Sullivan"))
-
-unicoi_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
-  filter(str_detect(Location, "Unicoi"))
-
-jc_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
-  filter(str_detect(Location, "Johnson City"))
-
-wash_co_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
-  filter(str_detect(Location, "Washington County"))
-
-uethda_schools_characteristics_poverty_2021 <- rbind(carter_county_characteristics_poverty_2021, elizabethton_characteristics_poverty_2021, greene_city_characteristics_poverty_2021, greene_cleaned_uethda_school_characteristics_poverty_2021,hancock_cleaned_uethda_school_characteristics_poverty_2021,hawkins_cleaned_uethda_school_characteristics_poverty_2021, 
-                                                     johnson_cleaned_uethda_school_characteristics_poverty_2021, kpt_city_characteristics_poverty_2021, bristol_city_characteristics_poverty_2021, sullivan_cleaned_uethda_school_characteristics_poverty_2021,unicoi_cleaned_uethda_school_characteristics_poverty_2021, jc_cleaned_uethda_school_characteristics_poverty_2021, 
-                                                     wash_co_cleaned_uethda_school_characteristics_poverty_2021)
-
-uethda_schools_characteristics_poverty_2021
-
-#S1702 - poverty status families 
-#### S1702 family_poverty IN PAST 12 MONTHS ####
-# 2021
-
-# school districts
-tn_school_districts_family_poverty_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
-
-# carter 
-
-Carter_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
-
-Carter_county_family_poverty_2021 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
-
-# Greene 
-
-Greene_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
-
-Greene_county_family_poverty_2021 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
-
-# Hancock 
-
-Hancock_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
-
-Hancock_county_family_poverty_2021 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
-
-# Hawkins 
-
-Hawkins_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
-
-Hawkins_county_family_poverty_2021 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
-
-# Johnson 
-
-Johnson_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
-
-Johnson_county_family_poverty_2021 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
-
-# Sullivan 
-
-Sullivan_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
-
-Sullivan_county_family_poverty_2021 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
-
-# Unicoi 
-
-Unicoi_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
-
-Unicoi_county_family_poverty_2021 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
-
-# Washington 
-
-Washington_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
-
-Washington_county_family_poverty_2021 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
-
-#bind the counties
-
-uethda_county_family_poverty_2021 <- rbind(Carter_county_family_poverty_2021, Greene_county_family_poverty_2021, Hancock_county_family_poverty_2021, Hawkins_county_family_poverty_2021, Johnson_county_family_poverty_2021,
-                                           Sullivan_county_family_poverty_2021, Unicoi_county_family_poverty_2021, Washington_county_family_poverty_2021)
-
-uethda_tract_family_poverty_2021 <- rbind(Carter_tract_family_poverty_2021, Greene_tract_family_poverty_2021, Hancock_tract_family_poverty_2021, Hawkins_tract_family_poverty_2021,
-                                          Johnson_tract_family_poverty_2021, Sullivan_tract_family_poverty_2021, Unicoi_tract_family_poverty_2021, Washington_tract_family_poverty_2021)
-
-#join the names 
-
-named_uethda_county_family_poverty_2021 <- inner_join(uethda_county_family_poverty_2021, subject_table_variables_22, by = "variable")
-
-named_uethda_tract_family_poverty_2021 <- inner_join(uethda_tract_family_poverty_2021,subject_table_variables_22, by = "variable")
-
-named_uethda_school_family_poverty_2021 <- inner_join(tn_school_districts_family_poverty_2021, subject_table_variables_22, by = "variable")
-
-# clean the names 
-
-cleaned_uethda_county_family_poverty_2021 <- named_uethda_county_family_poverty_2021 %>%
-  select(NAME, variable,estimate, moe, label, geometry)%>%
-  mutate(Year = 2021)%>%
-  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
-
-cleaned_uethda_tract_family_poverty_2021 <- named_uethda_tract_family_poverty_2021 %>%
-  select(NAME, variable,estimate, moe, label, geometry)%>%
-  mutate(Year = 2021)%>%
-  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
-
-cleaned_uethda_school_family_poverty_2021 <- named_uethda_school_family_poverty_2021 %>%
-  select(NAME, variable,estimate, moe, label, geometry)%>%
-  mutate(Year = 2021)%>%
-  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
-
-carter_county_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
-  filter(str_detect(Location, "Carter County"))
-
-elizabethton_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
-  filter(str_detect(Location, "Elizabethton"))
-
-greene_city_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
-  filter(str_detect(Location, "Greeneville City"))
-
-greene_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
-  filter(str_detect(Location, "Greene County"))
-
-hancock_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
-  filter(str_detect(Location, "Hancock"))
-
-hawkins_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
-  filter(str_detect(Location, "Hawkins"))
-
-johnson_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
-  filter(str_detect(Location, "Johnson"))
-
-kpt_city_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
-  filter(str_detect(Location, "Kingsport"))
-
-bristol_city_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
-  filter(str_detect(Location, "Bristol"))
-
-sullivan_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
-  filter(str_detect(Location, "Sullivan"))
-
-unicoi_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
-  filter(str_detect(Location, "Unicoi"))
-
-jc_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
-  filter(str_detect(Location, "Johnson City"))
-
-wash_co_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
-  filter(str_detect(Location, "Washington County"))
-
-uethda_schools_family_poverty_2021 <- rbind(carter_county_family_poverty_2021, elizabethton_family_poverty_2021, greene_city_family_poverty_2021, greene_cleaned_uethda_school_family_poverty_2021,hancock_cleaned_uethda_school_family_poverty_2021,hawkins_cleaned_uethda_school_family_poverty_2021, 
-                                            johnson_cleaned_uethda_school_family_poverty_2021, kpt_city_family_poverty_2021, bristol_city_family_poverty_2021, sullivan_cleaned_uethda_school_family_poverty_2021,unicoi_cleaned_uethda_school_family_poverty_2021, jc_cleaned_uethda_school_family_poverty_2021, 
-                                            wash_co_cleaned_uethda_school_family_poverty_2021)
-
-uethda_schools_family_poverty_2021
 
 #### S1701 individual_poverty IN PAST 12 MONTHS ####
 # 2021
 
 # school districts
 tn_school_districts_individual_poverty_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1701", year = 2021, geometry = TRUE)
+
+va_school_districts_individual_poverty_2021 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1701", year = 2021, geometry = TRUE)
+
+bristol_va_school_districts_individual_poverty_2021 <- va_school_districts_individual_poverty_2021 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_invididual_poverty_2021 <- rbind(tn_school_districts_individual_poverty_2021,bristol_va_school_districts_individual_poverty_2021)
+
+
 
 # carter 
 
@@ -3158,7 +3159,7 @@ named_uethda_county_individual_poverty_2021 <- inner_join(uethda_county_individu
 
 named_uethda_tract_individual_poverty_2021 <- inner_join(uethda_tract_individual_poverty_2021,subject_table_variables_22, by = "variable")
 
-named_uethda_school_individual_poverty_2021 <- inner_join(tn_school_districts_individual_poverty_2021, subject_table_variables_22, by = "variable")
+named_uethda_school_individual_poverty_2021 <- inner_join(school_districts_invididual_poverty_2021, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -3202,7 +3203,12 @@ kpt_city_individual_poverty_2021 <- cleaned_uethda_school_individual_poverty_202
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_individual_poverty_2021 <- cleaned_uethda_school_individual_poverty_2021 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_individual_poverty_2021 <- cleaned_uethda_school_individual_poverty_2021 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_individual_poverty_2021 <- cleaned_uethda_school_individual_poverty_2021 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -3218,9 +3224,302 @@ wash_co_cleaned_uethda_school_individual_poverty_2021 <- cleaned_uethda_school_i
 
 uethda_schools_individual_poverty_2021 <- rbind(carter_county_individual_poverty_2021, elizabethton_individual_poverty_2021, greene_city_individual_poverty_2021, greene_cleaned_uethda_school_individual_poverty_2021,hancock_cleaned_uethda_school_individual_poverty_2021,hawkins_cleaned_uethda_school_individual_poverty_2021, 
                                                 johnson_cleaned_uethda_school_individual_poverty_2021, kpt_city_individual_poverty_2021, bristol_city_individual_poverty_2021, sullivan_cleaned_uethda_school_individual_poverty_2021,unicoi_cleaned_uethda_school_individual_poverty_2021, jc_cleaned_uethda_school_individual_poverty_2021, 
-                                                wash_co_cleaned_uethda_school_individual_poverty_2021)
+                                                wash_co_cleaned_uethda_school_individual_poverty_2021,bristol_va_individual_poverty_2021)
 
 uethda_schools_individual_poverty_2021
+
+#S1702 - poverty status families 
+#### S1702 family_poverty IN PAST 12 MONTHS ####
+# 2021
+
+# school districts
+tn_school_districts_family_poverty_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+va_school_districts_family_poverty_2021 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1702", year = 2021, geometry = TRUE)
+
+bristol_va_school_districts_family_poverty_2021 <- va_school_districts_family_poverty_2021 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_family_poverty_2021 <- rbind(tn_school_districts_family_poverty_2021,bristol_va_school_districts_family_poverty_2021)
+
+# carter 
+
+Carter_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+Carter_county_family_poverty_2021 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+Greene_county_family_poverty_2021 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+Hancock_county_family_poverty_2021 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+Hawkins_county_family_poverty_2021 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+Johnson_county_family_poverty_2021 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+Sullivan_county_family_poverty_2021 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+Unicoi_county_family_poverty_2021 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_family_poverty_2021 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+Washington_county_family_poverty_2021 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1702", year = 2021, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_family_poverty_2021 <- rbind(Carter_county_family_poverty_2021, Greene_county_family_poverty_2021, Hancock_county_family_poverty_2021, Hawkins_county_family_poverty_2021, Johnson_county_family_poverty_2021,
+                                           Sullivan_county_family_poverty_2021, Unicoi_county_family_poverty_2021, Washington_county_family_poverty_2021)
+
+uethda_tract_family_poverty_2021 <- rbind(Carter_tract_family_poverty_2021, Greene_tract_family_poverty_2021, Hancock_tract_family_poverty_2021, Hawkins_tract_family_poverty_2021,
+                                          Johnson_tract_family_poverty_2021, Sullivan_tract_family_poverty_2021, Unicoi_tract_family_poverty_2021, Washington_tract_family_poverty_2021)
+
+#join the names 
+
+named_uethda_county_family_poverty_2021 <- inner_join(uethda_county_family_poverty_2021, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_family_poverty_2021 <- inner_join(uethda_tract_family_poverty_2021,subject_table_variables_22, by = "variable")
+
+named_uethda_school_family_poverty_2021 <- inner_join(school_districts_family_poverty_2021, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_family_poverty_2021 <- named_uethda_county_family_poverty_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_family_poverty_2021 <- named_uethda_tract_family_poverty_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_family_poverty_2021 <- named_uethda_school_family_poverty_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
+
+sullivan_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_family_poverty_2021 <- cleaned_uethda_school_family_poverty_2021 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_family_poverty_2021 <- rbind(carter_county_family_poverty_2021, elizabethton_family_poverty_2021, greene_city_family_poverty_2021, greene_cleaned_uethda_school_family_poverty_2021,hancock_cleaned_uethda_school_family_poverty_2021,hawkins_cleaned_uethda_school_family_poverty_2021, 
+                                            johnson_cleaned_uethda_school_family_poverty_2021, kpt_city_family_poverty_2021, bristol_city_family_poverty_2021, sullivan_cleaned_uethda_school_family_poverty_2021,unicoi_cleaned_uethda_school_family_poverty_2021, jc_cleaned_uethda_school_family_poverty_2021, 
+                                            wash_co_cleaned_uethda_school_family_poverty_2021,bristol_va_family_poverty_2021)
+
+
+
+#S1703 - characteristics of poverty level 
+#### S1703 characteristics_poverty IN PAST 12 MONTHS ####
+# 2021
+
+# school districts
+tn_school_districts_characteristics_poverty_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+va_school_districts_characteristics_poverty_2021 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1703", year = 2021, geometry = TRUE)
+
+bristol_va_school_districts_characteristics_poverty_2021 <- va_school_districts_characteristics_poverty_2021 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_characteristics_poverty_2021 <- rbind(tn_school_districts_family_poverty_2021, bristol_va_school_districts_characteristics_poverty_2021)
+
+
+# carter 
+
+Carter_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Carter", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+Carter_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Carter", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+# Greene 
+
+Greene_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Greene", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+Greene_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Greene", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+# Hancock 
+
+Hancock_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Hancock", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+Hancock_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Hancock", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+# Hawkins 
+
+Hawkins_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Hawkins", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+Hawkins_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Hawkins", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+# Johnson 
+
+Johnson_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Johnson", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+Johnson_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Johnson", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+# Sullivan 
+
+Sullivan_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Sullivan", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+Sullivan_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Sullivan", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+# Unicoi 
+
+Unicoi_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Unicoi", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+Unicoi_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Unicoi", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+# Washington 
+
+Washington_tract_characteristics_poverty_2021 <- get_acs(geography = "tract", county = "Washington", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+Washington_county_characteristics_poverty_2021 <- get_acs(geography = "county", county = "Washington", state = "TN", table = "S1703", year = 2021, geometry = TRUE)
+
+#bind the counties
+
+uethda_county_characteristics_poverty_2021 <- rbind(Carter_county_characteristics_poverty_2021, Greene_county_characteristics_poverty_2021, Hancock_county_characteristics_poverty_2021, Hawkins_county_characteristics_poverty_2021, Johnson_county_characteristics_poverty_2021,
+                                                    Sullivan_county_characteristics_poverty_2021, Unicoi_county_characteristics_poverty_2021, Washington_county_characteristics_poverty_2021)
+
+uethda_tract_characteristics_poverty_2021 <- rbind(Carter_tract_characteristics_poverty_2021, Greene_tract_characteristics_poverty_2021, Hancock_tract_characteristics_poverty_2021, Hawkins_tract_characteristics_poverty_2021,
+                                                   Johnson_tract_characteristics_poverty_2021, Sullivan_tract_characteristics_poverty_2021, Unicoi_tract_characteristics_poverty_2021, Washington_tract_characteristics_poverty_2021)
+
+#join the names 
+
+named_uethda_county_characteristics_poverty_2021 <- inner_join(uethda_county_characteristics_poverty_2021, subject_table_variables_22, by = "variable")
+
+named_uethda_tract_characteristics_poverty_2021 <- inner_join(uethda_tract_characteristics_poverty_2021,subject_table_variables_22, by = "variable")
+
+named_uethda_school_characteristics_poverty_2021 <- inner_join(school_districts_characteristics_poverty_2021, subject_table_variables_22, by = "variable")
+
+# clean the names 
+
+cleaned_uethda_county_characteristics_poverty_2021 <- named_uethda_county_characteristics_poverty_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_tract_characteristics_poverty_2021 <- named_uethda_tract_characteristics_poverty_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+cleaned_uethda_school_characteristics_poverty_2021 <- named_uethda_school_characteristics_poverty_2021 %>%
+  select(NAME, variable,estimate, moe, label, geometry)%>%
+  mutate(Year = 2021)%>%
+  rename("Location" = "NAME", "Estimate" = "estimate", "MOE" = "moe",  "Variable" = "variable")
+
+carter_county_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Carter County"))
+
+elizabethton_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Elizabethton"))
+
+greene_city_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Greeneville City"))
+
+greene_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Greene County"))
+
+hancock_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Hancock"))
+
+hawkins_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Hawkins"))
+
+johnson_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Johnson"))
+
+kpt_city_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Kingsport"))
+
+bristol_city_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
+
+sullivan_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Sullivan"))
+
+unicoi_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Unicoi"))
+
+jc_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Johnson City"))
+
+wash_co_cleaned_uethda_school_characteristics_poverty_2021 <- cleaned_uethda_school_characteristics_poverty_2021 %>%
+  filter(str_detect(Location, "Washington County"))
+
+uethda_schools_characteristics_poverty_2021 <- rbind(carter_county_characteristics_poverty_2021, elizabethton_characteristics_poverty_2021, greene_city_characteristics_poverty_2021, greene_cleaned_uethda_school_characteristics_poverty_2021,hancock_cleaned_uethda_school_characteristics_poverty_2021,hawkins_cleaned_uethda_school_characteristics_poverty_2021, 
+                                                     johnson_cleaned_uethda_school_characteristics_poverty_2021, kpt_city_characteristics_poverty_2021, bristol_city_characteristics_poverty_2021, sullivan_cleaned_uethda_school_characteristics_poverty_2021,unicoi_cleaned_uethda_school_characteristics_poverty_2021, jc_cleaned_uethda_school_characteristics_poverty_2021, 
+                                                     wash_co_cleaned_uethda_school_characteristics_poverty_2021, bristol_va_characteristics_poverty_2021)
+
+uethda_schools_characteristics_poverty_2021
+
+
 
 #S1903 - Median Income past 12 months
 
@@ -3236,6 +3535,14 @@ tn_median_income_2022 <- get_acs(geography = "state", state = "TN", table = "S19
 
 # school districts
 tn_school_districts_median_income_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1903", year = 2022, geometry = TRUE)
+
+va_school_districts_median_income_2022 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1903", year = 2022, geometry = TRUE)
+
+bristol_va_school_districts_median_income_2022 <- va_school_districts_median_income_2022 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_median_income_2022 <- rbind(tn_school_districts_median_income_2022, bristol_va_school_districts_median_income_2022)
+
 
 # carter 
 
@@ -3309,7 +3616,7 @@ named_full_median_income_2022 <- inner_join(full_median_income_2022, subject_tab
 
 named_uethda_tract_median_income_2022 <- inner_join(uethda_tract_median_income_2022,subject_table_variables_22, by = "variable")
 
-named_uethda_school_median_income_2022 <- inner_join(tn_school_districts_median_income_2022, subject_table_variables_22, by = "variable")
+named_uethda_school_median_income_2022 <- inner_join(school_districts_median_income_2022, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -3358,7 +3665,12 @@ kpt_city_median_income_2022 <- cleaned_uethda_school_median_income_2022 %>%
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_median_income_2022 <- cleaned_uethda_school_median_income_2022 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_median_income_2022 <- cleaned_uethda_school_median_income_2022 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_median_income_2022 <- cleaned_uethda_school_median_income_2022 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -3374,11 +3686,14 @@ wash_co_cleaned_uethda_school_median_income_2022 <- cleaned_uethda_school_median
 
 uethda_schools_median_income_2022 <- rbind(carter_county_median_income_2022, elizabethton_median_income_2022, greene_city_median_income_2022, greene_cleaned_uethda_school_median_income_2022,hancock_cleaned_uethda_school_median_income_2022,hawkins_cleaned_uethda_school_median_income_2022, 
                                            johnson_cleaned_uethda_school_median_income_2022, kpt_city_median_income_2022, bristol_city_median_income_2022, sullivan_cleaned_uethda_school_median_income_2022,unicoi_cleaned_uethda_school_median_income_2022, jc_cleaned_uethda_school_median_income_2022, 
-                                           wash_co_cleaned_uethda_school_median_income_2022)
+                                           wash_co_cleaned_uethda_school_median_income_2022,bristol_va_median_income_2022)
 
 uethda_schools_median_income_2022
 
 
+#S1903 - Median Income past 12 months
+
+#### S1903 median_income IN PAST 12 MONTHS ####
 # 2021
 
 # United States and TN
@@ -3390,6 +3705,14 @@ tn_median_income_2021 <- get_acs(geography = "state", state = "TN", table = "S19
 
 # school districts
 tn_school_districts_median_income_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1903", year = 2021, geometry = TRUE)
+
+va_school_districts_median_income_2021 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1903", year = 2021, geometry = TRUE)
+
+bristol_va_school_districts_median_income_2021 <- va_school_districts_median_income_2021 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_median_income_2021 <- rbind(tn_school_districts_median_income_2021, bristol_va_school_districts_median_income_2021)
+
 
 # carter 
 
@@ -3463,7 +3786,7 @@ named_full_median_income_2021 <- inner_join(full_median_income_2021, subject_tab
 
 named_uethda_tract_median_income_2021 <- inner_join(uethda_tract_median_income_2021,subject_table_variables_22, by = "variable")
 
-named_uethda_school_median_income_2021 <- inner_join(tn_school_districts_median_income_2021, subject_table_variables_22, by = "variable")
+named_uethda_school_median_income_2021 <- inner_join(school_districts_median_income_2021, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -3512,7 +3835,12 @@ kpt_city_median_income_2021 <- cleaned_uethda_school_median_income_2021 %>%
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_median_income_2021 <- cleaned_uethda_school_median_income_2021 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_median_income_2021 <- cleaned_uethda_school_median_income_2021 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_median_income_2021 <- cleaned_uethda_school_median_income_2021 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -3528,7 +3856,7 @@ wash_co_cleaned_uethda_school_median_income_2021 <- cleaned_uethda_school_median
 
 uethda_schools_median_income_2021 <- rbind(carter_county_median_income_2021, elizabethton_median_income_2021, greene_city_median_income_2021, greene_cleaned_uethda_school_median_income_2021,hancock_cleaned_uethda_school_median_income_2021,hawkins_cleaned_uethda_school_median_income_2021, 
                                            johnson_cleaned_uethda_school_median_income_2021, kpt_city_median_income_2021, bristol_city_median_income_2021, sullivan_cleaned_uethda_school_median_income_2021,unicoi_cleaned_uethda_school_median_income_2021, jc_cleaned_uethda_school_median_income_2021, 
-                                           wash_co_cleaned_uethda_school_median_income_2021)
+                                           wash_co_cleaned_uethda_school_median_income_2021,bristol_va_median_income_2021)
 
 uethda_schools_median_income_2021
 
@@ -3538,6 +3866,14 @@ uethda_schools_median_income_2021
 
 # school districts
 tn_school_districts_mean_income_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1902", year = 2022, geometry = TRUE)
+
+va_school_districts_mean_income_2022 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1902", year = 2022, geometry = TRUE)
+
+bristol_va_school_districts_mean_income_2022 <- va_school_districts_mean_income_2022 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_mean_income_2022 <- rbind(tn_school_districts_mean_income_2022, bristol_va_school_districts_mean_income_2022)
+
 
 # carter 
 
@@ -3601,7 +3937,7 @@ named_uethda_county_mean_income_2022 <- inner_join(uethda_county_mean_income_202
 
 named_uethda_tract_mean_income_2022 <- inner_join(uethda_tract_mean_income_2022,subject_table_variables_22, by = "variable")
 
-named_uethda_school_mean_income_2022 <- inner_join(tn_school_districts_mean_income_2022, subject_table_variables_22, by = "variable")
+named_uethda_school_mean_income_2022 <- inner_join(school_districts_mean_income_2022, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -3645,7 +3981,12 @@ kpt_city_mean_income_2022 <- cleaned_uethda_school_mean_income_2022 %>%
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_mean_income_2022 <- cleaned_uethda_school_mean_income_2022 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_mean_income_2022 <- cleaned_uethda_school_mean_income_2022 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_mean_income_2022 <- cleaned_uethda_school_mean_income_2022 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -3661,15 +4002,24 @@ wash_co_cleaned_uethda_school_mean_income_2022 <- cleaned_uethda_school_mean_inc
 
 uethda_schools_mean_income_2022 <- rbind(carter_county_mean_income_2022, elizabethton_mean_income_2022, greene_city_mean_income_2022, greene_cleaned_uethda_school_mean_income_2022,hancock_cleaned_uethda_school_mean_income_2022,hawkins_cleaned_uethda_school_mean_income_2022, 
                                          johnson_cleaned_uethda_school_mean_income_2022, kpt_city_mean_income_2022, bristol_city_mean_income_2022, sullivan_cleaned_uethda_school_mean_income_2022,unicoi_cleaned_uethda_school_mean_income_2022, jc_cleaned_uethda_school_mean_income_2022, 
-                                         wash_co_cleaned_uethda_school_mean_income_2022)
+                                         wash_co_cleaned_uethda_school_mean_income_2022, bristol_va_mean_income_2022)
 
 uethda_schools_mean_income_2022
 
-
+#S1902 - mean income in past 12 months
+#### S1902 mean_income IN PAST 12 MONTHS ####
 # 2021
 
 # school districts
 tn_school_districts_mean_income_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1902", year = 2021, geometry = TRUE)
+
+va_school_districts_mean_income_2021 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1902", year = 2021, geometry = TRUE)
+
+bristol_va_school_districts_mean_income_2021 <- va_school_districts_mean_income_2021 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_mean_income_2021 <- rbind(tn_school_districts_mean_income_2021, bristol_va_school_districts_mean_income_2021)
+
 
 # carter 
 
@@ -3733,7 +4083,7 @@ named_uethda_county_mean_income_2021 <- inner_join(uethda_county_mean_income_202
 
 named_uethda_tract_mean_income_2021 <- inner_join(uethda_tract_mean_income_2021,subject_table_variables_22, by = "variable")
 
-named_uethda_school_mean_income_2021 <- inner_join(tn_school_districts_mean_income_2021, subject_table_variables_22, by = "variable")
+named_uethda_school_mean_income_2021 <- inner_join(school_districts_mean_income_2021, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -3777,7 +4127,12 @@ kpt_city_mean_income_2021 <- cleaned_uethda_school_mean_income_2021 %>%
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_mean_income_2021 <- cleaned_uethda_school_mean_income_2021 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_mean_income_2021 <- cleaned_uethda_school_mean_income_2021 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_mean_income_2021 <- cleaned_uethda_school_mean_income_2021 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -3793,7 +4148,7 @@ wash_co_cleaned_uethda_school_mean_income_2021 <- cleaned_uethda_school_mean_inc
 
 uethda_schools_mean_income_2021 <- rbind(carter_county_mean_income_2021, elizabethton_mean_income_2021, greene_city_mean_income_2021, greene_cleaned_uethda_school_mean_income_2021,hancock_cleaned_uethda_school_mean_income_2021,hawkins_cleaned_uethda_school_mean_income_2021, 
                                          johnson_cleaned_uethda_school_mean_income_2021, kpt_city_mean_income_2021, bristol_city_mean_income_2021, sullivan_cleaned_uethda_school_mean_income_2021,unicoi_cleaned_uethda_school_mean_income_2021, jc_cleaned_uethda_school_mean_income_2021, 
-                                         wash_co_cleaned_uethda_school_mean_income_2021)
+                                         wash_co_cleaned_uethda_school_mean_income_2021, bristol_va_mean_income_2021)
 
 uethda_schools_mean_income_2021
 
@@ -3809,6 +4164,13 @@ tn_income_2022 <- get_acs(geography = "state", state = "TN", table = "S1901", ye
 
 # school districts
 tn_school_districts_income_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1901", year = 2022, geometry = TRUE)
+
+va_school_districts_income_2022 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1901", year = 2022, geometry = TRUE)
+
+bristol_va_school_districts_income_2022 <- va_school_districts_income_2022 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_income_2022 <- rbind(tn_school_districts_income_2022, bristol_va_school_districts_income_2022)
 
 # carter 
 
@@ -3879,7 +4241,7 @@ named_full_income_2022 <- inner_join(full_income_2022, subject_table_variables_2
 
 named_uethda_tract_income_2022 <- inner_join(uethda_tract_income_2022,subject_table_variables_22, by = "variable")
 
-named_uethda_school_income_2022 <- inner_join(tn_school_districts_income_2022, subject_table_variables_22, by = "variable")
+named_uethda_school_income_2022 <- inner_join(school_districts_income_2022, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -3928,7 +4290,12 @@ kpt_city_income_2022 <- cleaned_uethda_school_income_2022 %>%
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_income_2022 <- cleaned_uethda_school_income_2022 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_income_2022 <- cleaned_uethda_school_income_2022 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_income_2022 <- cleaned_uethda_school_income_2022 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -3944,10 +4311,12 @@ wash_co_cleaned_uethda_school_income_2022 <- cleaned_uethda_school_income_2022 %
 
 uethda_schools_income_2022 <- rbind(carter_county_income_2022, elizabethton_income_2022, greene_city_income_2022, greene_cleaned_uethda_school_income_2022,hancock_cleaned_uethda_school_income_2022,hawkins_cleaned_uethda_school_income_2022, 
                                     johnson_cleaned_uethda_school_income_2022, kpt_city_income_2022, bristol_city_income_2022, sullivan_cleaned_uethda_school_income_2022,unicoi_cleaned_uethda_school_income_2022, jc_cleaned_uethda_school_income_2022, 
-                                    wash_co_cleaned_uethda_school_income_2022)
+                                    wash_co_cleaned_uethda_school_income_2022,bristol_va_income_2022)
 
 uethda_schools_income_2022
 
+#S1901 - income in past 12 months
+#### S1901 INCOME IN PAST 12 MONTHS ####
 # 2021
 
 # United States and TN
@@ -3958,6 +4327,13 @@ tn_income_2021 <- get_acs(geography = "state", state = "TN", table = "S1901", ye
 
 # school districts
 tn_school_districts_income_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S1901", year = 2021, geometry = TRUE)
+
+va_school_districts_income_2021 <- get_acs(geography = "school district (unified)", state = "VA", table = "S1901", year = 2021, geometry = TRUE)
+
+bristol_va_school_districts_income_2021 <- va_school_districts_income_2021 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_income_2021 <- rbind(tn_school_districts_income_2021, bristol_va_school_districts_income_2021)
 
 # carter 
 
@@ -4028,7 +4404,7 @@ named_full_income_2021 <- inner_join(full_income_2021, subject_table_variables_2
 
 named_uethda_tract_income_2021 <- inner_join(uethda_tract_income_2021,subject_table_variables_22, by = "variable")
 
-named_uethda_school_income_2021 <- inner_join(tn_school_districts_income_2021, subject_table_variables_22, by = "variable")
+named_uethda_school_income_2021 <- inner_join(school_districts_income_2021, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -4077,7 +4453,12 @@ kpt_city_income_2021 <- cleaned_uethda_school_income_2021 %>%
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_income_2021 <- cleaned_uethda_school_income_2021 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_income_2021 <- cleaned_uethda_school_income_2021 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_income_2021 <- cleaned_uethda_school_income_2021 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -4093,7 +4474,7 @@ wash_co_cleaned_uethda_school_income_2021 <- cleaned_uethda_school_income_2021 %
 
 uethda_schools_income_2021 <- rbind(carter_county_income_2021, elizabethton_income_2021, greene_city_income_2021, greene_cleaned_uethda_school_income_2021,hancock_cleaned_uethda_school_income_2021,hawkins_cleaned_uethda_school_income_2021, 
                                     johnson_cleaned_uethda_school_income_2021, kpt_city_income_2021, bristol_city_income_2021, sullivan_cleaned_uethda_school_income_2021,unicoi_cleaned_uethda_school_income_2021, jc_cleaned_uethda_school_income_2021, 
-                                    wash_co_cleaned_uethda_school_income_2021)
+                                    wash_co_cleaned_uethda_school_income_2021,bristol_va_income_2021)
 
 uethda_schools_income_2021
 
@@ -4103,6 +4484,13 @@ uethda_schools_income_2021
 
 # school districts
 tn_school_districts_mobility_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S0701", year = 2022, geometry = TRUE)
+
+va_school_districts_mobility_2022 <- get_acs(geography = "school district (unified)", state = "VA", table = "S0701", year = 2022, geometry = TRUE)
+
+bristol_va_school_districts_mobility_2022 <- va_school_districts_mobility_2022 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_mobility_2022 <- rbind(tn_school_districts_mobility_2022, bristol_va_school_districts_mobility_2022)
 
 # carter 
 
@@ -4166,7 +4554,7 @@ named_uethda_county_mobility_2022 <- inner_join(uethda_county_mobility_2022, sub
 
 named_uethda_tract_mobility_2022 <- inner_join(uethda_tract_mobility_2022,subject_table_variables_22, by = "variable")
 
-named_uethda_school_mobility_2022 <- inner_join(tn_school_districts_mobility_2022, subject_table_variables_22, by = "variable")
+named_uethda_school_mobility_2022 <- inner_join(school_districts_mobility_2022, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -4210,7 +4598,12 @@ kpt_city_mobility_2022 <- cleaned_uethda_school_mobility_2022 %>%
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_mobility_2022 <- cleaned_uethda_school_mobility_2022 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_mobility_2022 <- cleaned_uethda_school_mobility_2022 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_mobility_2022 <- cleaned_uethda_school_mobility_2022 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -4226,7 +4619,7 @@ wash_co_cleaned_uethda_school_mobility_2022 <- cleaned_uethda_school_mobility_20
 
 uethda_schools_mobility_2022 <- rbind(carter_county_mobility_2022, elizabethton_mobility_2022, greene_city_mobility_2022, greene_cleaned_uethda_school_mobility_2022,hancock_cleaned_uethda_school_mobility_2022,hawkins_cleaned_uethda_school_mobility_2022, 
                                       johnson_cleaned_uethda_school_mobility_2022, kpt_city_mobility_2022, bristol_city_mobility_2022, sullivan_cleaned_uethda_school_mobility_2022,unicoi_cleaned_uethda_school_mobility_2022, jc_cleaned_uethda_school_mobility_2022, 
-                                      wash_co_cleaned_uethda_school_mobility_2022)
+                                      wash_co_cleaned_uethda_school_mobility_2022,bristol_va_mobility_2022)
 
 uethda_schools_mobility_2022
 
@@ -4236,6 +4629,13 @@ uethda_schools_mobility_2022
 
 # school districts
 tn_school_districts_mobility_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S0701", year = 2021, geometry = TRUE)
+
+va_school_districts_mobility_2021 <- get_acs(geography = "school district (unified)", state = "VA", table = "S0701", year = 2021, geometry = TRUE)
+
+bristol_va_school_districts_mobility_2021 <- va_school_districts_mobility_2021 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_mobility_2021 <- rbind(tn_school_districts_mobility_2021, bristol_va_school_districts_mobility_2021)
 
 # carter 
 
@@ -4295,11 +4695,11 @@ uethda_tract_mobility_2021 <- rbind(Carter_tract_mobility_2021, Greene_tract_mob
 
 #join the names 
 
-named_uethda_county_mobility_2021 <- inner_join(uethda_county_mobility_2021, subject_table_variables_21, by = "variable")
+named_uethda_county_mobility_2021 <- inner_join(uethda_county_mobility_2021, subject_table_variables_22, by = "variable")
 
-named_uethda_tract_mobility_2021 <- inner_join(uethda_tract_mobility_2021,subject_table_variables_21, by = "variable")
+named_uethda_tract_mobility_2021 <- inner_join(uethda_tract_mobility_2021,subject_table_variables_22, by = "variable")
 
-named_uethda_school_mobility_2021 <- inner_join(tn_school_districts_mobility_2021, subject_table_variables_21, by = "variable")
+named_uethda_school_mobility_2021 <- inner_join(school_districts_mobility_2021, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -4343,7 +4743,12 @@ kpt_city_mobility_2021 <- cleaned_uethda_school_mobility_2021 %>%
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_mobility_2021 <- cleaned_uethda_school_mobility_2021 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_mobility_2021 <- cleaned_uethda_school_mobility_2021 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_mobility_2021 <- cleaned_uethda_school_mobility_2021 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -4359,14 +4764,23 @@ wash_co_cleaned_uethda_school_mobility_2021 <- cleaned_uethda_school_mobility_20
 
 uethda_schools_mobility_2021 <- rbind(carter_county_mobility_2021, elizabethton_mobility_2021, greene_city_mobility_2021, greene_cleaned_uethda_school_mobility_2021,hancock_cleaned_uethda_school_mobility_2021,hawkins_cleaned_uethda_school_mobility_2021, 
                                       johnson_cleaned_uethda_school_mobility_2021, kpt_city_mobility_2021, bristol_city_mobility_2021, sullivan_cleaned_uethda_school_mobility_2021,unicoi_cleaned_uethda_school_mobility_2021, jc_cleaned_uethda_school_mobility_2021, 
-                                      wash_co_cleaned_uethda_school_mobility_2021)
+                                      wash_co_cleaned_uethda_school_mobility_2021,bristol_va_mobility_2021)
 
 uethda_schools_mobility_2021
+
+######S0701 - geographic mobility ######
 
 # 2020
 
 # school districts
 tn_school_districts_mobility_2020 <- get_acs(geography = "school district (unified)", state = "TN", table = "S0701", year = 2020, geometry = TRUE)
+
+va_school_districts_mobility_2020 <- get_acs(geography = "school district (unified)", state = "VA", table = "S0701", year = 2020, geometry = TRUE)
+
+bristol_va_school_districts_mobility_2020 <- va_school_districts_mobility_2020 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_mobility_2020 <- rbind(tn_school_districts_mobility_2020, bristol_va_school_districts_mobility_2020)
 
 # carter 
 
@@ -4430,7 +4844,7 @@ named_uethda_county_mobility_2020 <- inner_join(uethda_county_mobility_2020, sub
 
 named_uethda_tract_mobility_2020 <- inner_join(uethda_tract_mobility_2020,subject_table_variables_22, by = "variable")
 
-named_uethda_school_mobility_2020 <- inner_join(tn_school_districts_mobility_2020, subject_table_variables_22, by = "variable")
+named_uethda_school_mobility_2020 <- inner_join(school_districts_mobility_2020, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -4474,7 +4888,12 @@ kpt_city_mobility_2020 <- cleaned_uethda_school_mobility_2020 %>%
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_mobility_2020 <- cleaned_uethda_school_mobility_2020 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_mobility_2020 <- cleaned_uethda_school_mobility_2020 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_mobility_2020 <- cleaned_uethda_school_mobility_2020 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -4490,16 +4909,24 @@ wash_co_cleaned_uethda_school_mobility_2020 <- cleaned_uethda_school_mobility_20
 
 uethda_schools_mobility_2020 <- rbind(carter_county_mobility_2020, elizabethton_mobility_2020, greene_city_mobility_2020, greene_cleaned_uethda_school_mobility_2020,hancock_cleaned_uethda_school_mobility_2020,hawkins_cleaned_uethda_school_mobility_2020, 
                                       johnson_cleaned_uethda_school_mobility_2020, kpt_city_mobility_2020, bristol_city_mobility_2020, sullivan_cleaned_uethda_school_mobility_2020,unicoi_cleaned_uethda_school_mobility_2020, jc_cleaned_uethda_school_mobility_2020, 
-                                      wash_co_cleaned_uethda_school_mobility_2020)
+                                      wash_co_cleaned_uethda_school_mobility_2020,bristol_va_mobility_2020)
 
 uethda_schools_mobility_2020
 
 
+######S0701 - geographic mobility ######
 
 # 2019
 
 # school districts
 tn_school_districts_mobility_2019 <- get_acs(geography = "school district (unified)", state = "TN", table = "S0701", year = 2019, geometry = TRUE)
+
+va_school_districts_mobility_2019 <- get_acs(geography = "school district (unified)", state = "VA", table = "S0701", year = 2019, geometry = TRUE)
+
+bristol_va_school_districts_mobility_2019 <- va_school_districts_mobility_2019 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_mobility_2019 <- rbind(tn_school_districts_mobility_2019, bristol_va_school_districts_mobility_2019)
 
 # carter 
 
@@ -4563,7 +4990,7 @@ named_uethda_county_mobility_2019 <- inner_join(uethda_county_mobility_2019, sub
 
 named_uethda_tract_mobility_2019 <- inner_join(uethda_tract_mobility_2019,subject_table_variables_22, by = "variable")
 
-named_uethda_school_mobility_2019 <- inner_join(tn_school_districts_mobility_2019, subject_table_variables_22, by = "variable")
+named_uethda_school_mobility_2019 <- inner_join(school_districts_mobility_2019, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -4607,7 +5034,12 @@ kpt_city_mobility_2019 <- cleaned_uethda_school_mobility_2019 %>%
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_mobility_2019 <- cleaned_uethda_school_mobility_2019 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_mobility_2019 <- cleaned_uethda_school_mobility_2019 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_mobility_2019 <- cleaned_uethda_school_mobility_2019 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -4623,16 +5055,24 @@ wash_co_cleaned_uethda_school_mobility_2019 <- cleaned_uethda_school_mobility_20
 
 uethda_schools_mobility_2019 <- rbind(carter_county_mobility_2019, elizabethton_mobility_2019, greene_city_mobility_2019, greene_cleaned_uethda_school_mobility_2019,hancock_cleaned_uethda_school_mobility_2019,hawkins_cleaned_uethda_school_mobility_2019, 
                                       johnson_cleaned_uethda_school_mobility_2019, kpt_city_mobility_2019, bristol_city_mobility_2019, sullivan_cleaned_uethda_school_mobility_2019,unicoi_cleaned_uethda_school_mobility_2019, jc_cleaned_uethda_school_mobility_2019, 
-                                      wash_co_cleaned_uethda_school_mobility_2019)
+                                      wash_co_cleaned_uethda_school_mobility_2019,bristol_va_mobility_2019)
 
 uethda_schools_mobility_2019
 
 
+######S0701 - geographic mobility ######
 
 # 2018
 
 # school districts
 tn_school_districts_mobility_2018 <- get_acs(geography = "school district (unified)", state = "TN", table = "S0701", year = 2018, geometry = TRUE)
+
+va_school_districts_mobility_2018 <- get_acs(geography = "school district (unified)", state = "VA", table = "S0701", year = 2018, geometry = TRUE)
+
+bristol_va_school_districts_mobility_2018 <- va_school_districts_mobility_2018 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_mobility_2018 <- rbind(tn_school_districts_mobility_2018, bristol_va_school_districts_mobility_2018)
 
 # carter 
 
@@ -4696,7 +5136,7 @@ named_uethda_county_mobility_2018 <- inner_join(uethda_county_mobility_2018, sub
 
 named_uethda_tract_mobility_2018 <- inner_join(uethda_tract_mobility_2018,subject_table_variables_22, by = "variable")
 
-named_uethda_school_mobility_2018 <- inner_join(tn_school_districts_mobility_2018, subject_table_variables_22, by = "variable")
+named_uethda_school_mobility_2018 <- inner_join(school_districts_mobility_2018, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -4740,7 +5180,12 @@ kpt_city_mobility_2018 <- cleaned_uethda_school_mobility_2018 %>%
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_mobility_2018 <- cleaned_uethda_school_mobility_2018 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_mobility_2018 <- cleaned_uethda_school_mobility_2018 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_mobility_2018 <- cleaned_uethda_school_mobility_2018 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -4756,16 +5201,24 @@ wash_co_cleaned_uethda_school_mobility_2018 <- cleaned_uethda_school_mobility_20
 
 uethda_schools_mobility_2018 <- rbind(carter_county_mobility_2018, elizabethton_mobility_2018, greene_city_mobility_2018, greene_cleaned_uethda_school_mobility_2018,hancock_cleaned_uethda_school_mobility_2018,hawkins_cleaned_uethda_school_mobility_2018, 
                                       johnson_cleaned_uethda_school_mobility_2018, kpt_city_mobility_2018, bristol_city_mobility_2018, sullivan_cleaned_uethda_school_mobility_2018,unicoi_cleaned_uethda_school_mobility_2018, jc_cleaned_uethda_school_mobility_2018, 
-                                      wash_co_cleaned_uethda_school_mobility_2018)
+                                      wash_co_cleaned_uethda_school_mobility_2018,bristol_va_mobility_2018)
 
 uethda_schools_mobility_2018
 
 
+######S0701 - geographic mobility ######
 
 # 2017
 
 # school districts
 tn_school_districts_mobility_2017 <- get_acs(geography = "school district (unified)", state = "TN", table = "S0701", year = 2017, geometry = TRUE)
+
+va_school_districts_mobility_2017 <- get_acs(geography = "school district (unified)", state = "VA", table = "S0701", year = 2017, geometry = TRUE)
+
+bristol_va_school_districts_mobility_2017 <- va_school_districts_mobility_2017 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_mobility_2017 <- rbind(tn_school_districts_mobility_2017, bristol_va_school_districts_mobility_2017)
 
 # carter 
 
@@ -4829,7 +5282,7 @@ named_uethda_county_mobility_2017 <- inner_join(uethda_county_mobility_2017, sub
 
 named_uethda_tract_mobility_2017 <- inner_join(uethda_tract_mobility_2017,subject_table_variables_22, by = "variable")
 
-named_uethda_school_mobility_2017 <- inner_join(tn_school_districts_mobility_2017, subject_table_variables_22, by = "variable")
+named_uethda_school_mobility_2017 <- inner_join(school_districts_mobility_2017, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -4873,7 +5326,12 @@ kpt_city_mobility_2017 <- cleaned_uethda_school_mobility_2017 %>%
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_mobility_2017 <- cleaned_uethda_school_mobility_2017 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_mobility_2017 <- cleaned_uethda_school_mobility_2017 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_mobility_2017 <- cleaned_uethda_school_mobility_2017 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -4889,19 +5347,9 @@ wash_co_cleaned_uethda_school_mobility_2017 <- cleaned_uethda_school_mobility_20
 
 uethda_schools_mobility_2017 <- rbind(carter_county_mobility_2017, elizabethton_mobility_2017, greene_city_mobility_2017, greene_cleaned_uethda_school_mobility_2017,hancock_cleaned_uethda_school_mobility_2017,hawkins_cleaned_uethda_school_mobility_2017, 
                                       johnson_cleaned_uethda_school_mobility_2017, kpt_city_mobility_2017, bristol_city_mobility_2017, sullivan_cleaned_uethda_school_mobility_2017,unicoi_cleaned_uethda_school_mobility_2017, jc_cleaned_uethda_school_mobility_2017, 
-                                      wash_co_cleaned_uethda_school_mobility_2017)
+                                      wash_co_cleaned_uethda_school_mobility_2017,bristol_va_mobility_2017)
 
 uethda_schools_mobility_2017
-
-## bind all the years together ##
-uethda_tract_mobility <- rbind(cleaned_uethda_tract_mobility_2022, cleaned_uethda_tract_mobility_2021,cleaned_uethda_tract_mobility_2020, cleaned_uethda_tract_mobility_2019, 
-                               cleaned_uethda_tract_mobility_2018, cleaned_uethda_tract_mobility_2017)
-
-uethda_county_mobility  <- rbind(cleaned_uethda_county_mobility_2022, cleaned_uethda_county_mobility_2021,cleaned_uethda_county_mobility_2020, cleaned_uethda_county_mobility_2019, 
-                                 cleaned_uethda_county_mobility_2018, cleaned_uethda_county_mobility_2017)
-
-uethda_schools_mobility <- rbind(uethda_schools_mobility_2022, uethda_schools_mobility_2021,uethda_schools_mobility_2020, uethda_schools_mobility_2019, uethda_schools_mobility_2018, 
-                                 uethda_schools_mobility_2017)
 
 #S1501 - educational attainment
 #S2301 - employment status
@@ -4911,6 +5359,14 @@ uethda_schools_mobility <- rbind(uethda_schools_mobility_2022, uethda_schools_mo
 
 # school districts
 tn_school_districts_employment_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S2301", year = 2022, geometry = TRUE)
+
+va_school_districts_employment_2022 <- get_acs(geography = "school district (unified)", state = "VA", table = "S2301", year = 2022, geometry = TRUE)
+
+bristol_va_school_districts_employment_2022 <- va_school_districts_employment_2022 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_employment_2022 <- rbind(tn_school_districts_employment_2022, bristol_va_school_districts_employment_2022)
+
 
 # carter 
 
@@ -4974,7 +5430,7 @@ named_uethda_county_employment_2022 <- inner_join(uethda_county_employment_2022,
 
 named_uethda_tract_employment_2022 <- inner_join(uethda_tract_employment_2022,subject_table_variables_22, by = "variable")
 
-named_uethda_school_employment_2022 <- inner_join(tn_school_districts_employment_2022, subject_table_variables_22, by = "variable")
+named_uethda_school_employment_2022 <- inner_join(school_districts_employment_2022, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -5018,7 +5474,12 @@ kpt_city_employment_2022 <- cleaned_uethda_school_employment_2022 %>%
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_employment_2022 <- cleaned_uethda_school_employment_2022 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_employment_2022 <- cleaned_uethda_school_employment_2022 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_employment_2022 <- cleaned_uethda_school_employment_2022 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -5034,15 +5495,27 @@ wash_co_cleaned_uethda_school_employment_2022 <- cleaned_uethda_school_employmen
 
 uethda_schools_employment_2022 <- rbind(carter_county_employment_2022, elizabethton_employment_2022, greene_city_employment_2022, greene_cleaned_uethda_school_employment_2022,hancock_cleaned_uethda_school_employment_2022,hawkins_cleaned_uethda_school_employment_2022, 
                                         johnson_cleaned_uethda_school_employment_2022, kpt_city_employment_2022, bristol_city_employment_2022, sullivan_cleaned_uethda_school_employment_2022,unicoi_cleaned_uethda_school_employment_2022, jc_cleaned_uethda_school_employment_2022, 
-                                        wash_co_cleaned_uethda_school_employment_2022)
+                                        wash_co_cleaned_uethda_school_employment_2022,bristol_va_employment_2022)
 
 uethda_schools_employment_2022
 
+
+#S1501 - educational attainment
+#S2301 - employment status
+######S2301 - geographic employment ######
 
 # 2021
 
 # school districts
 tn_school_districts_employment_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S2301", year = 2021, geometry = TRUE)
+
+va_school_districts_employment_2021 <- get_acs(geography = "school district (unified)", state = "VA", table = "S2301", year = 2021, geometry = TRUE)
+
+bristol_va_school_districts_employment_2021 <- va_school_districts_employment_2021 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_employment_2021 <- rbind(tn_school_districts_employment_2021, bristol_va_school_districts_employment_2021)
+
 
 # carter 
 
@@ -5106,7 +5579,7 @@ named_uethda_county_employment_2021 <- inner_join(uethda_county_employment_2021,
 
 named_uethda_tract_employment_2021 <- inner_join(uethda_tract_employment_2021,subject_table_variables_22, by = "variable")
 
-named_uethda_school_employment_2021 <- inner_join(tn_school_districts_employment_2021, subject_table_variables_22, by = "variable")
+named_uethda_school_employment_2021 <- inner_join(school_districts_employment_2021, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -5150,7 +5623,12 @@ kpt_city_employment_2021 <- cleaned_uethda_school_employment_2021 %>%
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_employment_2021 <- cleaned_uethda_school_employment_2021 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_employment_2021 <- cleaned_uethda_school_employment_2021 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_employment_2021 <- cleaned_uethda_school_employment_2021 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -5166,7 +5644,7 @@ wash_co_cleaned_uethda_school_employment_2021 <- cleaned_uethda_school_employmen
 
 uethda_schools_employment_2021 <- rbind(carter_county_employment_2021, elizabethton_employment_2021, greene_city_employment_2021, greene_cleaned_uethda_school_employment_2021,hancock_cleaned_uethda_school_employment_2021,hawkins_cleaned_uethda_school_employment_2021, 
                                         johnson_cleaned_uethda_school_employment_2021, kpt_city_employment_2021, bristol_city_employment_2021, sullivan_cleaned_uethda_school_employment_2021,unicoi_cleaned_uethda_school_employment_2021, jc_cleaned_uethda_school_employment_2021, 
-                                        wash_co_cleaned_uethda_school_employment_2021)
+                                        wash_co_cleaned_uethda_school_employment_2021,bristol_va_employment_2021)
 
 uethda_schools_employment_2021
 
@@ -5176,6 +5654,13 @@ uethda_schools_employment_2021
 
 # school districts
 tn_school_districts_work_status_2022 <- get_acs(geography = "school district (unified)", state = "TN", table = "S2303", year = 2022, geometry = TRUE)
+
+va_school_districts_work_status_2022 <- get_acs(geography = "school district (unified)", state = "VA", table = "S2303", year = 2022, geometry = TRUE)
+
+bristol_va_school_districts_work_status_2022 <- va_school_districts_work_status_2022 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_work_status_2022 <- rbind(tn_school_districts_work_status_2022,va_school_districts_work_status_2022)
 
 # carter 
 
@@ -5239,7 +5724,7 @@ named_uethda_county_work_status_2022 <- inner_join(uethda_county_work_status_202
 
 named_uethda_tract_work_status_2022 <- inner_join(uethda_tract_work_status_2022,subject_table_variables_22, by = "variable")
 
-named_uethda_school_work_status_2022 <- inner_join(tn_school_districts_work_status_2022, subject_table_variables_22, by = "variable")
+named_uethda_school_work_status_2022 <- inner_join(school_districts_work_status_2022, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -5283,7 +5768,12 @@ kpt_city_work_status_2022 <- cleaned_uethda_school_work_status_2022 %>%
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_work_status_2022 <- cleaned_uethda_school_work_status_2022 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_work_status_2022 <- cleaned_uethda_school_work_status_2022 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_work_status_2022 <- cleaned_uethda_school_work_status_2022 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -5299,15 +5789,24 @@ wash_co_cleaned_uethda_school_work_status_2022 <- cleaned_uethda_school_work_sta
 
 uethda_schools_work_status_2022 <- rbind(carter_county_work_status_2022, elizabethton_work_status_2022, greene_city_work_status_2022, greene_cleaned_uethda_school_work_status_2022,hancock_cleaned_uethda_school_work_status_2022,hawkins_cleaned_uethda_school_work_status_2022, 
                                          johnson_cleaned_uethda_school_work_status_2022, kpt_city_work_status_2022, bristol_city_work_status_2022, sullivan_cleaned_uethda_school_work_status_2022,unicoi_cleaned_uethda_school_work_status_2022, jc_cleaned_uethda_school_work_status_2022, 
-                                         wash_co_cleaned_uethda_school_work_status_2022)
+                                         wash_co_cleaned_uethda_school_work_status_2022,bristol_va_work_status_2022)
 
 uethda_schools_work_status_2022
 
 
+#S2303 - work status in past 12 months 
+#### S2303 work_status IN PAST 12 MONTHS ####
 # 2021
 
 # school districts
 tn_school_districts_work_status_2021 <- get_acs(geography = "school district (unified)", state = "TN", table = "S2303", year = 2021, geometry = TRUE)
+
+va_school_districts_work_status_2021 <- get_acs(geography = "school district (unified)", state = "VA", table = "S2303", year = 2021, geometry = TRUE)
+
+bristol_va_school_districts_work_status_2021 <- va_school_districts_work_status_2021 %>%
+  filter(str_detect(NAME, "Bristol"))
+
+school_districts_work_status_2021 <- rbind(tn_school_districts_work_status_2021,va_school_districts_work_status_2021)
 
 # carter 
 
@@ -5371,7 +5870,7 @@ named_uethda_county_work_status_2021 <- inner_join(uethda_county_work_status_202
 
 named_uethda_tract_work_status_2021 <- inner_join(uethda_tract_work_status_2021,subject_table_variables_22, by = "variable")
 
-named_uethda_school_work_status_2021 <- inner_join(tn_school_districts_work_status_2021, subject_table_variables_22, by = "variable")
+named_uethda_school_work_status_2021 <- inner_join(school_districts_work_status_2021, subject_table_variables_22, by = "variable")
 
 # clean the names 
 
@@ -5415,7 +5914,12 @@ kpt_city_work_status_2021 <- cleaned_uethda_school_work_status_2021 %>%
   filter(str_detect(Location, "Kingsport"))
 
 bristol_city_work_status_2021 <- cleaned_uethda_school_work_status_2021 %>%
-  filter(str_detect(Location, "Bristol"))
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Tennessee"))
+
+bristol_va_work_status_2021 <- cleaned_uethda_school_work_status_2021 %>%
+  filter(str_detect(Location, "Bristol"))%>%
+  filter(str_detect(Location, "Virginia"))
 
 sullivan_cleaned_uethda_school_work_status_2021 <- cleaned_uethda_school_work_status_2021 %>%
   filter(str_detect(Location, "Sullivan"))
@@ -5431,7 +5935,6 @@ wash_co_cleaned_uethda_school_work_status_2021 <- cleaned_uethda_school_work_sta
 
 uethda_schools_work_status_2021 <- rbind(carter_county_work_status_2021, elizabethton_work_status_2021, greene_city_work_status_2021, greene_cleaned_uethda_school_work_status_2021,hancock_cleaned_uethda_school_work_status_2021,hawkins_cleaned_uethda_school_work_status_2021, 
                                          johnson_cleaned_uethda_school_work_status_2021, kpt_city_work_status_2021, bristol_city_work_status_2021, sullivan_cleaned_uethda_school_work_status_2021,unicoi_cleaned_uethda_school_work_status_2021, jc_cleaned_uethda_school_work_status_2021, 
-                                         wash_co_cleaned_uethda_school_work_status_2021)
+                                         wash_co_cleaned_uethda_school_work_status_2021,bristol_va_work_status_2021)
 
 uethda_schools_work_status_2021
-

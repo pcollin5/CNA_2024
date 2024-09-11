@@ -6,13 +6,16 @@ packages <- c("tidyverse", "tidycensus", "leaflet", "mapview", "DT", "sf",
               "brms", "ggridges", "shinystan", "bayesplot", "tidybayes",
               "ggmcmc", "forecast", "tseries", "parsnip", "DALEX", "config","DataExplorer",
               "skimr", "recipes", "yardstick", "iBreakDown", "tidyquant",
-              "leaflet", "plotly", "crosstalk", "DT", "ggthemes", "blsR", "blscrapeR", "blsAPI")
+              "leaflet", "plotly", "crosstalk", "DT", "ggthemes", "blsR", "blscrapeR", "blsAPI",
+              "rstatix")
 
+library(purrr)
 
 library(blsR)
 
 library("blsAPI")
 
+library(rstatix)
 
 lapply(packages, library, character.only = TRUE)
 
@@ -178,6 +181,33 @@ tract_map_function <- function(outline, data, fill, label){
     theme(plot.title = element_text(face = "bold"))+
     theme(text = element_text("Calibri"))+
     ggtitle({{label}})
+}
+
+
+##### BURST PLOTTING #####
+for (i in unique(edeca_3_leveled$Site)) {
+g = ggplot(edeca_3_leveled[edeca_3_leveled$Site == i, ], aes(x = Level, y = N, fill = Level))+
+  geom_bar(stat = "identity", position = "dodge")+ 
+  facet_grid(~Category+Test)+
+  geom_label(aes(group = Level,label = N), position = position_dodge(width = 1),color = "white", show.legend = FALSE, size = 3)+
+  theme(text = element_text("Calibri"))+
+  theme(strip.text.x = element_text(size = rel(1.5)))+
+  theme(strip.text.x = element_text(face = "bold"))+
+  theme(strip.text.x = element_text(face = "bold"))+
+  theme(plot.title = element_text(size=rel(2.25)))+
+  theme(plot.title = element_text(face = "bold"))+
+  theme(plot.subtitle = element_text(size = rel(1.5)))+
+  theme(plot.subtitle = element_text(face = "italic"))+
+  theme(axis.text.x = element_text(size = rel(1.5)))+
+  theme(axis.text.x = element_text(face = "bold"))+
+  theme(axis.text.y = element_text(size = rel(1.5)))+
+  theme(axis.text.y = element_text(face = "bold"))+
+  theme(legend.text=element_text(size=rel(1)))+
+  theme(legend.text = element_text(face = "bold"))+
+  theme(axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())+
+  ggtitle(paste("2024 3 Test Distribution:", i))
+ggsave(filename = paste0("test_3_distribution_", i, ".png"), plot = g)
 }
 
 
